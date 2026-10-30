@@ -130,10 +130,15 @@
       </a>
 
       <div class="flex items-center gap-6 text-sm font-medium">
-        <a href="#projects" class="text-slate-300 hover:text-cyan-400 transition-colors hidden md:inline-block">Proyek</a>
-        <a href="#ai-linguistics" class="text-slate-300 hover:text-cyan-400 transition-colors hidden md:inline-block">AI &amp; Evaluasi</a>
-        <a href="#skills" class="text-slate-300 hover:text-cyan-400 transition-colors hidden md:inline-block">Tech Stack</a>
-        <a href="#contact" class="px-4 py-2 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-semibold text-xs tracking-wide uppercase transition-all shadow-md shadow-cyan-500/20">
+        <a href="#projects" data-i18n="navProjects" class="text-slate-300 hover:text-cyan-400 transition-colors hidden md:inline-block">Proyek</a>
+        <a href="#ai-linguistics" data-i18n="navAi" class="text-slate-300 hover:text-cyan-400 transition-colors hidden md:inline-block">AI &amp; Evaluasi</a>
+        <a href="#skills" data-i18n="navSkills" class="text-slate-300 hover:text-cyan-400 transition-colors hidden md:inline-block">Tech Stack</a>
+        <!-- Bilingual Switcher Pill -->
+        <div class="flex items-center rounded-xl glass p-0.5 border border-white/10 text-xs font-mono mr-1">
+          <button id="btnLangId" onclick="setLanguage('id')" class="px-2.5 py-1 rounded-lg transition-all font-semibold text-cyan-300 bg-cyan-950/80 border border-cyan-800/60">ID</button>
+          <button id="btnLangEn" onclick="setLanguage('en')" class="px-2.5 py-1 rounded-lg transition-all font-semibold text-slate-400 hover:text-white">EN</button>
+        </div>
+        <a href="#contact" data-i18n="navContact" class="px-4 py-2 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-semibold text-xs tracking-wide uppercase transition-all shadow-md shadow-cyan-500/20">
           Kontak
         </a>
       </div>
@@ -149,7 +154,7 @@
       <div class="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full glass border border-cyan-500/30 text-cyan-300 text-xs font-mono mb-6 shadow-sm">
         <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
         <span class="w-2 h-2 rounded-full bg-emerald-400 -ml-4.5"></span>
-        <span>Open for Full-Stack, AI Evaluation &amp; Contract Work</span>
+        <span data-i18n="heroBadge">Open for Full-Stack, AI Evaluation &amp; Contract Work</span>
       </div>
 
       <h1 class="text-4xl sm:text-6xl lg:text-7xl font-display font-extrabold text-white tracking-tight leading-[1.1] mb-6">
@@ -157,7 +162,7 @@
         Evaluating <span class="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-pink-400 to-amber-300">Frontier AI</span>.
       </h1>
 
-      <p class="max-w-2xl text-slate-300 text-base sm:text-lg leading-relaxed mb-8 font-normal">
+      <p data-i18n="heroDesc" class="max-w-2xl text-slate-300 text-base sm:text-lg leading-relaxed mb-8 font-normal">
         Halo, saya <strong class="text-white font-semibold">Jaya Hartono Pinuyut</strong> (<span class="font-mono text-cyan-300">jayyuzz</span>), Full-Stack Developer &amp; Educator berbasis di Kotamobagu, Sulawesi Utara. Membangun aplikasi produksi skala instansi, sistem absensi biometrik &amp; GPS, cloud POS, serta evaluasi bahasa &amp; reasoning untuk LLM mutakhir.
       </p>
 
@@ -165,7 +170,7 @@
       <div class="flex flex-wrap items-center gap-4 mb-14">
         <a href="#projects" class="px-6 py-3.5 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-semibold text-sm flex items-center gap-2 shadow-lg shadow-cyan-500/25 transition-all">
           <i data-lucide="layers" class="w-4 h-4"></i>
-          Lihat Karya Produksi
+          <span data-i18n="heroBtnProjects">Lihat Karya Produksi</span>
         </a>
         <a href="https://github.com/jayyuzz" target="_blank" rel="noopener" class="px-6 py-3.5 rounded-xl glass hover:border-cyan-400/50 text-white font-semibold text-sm flex items-center gap-2 transition-all">
           <i data-lucide="github" class="w-4 h-4 text-cyan-400"></i>
@@ -181,11 +186,11 @@
       <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 w-full">
         <div class="glass p-5 rounded-2xl border border-white/5">
           <div class="text-3xl font-display font-extrabold text-cyan-400">1,500+</div>
-          <div class="text-xs font-medium text-slate-400 mt-1">Pengguna Terlayani (Siswa &amp; Guru)</div>
+          <div data-i18n="heroStat1Label" class="text-xs font-medium text-slate-400 mt-1">Pengguna Terlayani (Siswa &amp; Guru)</div>
         </div>
         <div class="glass p-5 rounded-2xl border border-white/5">
           <div class="text-3xl font-display font-extrabold text-purple-400">4</div>
-          <div class="text-xs font-medium text-slate-400 mt-1">Platform Produksi Aktif</div>
+          <div data-i18n="heroStat2Label" class="text-xs font-medium text-slate-400 mt-1">Platform Produksi Aktif</div>
         </div>
         <div class="glass p-5 rounded-2xl border border-white/5">
           <div class="text-3xl font-display font-extrabold text-emerald-400">100%</div>
@@ -202,7 +207,7 @@
     <div class="glass py-2 px-4 rounded-xl flex items-center justify-between text-xs text-slate-400 font-mono border border-cyan-500/20">
       <span class="flex items-center gap-2">
         <i data-lucide="sparkles" class="w-4 h-4 text-cyan-400"></i>
-        <span>3D Scene interaktif di latar belakang: gerakkan mouse / kursor untuk mengarahkan rotasi partikel dan poligon.</span>
+        <span data-i18n="sceneTip">3D Scene interaktif di latar belakang: gerakkan mouse / kursor untuk mengarahkan rotasi partikel dan poligon.</span>
       </span>
       <span class="hidden sm:inline-block text-cyan-400/80">WebGL Active</span>
     </div>
@@ -214,10 +219,10 @@
           <span class="w-8 h-px bg-cyan-400"></span>
           <span>Production Portfolio</span>
         </div>
-        <h2 class="text-3xl sm:text-5xl font-display font-bold text-white tracking-tight">
+        <h2 data-i18n="projectsTitle" class="text-3xl sm:text-5xl font-display font-bold text-white tracking-tight">
           Sistem Nyata yang Beroperasi
         </h2>
-        <p class="text-slate-400 text-sm sm:text-base mt-2 max-w-2xl">
+        <p data-i18n="projectsDesc" class="text-slate-400 text-sm sm:text-base mt-2 max-w-2xl">
           Setiap proyek di bawah ini aktif di domain produksi, memiliki arsitektur terstruktur, dan melayani operasional harian organisasi.
         </p>
       </div>
@@ -243,7 +248,7 @@
               <p class="text-xs font-mono text-cyan-400 mt-1">pr.smkn3kotamobagu.sch.id</p>
             </div>
 
-            <p class="text-slate-300 text-sm leading-relaxed">
+            <p data-i18n="p1Desc" class="text-slate-300 text-sm leading-relaxed">
               Sistem presensi multi-peran (Kepsek, Admin, Guru, TU, Siswa, Wali Kelas, Orang Tua) untuk SMK Negeri 3 Kotamobagu. Dilengkapi verifikasi wajah di browser (face-api.js), validasi radius GPS (Haversine), pengajuan izin, dan notifikasi otomatis WhatsApp.
             </p>
 
@@ -259,7 +264,7 @@
 
           <div class="pt-6 mt-6 border-t border-white/10 flex items-center justify-between">
             <a href="https://pr.smkn3kotamobagu.sch.id" target="_blank" rel="noopener" class="text-sm font-semibold text-cyan-400 hover:text-cyan-300 flex items-center gap-1.5 transition-colors">
-              Buka Aplikasi Live <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+              <span data-i18n="p1Live">Buka Aplikasi Live</span> <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
             </a>
             <a href="https://github.com/jayyuzz/smk3-absensi-showcase" target="_blank" rel="noopener" class="text-xs font-mono text-slate-400 hover:text-white flex items-center gap-1 transition-colors">
               <i data-lucide="github" class="w-3.5 h-3.5"></i> Showcase Repo
@@ -286,7 +291,7 @@
               <p class="text-xs font-mono text-purple-400 mt-1">marry.myap.web.id</p>
             </div>
 
-            <p class="text-slate-300 text-sm leading-relaxed">
+            <p data-i18n="p2Desc" class="text-slate-300 text-sm leading-relaxed">
               Platform analisis peluang pasar global untuk produk digital mandiri (ebook, micro-SaaS, template, preset). Mengolah estimasi demand, pricing tier, analisis kompetisi, dan langkah eksekusi roadmap dalam 50+ bahasa via AI gateway berkecepatan tinggi.
             </p>
 
@@ -301,7 +306,7 @@
 
           <div class="pt-6 mt-6 border-t border-white/10 flex items-center justify-between">
             <a href="https://marry.myap.web.id" target="_blank" rel="noopener" class="text-sm font-semibold text-purple-400 hover:text-purple-300 flex items-center gap-1.5 transition-colors">
-              Analisis Produk Sekarang <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+              <span data-i18n="p2Live">Analisis Produk Sekarang</span> <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
             </a>
             <a href="https://github.com/jayyuzz/marry" target="_blank" rel="noopener" class="text-xs font-mono text-slate-400 hover:text-white flex items-center gap-1 transition-colors">
               <i data-lucide="github" class="w-3.5 h-3.5"></i> Open Source Repo
@@ -328,7 +333,7 @@
               <p class="text-xs font-mono text-emerald-400 mt-1">cafe.mve.my.id</p>
             </div>
 
-            <p class="text-slate-300 text-sm leading-relaxed">
+            <p data-i18n="p3Desc" class="text-slate-300 text-sm leading-relaxed">
               Sistem kasir dan operasional back-office cafe terintegrasi. Manajemen shift kasir, dapur (Kitchen Display System), pesanan mandiri via QR meja, modul delivery &amp; driver checklist, pengurangan stok bahan baku otomatis berbasis resep, serta laporan laba kotor.
             </p>
 
@@ -343,7 +348,7 @@
 
           <div class="pt-6 mt-6 border-t border-white/10 flex items-center justify-between">
             <a href="https://cafe.mve.my.id" target="_blank" rel="noopener" class="text-sm font-semibold text-emerald-400 hover:text-emerald-300 flex items-center gap-1.5 transition-colors">
-              Portal Kasir <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+              <span data-i18n="p3Live">Portal Kasir</span> <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
             </a>
             <a href="https://github.com/jayyuzz/cafe-pos-showcase" target="_blank" rel="noopener" class="text-xs font-mono text-slate-400 hover:text-white flex items-center gap-1 transition-colors">
               <i data-lucide="github" class="w-3.5 h-3.5"></i> Showcase Repo
@@ -370,7 +375,7 @@
               <p class="text-xs font-mono text-sky-400 mt-1">smkn3kotamobagu.sch.id</p>
             </div>
 
-            <p class="text-slate-300 text-sm leading-relaxed">
+            <p data-i18n="p4Desc" class="text-slate-300 text-sm leading-relaxed">
               Portal informasi publik dan berita sekolah resmi. Mengelola publikasi akademik, pencapaian prestasi siswa, agenda kegiatan, portal alumni, serta integrasi e-learning dengan sistem audit log aktivitas admin yang ketat.
             </p>
 
@@ -385,7 +390,7 @@
 
           <div class="pt-6 mt-6 border-t border-white/10 flex items-center justify-between">
             <a href="https://smkn3kotamobagu.sch.id" target="_blank" rel="noopener" class="text-sm font-semibold text-sky-400 hover:text-sky-300 flex items-center gap-1.5 transition-colors">
-              Kunjungi Portal <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+              <span data-i18n="p4Live">Kunjungi Portal</span> <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
             </a>
             <a href="https://github.com/jayyuzz/smkn3-website-showcase" target="_blank" rel="noopener" class="text-xs font-mono text-slate-400 hover:text-white flex items-center gap-1 transition-colors">
               <i data-lucide="github" class="w-3.5 h-3.5"></i> Showcase Repo
@@ -404,28 +409,28 @@
             <i data-lucide="brain-circuit" class="w-3.5 h-3.5 text-purple-400"></i>
             <span>Frontier Model Evaluation</span>
           </div>
-          <h2 class="text-2xl sm:text-4xl font-display font-bold text-white tracking-tight">
+          <h2 data-i18n="aiTitle" class="text-2xl sm:text-4xl font-display font-bold text-white tracking-tight">
             Indonesian Linguistic &amp; AI Quality Specialist
           </h2>
-          <p class="text-slate-300 text-sm sm:text-base leading-relaxed">
+          <p data-i18n="aiDesc" class="text-slate-300 text-sm sm:text-base leading-relaxed">
             Berpengalaman dalam penilaian presisi LLM (RLHF, instruction-following, adversarial testing, hallucination detection) dengan fokus mendalam pada tata bahasa, sintaksis, konteks budaya, dan register bahasa Indonesia.
           </p>
           <div class="space-y-2 pt-2 text-sm text-slate-300">
             <div class="flex items-center gap-2.5">
               <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-400 shrink-0"></i>
-              <span><strong>AI Avatar &amp; Cloud Education Evaluator:</strong> Penilaian kualitas narasi AI Avatar &amp; akurasi lokalisasi materi teknis (AWS Skill Builder — RAG, Amazon Bedrock &amp; Cloud Security) dalam Bahasa Indonesia.</span>
+              <span data-i18n="aiBullet1"><strong>AI Avatar &amp; Cloud Education Evaluator:</strong> Penilaian kualitas narasi AI Avatar &amp; akurasi lokalisasi materi teknis (AWS Skill Builder — RAG, Amazon Bedrock &amp; Cloud Security) dalam Bahasa Indonesia.</span>
             </div>
             <div class="flex items-center gap-2.5">
               <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-400 shrink-0"></i>
-              <span><strong>Approved Mercor Expert:</strong> Indonesian Linguistic Specialist untuk project AI frontier lab.</span>
+              <span data-i18n="aiBullet2"><strong>Approved Mercor Expert:</strong> Indonesian Linguistic Specialist untuk project AI frontier lab.</span>
             </div>
             <div class="flex items-center gap-2.5">
               <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-400 shrink-0"></i>
-              <span><strong>Bilingual Fluency:</strong> Penilaian teks terjemahan, penalaran logika, dan gaya komunikasi natural vs. kaku.</span>
+              <span data-i18n="aiBullet3"><strong>Bilingual Fluency:</strong> Penilaian teks terjemahan, penalaran logika, dan gaya komunikasi natural vs. kaku.</span>
             </div>
             <div class="flex items-center gap-2.5">
               <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-400 shrink-0"></i>
-              <span><strong>Annotation &amp; Prompt Engineering:</strong> Kurasi data latih berakurasi tinggi untuk fine-tuning model generatif.</span>
+              <span data-i18n="aiBullet4"><strong>Annotation &amp; Prompt Engineering:</strong> Kurasi data latih berakurasi tinggi untuk fine-tuning model generatif.</span>
             </div>
           </div>
         </div>
@@ -459,7 +464,7 @@
           <span class="w-8 h-px bg-cyan-400"></span>
           <span>Core Capabilities</span>
         </div>
-        <h2 class="text-3xl sm:text-4xl font-display font-bold text-white tracking-tight">
+        <h2 data-i18n="skillsTitle" class="text-3xl sm:text-4xl font-display font-bold text-white tracking-tight">
           Teknologi &amp; Arsitektur
         </h2>
       </div>
@@ -471,7 +476,7 @@
             <i data-lucide="layout" class="w-5 h-5"></i>
           </div>
           <h3 class="text-lg font-display font-bold text-white">Frontend &amp; Mobile</h3>
-          <p class="text-xs text-slate-400 leading-relaxed">
+          <p data-i18n="s1Desc" class="text-xs text-slate-400 leading-relaxed">
             Membangun antarmuka responsif performa tinggi, PWA offline-first, dan aplikasi mobile multiplatform.
           </p>
           <div class="flex flex-wrap gap-1.5 pt-2">
@@ -490,7 +495,7 @@
             <i data-lucide="database" class="w-5 h-5"></i>
           </div>
           <h3 class="text-lg font-display font-bold text-white">Backend &amp; Security</h3>
-          <p class="text-xs text-slate-400 leading-relaxed">
+          <p data-i18n="s2Desc" class="text-xs text-slate-400 leading-relaxed">
             Infrastruktur database dengan kontrol keamanan data ketat (Row-Level Security) dan integrasi serverless.
           </p>
           <div class="flex flex-wrap gap-1.5 pt-2">
@@ -509,7 +514,7 @@
             <i data-lucide="cpu" class="w-5 h-5"></i>
           </div>
           <h3 class="text-lg font-display font-bold text-white">AI &amp; Integrations</h3>
-          <p class="text-xs text-slate-400 leading-relaxed">
+          <p data-i18n="s3Desc" class="text-xs text-slate-400 leading-relaxed">
             Integrasi biometrik klien, model AI, webhook pembayaran, dan gateway pesan WhatsApp.
           </p>
           <div class="flex flex-wrap gap-1.5 pt-2">
@@ -531,10 +536,10 @@
       </div>
       
       <div class="space-y-2 max-w-xl mx-auto">
-        <h2 class="text-3xl sm:text-4xl font-display font-bold text-white">
+        <h2 data-i18n="contactTitle" class="text-3xl sm:text-4xl font-display font-bold text-white">
           Mari Berkolaborasi
         </h2>
-        <p class="text-slate-300 text-sm sm:text-base">
+        <p data-i18n="contactDesc" class="text-slate-300 text-sm sm:text-base">
           Tersedia untuk proyek pengembangan aplikasi, sistem instansi/bisnis, evaluasi model AI, maupun remote engineering.
         </p>
       </div>
@@ -546,7 +551,7 @@
         </a>
         <button onclick="navigator.clipboard.writeText('jaya.pinuyut@gmail.com'); alert('Email berhasil disalin!');" class="px-4 py-3.5 rounded-xl glass hover:border-cyan-400 text-slate-300 hover:text-white text-sm font-mono flex items-center gap-2 transition-all">
           <i data-lucide="copy" class="w-4 h-4"></i>
-          Salin Email
+          <span data-i18n="contactBtnCopy">Salin Email</span>
         </button>
         <a href="https://github.com/jayyuzz" target="_blank" rel="noopener" class="px-5 py-3.5 rounded-xl glass hover:border-slate-400 text-slate-300 hover:text-white text-sm font-semibold flex items-center gap-2 transition-all">
           <i data-lucide="github" class="w-4 h-4"></i>
@@ -555,7 +560,7 @@
       </div>
 
       <div class="pt-10 border-t border-white/10 text-xs font-mono text-slate-400 flex flex-col sm:flex-row items-center justify-between gap-4">
-        <div>&copy; 2026 Jaya Hartono Pinuyut. Kotamobagu, Sulawesi Utara, Indonesia.</div>
+        <div data-i18n="footerCopy">&copy; 2026 Jaya Hartono Pinuyut. Kotamobagu, Sulawesi Utara, Indonesia.</div>
         <div class="flex items-center gap-4">
           <a href="https://marry.myap.web.id" target="_blank" class="hover:text-cyan-400">marry</a>
           <span>·</span>
@@ -751,5 +756,123 @@
       });
     });
   </script>
+
+  <!-- INTERNATIONALIZATION (ID / EN) SCRIPT -->
+  <script>
+    const i18n = {
+      id: {
+        navProjects: "Proyek",
+        navAi: "AI & Evaluasi",
+        navSkills: "Tech Stack",
+        navContact: "Kontak",
+        heroBadge: "Tersedia untuk Full-Stack, AI Evaluation & Proyek Kontrak",
+        heroDesc: 'Halo, saya <strong class="text-white font-semibold">Jaya Hartono Pinuyut</strong> (<span class="font-mono text-cyan-300">jayyuzz</span>), Full-Stack Developer & Educator berbasis di Kotamobagu, Sulawesi Utara. Membangun aplikasi produksi skala instansi, sistem absensi biometrik & GPS, cloud POS, serta evaluasi bahasa & reasoning untuk LLM mutakhir.',
+        heroBtnProjects: "Lihat Karya Produksi",
+        heroStat1Label: "Pengguna Terlayani (Siswa & Guru)",
+        heroStat2Label: "Platform Produksi Aktif",
+        sceneTip: "3D Scene interaktif di latar belakang: gerakkan mouse / kursor untuk mengarahkan rotasi partikel dan poligon.",
+        projectsTitle: "Sistem Nyata yang Beroperasi",
+        projectsDesc: "Setiap proyek di bawah ini aktif di domain produksi, memiliki arsitektur terstruktur, dan melayani operasional harian organisasi.",
+        p1Desc: "Sistem presensi multi-peran (Kepsek, Admin, Guru, TU, Siswa, Wali Kelas, Orang Tua) untuk SMK Negeri 3 Kotamobagu. Dilengkapi verifikasi wajah di browser (face-api.js), validasi radius GPS (Haversine), pengajuan izin, dan notifikasi otomatis WhatsApp.",
+        p1Live: "Buka Aplikasi Live",
+        p2Desc: "Platform analisis peluang pasar global untuk produk digital mandiri (ebook, micro-SaaS, template, preset). Mengolah estimasi demand, pricing tier, analisis kompetisi, dan langkah eksekusi roadmap dalam 50+ bahasa via AI gateway berkecepatan tinggi.",
+        p2Live: "Analisis Produk Sekarang",
+        p3Desc: "Sistem kasir dan operasional back-office cafe terintegrasi. Manajemen shift kasir, dapur (Kitchen Display System), pesanan mandiri via QR meja, modul delivery & driver checklist, pengurangan stok bahan baku otomatis berbasis resep, serta laporan laba kotor.",
+        p3Live: "Portal Kasir",
+        p4Desc: "Portal informasi publik dan berita sekolah resmi. Mengelola publikasi akademik, pencapaian prestasi siswa, agenda kegiatan, portal alumni, serta integrasi e-learning dengan sistem audit log aktivitas admin yang ketat.",
+        p4Live: "Kunjungi Portal",
+        aiTitle: "Spesialis Evaluasi AI & Linguistik Bahasa Indonesia",
+        aiDesc: "Berpengalaman dalam penilaian presisi LLM (RLHF, instruction-following, adversarial testing, hallucination detection) dengan fokus mendalam pada tata bahasa, sintaksis, konteks budaya, dan register bahasa Indonesia.",
+        aiBullet1: "<strong>AI Avatar & Cloud Education Evaluator:</strong> Penilaian kualitas narasi AI Avatar & akurasi lokalisasi materi teknis (AWS Skill Builder — RAG, Amazon Bedrock & Cloud Security) dalam Bahasa Indonesia.",
+        aiBullet2: "<strong>Approved Mercor Expert:</strong> Indonesian Linguistic Specialist untuk project AI frontier lab.",
+        aiBullet3: "<strong>Bilingual Fluency:</strong> Penilaian teks terjemahan, penalaran logika, dan gaya komunikasi natural vs. kaku.",
+        aiBullet4: "<strong>Annotation & Prompt Engineering:</strong> Kurasi data latih berakurasi tinggi untuk fine-tuning model generatif.",
+        skillsTitle: "Teknologi & Arsitektur",
+        s1Desc: "Membangun antarmuka responsif performa tinggi, PWA offline-first, dan aplikasi mobile multiplatform.",
+        s2Desc: "Infrastruktur database dengan kontrol keamanan data ketat (Row-Level Security) dan integrasi serverless.",
+        s3Desc: "Integrasi biometrik klien, model AI, webhook pembayaran, dan gateway pesan WhatsApp.",
+        contactTitle: "Mari Berkolaborasi",
+        contactDesc: "Tersedia untuk proyek pengembangan aplikasi, sistem instansi/bisnis, evaluasi model AI, maupun remote engineering.",
+        contactBtnCopy: "Salin Email",
+        contactCopied: "Email berhasil disalin!",
+        footerCopy: "© 2026 Jaya Hartono Pinuyut. Kotamobagu, Sulawesi Utara, Indonesia."
+      },
+      en: {
+        navProjects: "Projects",
+        navAi: "AI & Evaluation",
+        navSkills: "Tech Stack",
+        navContact: "Contact",
+        heroBadge: "Available for Full-Stack, AI Evaluation & Contract Roles",
+        heroDesc: 'Hello, I am <strong class="text-white font-semibold">Jaya Hartono Pinuyut</strong> (<span class="font-mono text-cyan-300">jayyuzz</span>), a Full-Stack Developer & Educator based in Kotamobagu, North Sulawesi, Indonesia. I build production-grade systems for institutions, biometric & GPS attendance platforms, cloud POS, and evaluate linguistic quality & reasoning for frontier LLMs.',
+        heroBtnProjects: "View Production Work",
+        heroStat1Label: "Users Served (Students & Teachers)",
+        heroStat2Label: "Active Production Platforms",
+        sceneTip: "Interactive 3D scene in the background: move your mouse / cursor to direct particle and polygon rotation.",
+        projectsTitle: "Real Systems in Operation",
+        projectsDesc: "Each project below is live in production, architected with modern standards, and actively serving daily organizational operations.",
+        p1Desc: "Multi-role attendance system (Principal, Admin, Teachers, Staff, Students, Homeroom, Parents) for SMKN 3 Kotamobagu. Features in-browser face verification (face-api.js), GPS geofencing (Haversine), leave request workflows, and automated WhatsApp notifications.",
+        p1Live: "Open Live App",
+        p2Desc: "Global market intelligence platform for independent digital products (ebooks, micro-SaaS, templates, presets). Estimates demand, optimal pricing tiers, competitive landscape, and an execution roadmap across 50+ languages via a high-speed AI gateway.",
+        p2Live: "Analyze Products Now",
+        p3Desc: "Integrated point-of-sale and back-office management system for cafes & restaurants. Features cashier shift reconciliation, Kitchen Display System (KDS), table QR ordering, delivery dispatch & driver checklist, recipe-based automated stock deduction, and gross profit analytics.",
+        p3Live: "Cashier Portal",
+        p4Desc: "Official public information and school news portal. Manages academic publications, student achievements, event calendars, alumni directories, and e-learning access with strict administrative audit logging.",
+        p4Live: "Visit Portal",
+        aiTitle: "Indonesian Linguistic & AI Quality Specialist",
+        aiDesc: "Experienced in precision LLM benchmarking (RLHF, instruction-following, adversarial testing, hallucination detection) with deep specialization in Indonesian grammar, syntax, cultural nuances, and linguistic register.",
+        aiBullet1: "<strong>AI Avatar & Cloud Education Evaluator:</strong> Evaluation of AI Avatar narration quality and technical localization accuracy (AWS Skill Builder — RAG, Amazon Bedrock & Cloud Security) in Indonesian.",
+        aiBullet2: "<strong>Approved Mercor Expert:</strong> Indonesian Linguistic Specialist for frontier AI lab research projects.",
+        aiBullet3: "<strong>Bilingual Fluency:</strong> Assessment of machine translation quality, logical reasoning, and natural vs. synthetic communication registers.",
+        aiBullet4: "<strong>Annotation & Prompt Engineering:</strong> High-precision training data curation and prompt engineering for generative model fine-tuning.",
+        skillsTitle: "Technologies & Architecture",
+        s1Desc: "Building high-performance responsive interfaces, offline-first PWAs, and multiplatform mobile applications.",
+        s2Desc: "Robust database infrastructure with strict Row-Level Security (RLS) policies and serverless integrations.",
+        s3Desc: "Integrating client-side biometrics, generative AI models, payment webhooks, and WhatsApp messaging gateways.",
+        contactTitle: "Let's Collaborate",
+        contactDesc: "Available for software engineering contracts, institutional/enterprise systems, AI model evaluation, and remote roles.",
+        contactBtnCopy: "Copy Email",
+        contactCopied: "Email copied to clipboard!",
+        footerCopy: "© 2026 Jaya Hartono Pinuyut. Kotamobagu, North Sulawesi, Indonesia."
+      }
+    };
+
+    let currentLang = localStorage.getItem('portfolio_lang') || 'id';
+
+    function setLanguage(lang) {
+      if (!i18n[lang]) return;
+      currentLang = lang;
+      localStorage.setItem('portfolio_lang', lang);
+
+      // Update button styles
+      const btnId = document.getElementById('btnLangId');
+      const btnEn = document.getElementById('btnLangEn');
+      if (btnId && btnEn) {
+        if (lang === 'id') {
+          btnId.className = "px-2.5 py-1 rounded-lg transition-all font-semibold text-cyan-300 bg-cyan-950/80 border border-cyan-800/60";
+          btnEn.className = "px-2.5 py-1 rounded-lg transition-all font-semibold text-slate-400 hover:text-white";
+        } else {
+          btnEn.className = "px-2.5 py-1 rounded-lg transition-all font-semibold text-cyan-300 bg-cyan-950/80 border border-cyan-800/60";
+          btnId.className = "px-2.5 py-1 rounded-lg transition-all font-semibold text-slate-400 hover:text-white";
+        }
+      }
+
+      // Update elements with data-i18n
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (i18n[lang] && i18n[lang][key] !== undefined) {
+          el.innerHTML = i18n[lang][key];
+        }
+      });
+
+      // Update html lang attribute
+      document.documentElement.lang = lang;
+    }
+
+    // Initialize on load
+    window.addEventListener('DOMContentLoaded', () => {
+      setLanguage(currentLang);
+    });
+  </script>
+
 </body>
 </html>
