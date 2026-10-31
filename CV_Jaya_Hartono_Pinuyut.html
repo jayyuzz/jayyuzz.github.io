@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Jaya Hartono Pinuyut, S.T. — Curriculum Vitae</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    @page {
+      size: A4;
+      margin: 14mm 14mm 14mm 14mm;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      color: #1e293b;
+      background-color: #ffffff;
+      line-height: 1.45;
+      font-size: 9pt;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+    a {
+      color: #0284c7;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+    .cv-container {
+      max-width: 210mm;
+      margin: 0 auto;
+    }
+    /* Header */
+    .header {
+      border-bottom: 2px solid #0f172a;
+      padding-bottom: 8px;
+      margin-bottom: 12px;
+    }
+    .name-title {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 4px;
+    }
+    h1 {
+      font-size: 20pt;
+      font-weight: 800;
+      color: #0f172a;
+      letter-spacing: -0.5px;
+    }
+    .subtitle {
+      font-size: 9.5pt;
+      font-weight: 600;
+      color: #0369a1;
+      margin-bottom: 5px;
+    }
+    .contact-bar {
+      font-size: 8pt;
+      color: #475569;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px 12px;
+      align-items: center;
+    }
+    .contact-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+    }
+    .contact-sep {
+      color: #cbd5e1;
+    }
+
+    /* Sections */
+    .section {
+      margin-bottom: 11px;
+    }
+    .section-title {
+      font-size: 9.5pt;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      color: #0f172a;
+      border-bottom: 1px solid #e2e8f0;
+      padding-bottom: 3px;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .section-title::before {
+      content: "";
+      display: inline-block;
+      width: 4px;
+      height: 11px;
+      background-color: #0284c7;
+      border-radius: 2px;
+    }
+
+    p.summary {
+      color: #334155;
+      text-align: justify;
+      font-size: 8.5pt;
+      line-height: 1.45;
+    }
+
+    /* Skill matrix */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 4px;
+      font-size: 8.5pt;
+    }
+    .skill-row {
+      display: flex;
+      line-height: 1.35;
+    }
+    .skill-cat {
+      width: 140px;
+      font-weight: 700;
+      color: #0f172a;
+      flex-shrink: 0;
+    }
+    .skill-val {
+      color: #334155;
+      flex-grow: 1;
+    }
+
+    /* Experience / Project Entry */
+    .entry {
+      margin-bottom: 8px;
+    }
+    .entry-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 2px;
+    }
+    .entry-title {
+      font-size: 9pt;
+      font-weight: 700;
+      color: #0f172a;
+    }
+    .entry-role {
+      font-size: 8.5pt;
+      font-weight: 600;
+      color: #0284c7;
+    }
+    .entry-meta {
+      font-size: 8pt;
+      color: #64748b;
+      font-weight: 500;
+      white-space: nowrap;
+    }
+    .entry-sublink {
+      font-size: 7.8pt;
+      color: #64748b;
+      margin-bottom: 3px;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    ul.entry-bullets {
+      list-style-type: square;
+      padding-left: 15px;
+      font-size: 8.2pt;
+      color: #334155;
+      line-height: 1.4;
+    }
+    ul.entry-bullets li {
+      margin-bottom: 2px;
+    }
+    .tech-pill {
+      display: inline-block;
+      background-color: #f1f5f9;
+      color: #334155;
+      padding: 1px 5px;
+      border-radius: 3px;
+      font-size: 7.5pt;
+      font-family: 'JetBrains Mono', monospace;
+      margin-top: 2px;
+      border: 1px solid #e2e8f0;
+    }
+
+    /* Tables for credentials */
+    .table-creds {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 8pt;
+      margin-top: 2px;
+    }
+    .table-creds th {
+      text-align: left;
+      background-color: #f8fafc;
+      padding: 4px 6px;
+      font-weight: 700;
+      color: #0f172a;
+      border-bottom: 1px solid #cbd5e1;
+    }
+    .table-creds td {
+      padding: 3.5px 6px;
+      border-bottom: 1px solid #f1f5f9;
+      color: #334155;
+      vertical-align: top;
+    }
+    .table-creds tr:last-child td {
+      border-bottom: none;
+    }
+
+    /* Page break helpers */
+    .page-break {
+      page-break-before: always;
+      padding-top: 4mm;
+    }
+  </style>
+</head>
+<body>
+
+<div class="cv-container">
+
+  <!-- HEADER -->
+  <header class="header">
+    <div class="name-title">
+      <h1>JAYA HARTONO PINUYUT, S.T.</h1>
+      <span style="font-size: 8pt; font-weight: 600; color: #475569;">NIP: 19881129 201403 1 001 | Gol: III/b</span>
+    </div>
+    <div class="subtitle">
+      Full-Stack Software Engineer · AI Evaluation Specialist · Certified Computer Science Educator
+    </div>
+    <div class="contact-bar">
+      <span class="contact-item">📍 Kotamobagu, North Sulawesi, Indonesia 95716</span>
+      <span class="contact-sep">•</span>
+      <span class="contact-item">✉️ <a href="mailto:jaya.pinuyut@gmail.com">jaya.pinuyut@gmail.com</a></span>
+      <span class="contact-sep">•</span>
+      <span class="contact-item">🌐 <a href="https://jayyuzz.github.io">jayyuzz.github.io</a></span>
+      <span class="contact-sep">•</span>
+      <span class="contact-item">💻 <a href="https://github.com/jayyuzz">github.com/jayyuzz</a></span>
+      <span class="contact-sep">•</span>
+      <span class="contact-item">☕ <a href="https://ko-fi.com/marry2">ko-fi.com/marry2</a></span>
+    </div>
+  </header>
+
+  <!-- EXECUTIVE SUMMARY -->
+  <section class="section">
+    <div class="section-title">Professional Profile</div>
+    <p class="summary">
+      Versatile <strong>Full-Stack Software Engineer</strong>, <strong>AI Evaluation Specialist</strong>, and certified <strong>Computer Science Educator</strong> with over 14 years of distinguished technical and pedagogical service. Combines strong computer engineering and networking foundations with modern full-stack software development—architecting production institutional platforms, client-side biometric/GPS attendance applications, point-of-sale systems, and AI-driven SaaS tools. Approved <strong>Indonesian Linguistic Expert on Mercor</strong> for frontier AI research lab evaluations and enterprise AI evaluator for technical course curriculum localization (AWS Skill Builder / RAG / Amazon Bedrock). Official <strong>Gemini Certified Educator</strong>, <strong>Google Certified Educator (Levels 1 &amp; 2)</strong>, and <strong>Adobe Certified Associate (ACA)</strong> with proven leadership in institutional digitization, student mentoring, and national competition coaching.
+    </p>
+  </section>
+
+  <!-- CORE TECHNICAL COMPETENCIES -->
+  <section class="section">
+    <div class="section-title">Core Competencies &amp; Technical Stack</div>
+    <div class="skills-grid">
+      <div class="skill-row">
+        <span class="skill-cat">Frontend &amp; Mobile</span>
+        <span class="skill-val">Next.js 16 (App Router), React 19, TypeScript, JavaScript (ES6+), Tailwind CSS v4, Progressive Web Apps (PWA), Expo / React Native, Three.js / WebGL, HTML5/CSS3.</span>
+      </div>
+      <div class="skill-row">
+        <span class="skill-cat">Backend &amp; Database</span>
+        <span class="skill-val">Node.js, Express, Supabase (PostgreSQL, Row-Level Security / RLS, Auth, Server Actions), PHP (Laravel, Sanctum), MySQL, SQLite, REST APIs, Vercel Serverless.</span>
+      </div>
+      <div class="skill-row">
+        <span class="skill-cat">AI &amp; Biometrics</span>
+        <span class="skill-val">In-browser Face Recognition (<code>face-api.js</code>), GPS Geofencing (Haversine), LLM Benchmarking &amp; RLHF Evaluation, Instruction-Following Auditing, Prompt Engineering, Gemini &amp; OpenAI API integration.</span>
+      </div>
+      <div class="skill-row">
+        <span class="skill-cat">Networking &amp; Systems</span>
+        <span class="skill-val">TCP/IP Architecture, LAN/WLAN Deployment, MikroTik RouterOS, VoIP Telephony (SIP/IP), Network Security, Linux Administration, Hardware Diagnostics.</span>
+      </div>
+      <div class="skill-row">
+        <span class="skill-cat">Integrations &amp; Tools</span>
+        <span class="skill-val">WhatsApp Gateway APIs (Fonnte, KirimDev), Payment Webhooks (Ko-fi), Thermal Printer APIs, Git, Clockify, Google Workspace for Education, Adobe Photoshop CC.</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURED SOFTWARE ENGINEERING & AI PROJECTS -->
+  <section class="section">
+    <div class="section-title">Featured Software Engineering &amp; AI Projects</div>
+
+    <!-- Project 1: SMK3 Absensi -->
+    <div class="entry">
+      <div class="entry-header">
+        <div>
+          <span class="entry-title">SMK3 Absensi Digital (Institutional Attendance Platform)</span>
+          <span class="entry-role"> — Lead Architect &amp; Full-Stack Developer</span>
+        </div>
+        <span class="entry-meta">2026 | Active Production</span>
+      </div>
+      <div class="entry-sublink">
+        Live: <a href="https://pr.smkn3kotamobagu.sch.id">pr.smkn3kotamobagu.sch.id</a> | Showcase: <a href="https://github.com/jayyuzz/smk3-absensi-showcase">github.com/jayyuzz/smk3-absensi-showcase</a>
+      </div>
+      <ul class="entry-bullets">
+        <li>Architected and deployed a multi-role digital attendance ecosystem serving <strong>1,500+ daily users</strong> (Principal, Admin, Teachers, Administrative Staff, Students, Homeroom Teachers, and Parents) for SMKN 3 Kotamobagu.</li>
+        <li>Implemented high-accuracy client-side biometric facial recognition via <code>face-api.js</code> coupled with server-validated GPS geofencing (Haversine algorithm) to strictly prevent proxy check-ins.</li>
+        <li>Built comprehensive approval workflows for leave requests, holiday scheduling, real-time attendance leaderboards, and automated WhatsApp notifications via KirimDev/Fonnte gateway.</li>
+        <li>Developed as an installable Progressive Web App (PWA) with offline capabilities, paired with a companion Expo / React Native mobile application.</li>
+      </ul>
+      <span class="tech-pill">Next.js 16</span> <span class="tech-pill">React 19</span> <span class="tech-pill">TypeScript</span> <span class="tech-pill">Tailwind CSS v4</span> <span class="tech-pill">Supabase Auth/RLS</span> <span class="tech-pill">face-api.js</span> <span class="tech-pill">Expo React Native</span> <span class="tech-pill">Vercel</span>
+    </div>
+
+    <!-- Project 2: marry -->
+    <div class="entry" style="margin-top: 6px;">
+      <div class="entry-header">
+        <div>
+          <span class="entry-title">marry 💍 (International Market Prospect Analyzer)</span>
+          <span class="entry-role"> — Creator &amp; Full-Stack Developer</span>
+        </div>
+        <span class="entry-meta">2026 | Active Production</span>
+      </div>
+      <div class="entry-sublink">
+        Live: <a href="https://marry.myap.web.id">marry.myap.web.id</a> | Repository: <a href="https://github.com/jayyuzz/marry">github.com/jayyuzz/marry</a>
+      </div>
+      <ul class="entry-bullets">
+        <li>Engineered an AI-powered SaaS product analyzing international market viability, pricing recommendations, and competitor benchmarks for small digital products (ebooks, templates, micro-SaaS) in <strong>50+ languages</strong>.</li>
+        <li>Designed a rate-limited Express.js API backend connecting to high-speed OpenAI-compatible inference gateways with structured JSON normalization and real-time execution roadmap generation.</li>
+        <li>Integrated Supabase user authentication and automated webhook listener handling instant membership upgrades via Ko-fi payments.</li>
+      </ul>
+      <span class="tech-pill">Node.js Express</span> <span class="tech-pill">Supabase Auth</span> <span class="tech-pill">AI Gateway</span> <span class="tech-pill">Ko-fi Webhooks</span> <span class="tech-pill">Vercel Serverless</span>
+    </div>
+
+    <!-- Project 3: Cafe POS -->
+    <div class="entry" style="margin-top: 6px;">
+      <div class="entry-header">
+        <div>
+          <span class="entry-title">Paylabs Cafe POS (Point of Sale &amp; Inventory Management)</span>
+          <span class="entry-role"> — Full-Stack Developer</span>
+        </div>
+        <span class="entry-meta">2026 | Active Production</span>
+      </div>
+      <div class="entry-sublink">
+        Live: <a href="https://cafe.mve.my.id">cafe.mve.my.id</a> | Showcase: <a href="https://github.com/jayyuzz/cafe-pos-showcase">github.com/jayyuzz/cafe-pos-showcase</a>
+      </div>
+      <ul class="entry-bullets">
+        <li>Built an integrated cloud POS and restaurant back-office system featuring cashier shift reconciliation, cash discrepancy auditing, and direct thermal printer API integration (<code>/api/print/[id]</code>).</li>
+        <li>Engineered a live Kitchen Display System (KDS), table QR self-ordering, delivery driver dispatch checklists, and recipe-based automated raw material stock deduction (BOM tracking &amp; COGS calculation).</li>
+      </ul>
+      <span class="tech-pill">Next.js</span> <span class="tech-pill">TypeScript</span> <span class="tech-pill">Supabase PostgreSQL</span> <span class="tech-pill">Recharts Analytics</span> <span class="tech-pill">Tailwind CSS</span>
+    </div>
+
+    <!-- Project 4: Official School Portal -->
+    <div class="entry" style="margin-top: 6px;">
+      <div class="entry-header">
+        <div>
+          <span class="entry-title">SMKN 3 Kotamobagu Official Web Portal</span>
+          <span class="entry-role"> — Web Developer</span>
+        </div>
+        <span class="entry-meta">2026 | Active Production</span>
+      </div>
+      <div class="entry-sublink">
+        Live: <a href="https://smkn3kotamobagu.sch.id">smkn3kotamobagu.sch.id</a> | Showcase: <a href="https://github.com/jayyuzz/smkn3-website-showcase">github.com/jayyuzz/smkn3-website-showcase</a>
+      </div>
+      <ul class="entry-bullets">
+        <li>Developed the official institutional portal managing news publishing, academic agendas, student achievements, alumni engagement, and e-learning gateways with structured audit logging.</li>
+      </ul>
+      <span class="tech-pill">Laravel (PHP)</span> <span class="tech-pill">MySQL</span> <span class="tech-pill">Sanctum</span> <span class="tech-pill">Activity Logger</span> <span class="tech-pill">Tailwind CSS</span>
+    </div>
+  </section>
+
+  <!-- AI EVALUATION & LINGUISTIC SPECIALIZATION -->
+  <section class="section">
+    <div class="section-title">AI Evaluation &amp; Linguistic Specialization</div>
+    <div class="entry">
+      <div class="entry-header">
+        <div>
+          <span class="entry-title">Approved Indonesian Linguistic Expert</span>
+          <span class="entry-role"> — Mercor</span>
+        </div>
+        <span class="entry-meta">Oct 2026 – Present</span>
+      </div>
+      <ul class="entry-bullets">
+        <li>Evaluated large language model (LLM) performance on complex Indonesian tasks in partnership with leading global frontier AI research labs.</li>
+        <li>Assessed model outputs across translation fidelity, multi-turn dialogue, grammatical/syntactic precision, adversarial edge cases, and cultural register appropriateness.</li>
+      </ul>
+    </div>
+    <div class="entry" style="margin-top: 4px;">
+      <div class="entry-header">
+        <div>
+          <span class="entry-title">AI Avatar &amp; Technical Course Localization Evaluator</span>
+          <span class="entry-role"> — Enterprise Technical Localization</span>
+        </div>
+        <span class="entry-meta">Oct 2026</span>
+      </div>
+      <ul class="entry-bullets">
+        <li>Evaluated AI avatar presenter narration quality, pedagogical clarity, and localization accuracy for technical AWS Skill Builder modules in Indonesian.</li>
+        <li>Benchmarked curriculum covering Retrieval-Augmented Generation (RAG), Amazon Bedrock Knowledge Bases, and Executive Cloud Security protocols.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- PROFESSIONAL TEACHING & INSTITUTIONAL LEADERSHIP -->
+  <section class="section">
+    <div class="section-title">Professional Teaching &amp; Civil Service Experience</div>
+
+    <div class="entry">
+      <div class="entry-header">
+        <div>
+          <span class="entry-title">SMA Negeri 4 Kotamobagu</span>
+          <span class="entry-role"> — Computer Science &amp; IT Educator (PNS Guru Ahli Pertama)</span>
+        </div>
+        <span class="entry-meta">2022 – Present</span>
+      </div>
+      <ul class="entry-bullets">
+        <li>Pioneered adoption of generative AI in secondary education, training teachers on Gemini AI, NotebookLM, and Google for Education suites.</li>
+        <li>Instructed students in computer science fundamentals, algorithmic logic, computational thinking, and modern programming (C++, Python).</li>
+        <li>Promoted to Penata Muda Tingkat I (Gol. III/b) effective July 2026 (Governor Decree No. 823/BKD/SK/98/2026).</li>
+      </ul>
+    </div>
+
+    <div class="entry" style="margin-top: 4px;">
+      <div class="entry-header">
+        <div>
+          <span class="entry-title">SMK Negeri 1 Tutuyan</span>
+          <span class="entry-role"> — Vocational Computer &amp; Multimedia Teacher (PNS Guru Ahli Pertama)</span>
+        </div>
+        <span class="entry-meta">2014 – 2022</span>
+      </div>
+      <ul class="entry-bullets">
+        <li>Delivered comprehensive curriculum in Computer Network Engineering (TKJ), Network Security, Multimedia Production, and Web Development.</li>
+        <li>Trained student delegates for the Vocational Student Competency Competition (LKS) in IT Networking Support at municipal, regency, and provincial levels.</li>
+        <li>Managed institutional IT infrastructure, Dapodik database, and Computer-Based Testing (CBT). Verified PAK Credit Score: 179.785.</li>
+      </ul>
+    </div>
+
+    <div class="entry" style="margin-top: 4px;">
+      <div class="entry-header">
+        <div>
+          <span class="entry-title">SMK Cokroaminoto Kotamobagu</span>
+          <span class="entry-role"> — IT &amp; Networking Instructor / Competition Coach</span>
+        </div>
+        <span class="entry-meta">2007 – 2012</span>
+      </div>
+      <ul class="entry-bullets">
+        <li>Official Supervising Coach for ICT at the National Applied Science Olympiad for Vocational High Schools (OSTN-SMK 2010) in Semarang, Central Java.</li>
+        <li>Administered Cisco Networking Academy coursework (CCNA 1) and computer laboratory operations.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- EDUCATION -->
+  <section class="section">
+    <div class="section-title">Education</div>
+    <div class="entry">
+      <div class="entry-header">
+        <div>
+          <span class="entry-title">Bachelor of Engineering (S.T.) in Electrical Engineering (Informatics Concentration)</span>
+        </div>
+        <span class="entry-meta">Graduated Dec 2012</span>
+      </div>
+      <div style="font-size: 8.2pt; color: #475569;">
+        Institut Teknologi Minaesa (ITM), Tomohon | GPA: <strong>3.15 / 4.00</strong> (Sangat Memuaskan / Very Satisfactory) | 148 SKS
+      </div>
+      <div style="font-size: 8pt; color: #64748b; margin-top: 1px;">
+        Thesis: <em>"Implementasi Jaringan Telepon Melalui Internet Protokol (IP)"</em> (Implementation of VoIP Telephony Networks)
+      </div>
+    </div>
+    <div class="entry" style="margin-top: 4px;">
+      <div class="entry-header">
+        <div>
+          <span class="entry-title">Vocational High School Diploma in Computer &amp; Network Engineering (TKJ)</span>
+        </div>
+        <span class="entry-meta">Graduated June 2006</span>
+      </div>
+      <div style="font-size: 8.2pt; color: #475569;">
+        SMK Cokroaminoto Kotamobagu, North Sulawesi
+      </div>
+    </div>
+  </section>
+
+  <!-- CERTIFICATIONS & HONORS -->
+  <section class="section">
+    <div class="section-title">Professional Certifications &amp; Honors</div>
+    <table class="table-creds">
+      <thead>
+        <tr>
+          <th>Credential / Certification</th>
+          <th>Issuing Authority</th>
+          <th>Validity / Year</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Approved Indonesian Linguistic Expert</strong></td>
+          <td>Mercor (Frontier AI Evaluation)</td>
+          <td>2026</td>
+        </tr>
+        <tr>
+          <td><strong>Pendidik Tersertifikasi Gemini (Gemini Certified Educator)</strong></td>
+          <td>Google for Education</td>
+          <td>2026 – 2029</td>
+        </tr>
+        <tr>
+          <td><strong>Google Certified Educator - Level 1 &amp; Level 2</strong></td>
+          <td>Google for Education</td>
+          <td>2026 – 2029</td>
+        </tr>
+        <tr>
+          <td><strong>ToT: Coding &amp; Artificial Intelligence (40 JP, Grade: Amat Baik)</strong></td>
+          <td>Ditjen GTK Kemendikdasmen RI</td>
+          <td>2025</td>
+        </tr>
+        <tr>
+          <td><strong>Sertifikat Pendidik Profesional (Multimedia)</strong></td>
+          <td>Kemristekdikti &amp; Universitas Negeri Makassar</td>
+          <td>2017 – Lifetime</td>
+        </tr>
+        <tr>
+          <td><strong>Adobe Certified Associate (ACA) - Visual Design (Photoshop CC)</strong></td>
+          <td>Certiport / Pearson VUE (Score: 833/1000)</td>
+          <td>2020</td>
+        </tr>
+        <tr>
+          <td><strong>CCNA 1: Networking Basics</strong></td>
+          <td>Cisco Networking Academy</td>
+          <td>2007</td>
+        </tr>
+        <tr>
+          <td><strong>National Supervising Coach Recognition - ICT (OSTN-SMK)</strong></td>
+          <td>Ditjen Mandikdasmen Kemendiknas RI</td>
+          <td>2010</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- LANGUAGES -->
+  <section class="section" style="margin-bottom: 0;">
+    <div class="section-title">Languages</div>
+    <p style="font-size: 8.5pt; color: #334155;">
+      <strong>Indonesian:</strong> Native / Bilingual Fluency (Linguistic Analysis, Syntax, Cultural Nuance, RLHF Annotation) &nbsp;|&nbsp;
+      <strong>English:</strong> Professional Working Proficiency (Technical Architecture, Software Documentation, Instruction)
+    </p>
+  </section>
+
+</div>
+
+</body>
+</html>
