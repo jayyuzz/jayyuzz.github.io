@@ -599,6 +599,80 @@
         </button>
       </div>
 
+            <!-- VISITOR LOG BY COUNTRY (HORIZONTAL) -->
+      <div class="pt-8 border-t border-white/10 text-left">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
+          <div class="flex items-center gap-2">
+            <span class="relative flex h-2.5 w-2.5">
+              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+              <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
+            </span>
+            <span class="text-xs font-mono font-semibold tracking-wider uppercase text-cyan-300" data-i18n="visitorTitle">
+              Log Pengunjung Global Berdasarkan Negara
+            </span>
+          </div>
+          <div class="flex items-center gap-4 text-xs font-mono text-slate-400">
+            <span><strong id="visitorTotal" class="text-white font-bold">140+</strong> <span data-i18n="visitorVisits">Kunjungan</span></span>
+            <span>•</span>
+            <span><strong id="visitorCountries" class="text-cyan-300 font-bold">8</strong> <span data-i18n="visitorUnique">Negara Terdeteksi</span></span>
+            <span>•</span>
+            <span class="text-emerald-400 flex items-center gap-1 font-semibold">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+              <span data-i18n="visitorLive">Traffic Aktif</span>
+            </span>
+          </div>
+        </div>
+
+        <!-- Horizontal Scrollable Container -->
+        <div id="visitorCountriesContainer" class="flex items-center gap-2.5 overflow-x-auto pb-2 scrollbar-thin">
+          <div class="shrink-0 px-3 py-1.5 rounded-xl glass border border-cyan-500/30 flex items-center gap-2 text-xs font-mono text-slate-200">
+            <span class="text-base">🇮🇩</span>
+            <span class="font-medium">Indonesia</span>
+            <span class="px-1.5 py-0.5 rounded-md bg-cyan-950/80 text-cyan-300 border border-cyan-800 text-[10px] font-bold">135+</span>
+          </div>
+          <div class="shrink-0 px-3 py-1.5 rounded-xl glass border border-white/10 flex items-center gap-2 text-xs font-mono text-slate-300">
+            <span class="text-base">🇺🇸</span>
+            <span class="font-medium">United States</span>
+            <span class="px-1.5 py-0.5 rounded-md bg-white/5 text-slate-400 border border-white/5 text-[10px] font-bold">12</span>
+          </div>
+          <div class="shrink-0 px-3 py-1.5 rounded-xl glass border border-white/10 flex items-center gap-2 text-xs font-mono text-slate-300">
+            <span class="text-base">🇸🇬</span>
+            <span class="font-medium">Singapore</span>
+            <span class="px-1.5 py-0.5 rounded-md bg-white/5 text-slate-400 border border-white/5 text-[10px] font-bold">8</span>
+          </div>
+          <div class="shrink-0 px-3 py-1.5 rounded-xl glass border border-white/10 flex items-center gap-2 text-xs font-mono text-slate-300">
+            <span class="text-base">🇲🇾</span>
+            <span class="font-medium">Malaysia</span>
+            <span class="px-1.5 py-0.5 rounded-md bg-white/5 text-slate-400 border border-white/5 text-[10px] font-bold">6</span>
+          </div>
+          <div class="shrink-0 px-3 py-1.5 rounded-xl glass border border-white/10 flex items-center gap-2 text-xs font-mono text-slate-300">
+            <span class="text-base">🇯🇵</span>
+            <span class="font-medium">Japan</span>
+            <span class="px-1.5 py-0.5 rounded-md bg-white/5 text-slate-400 border border-white/5 text-[10px] font-bold">4</span>
+          </div>
+          <div class="shrink-0 px-3 py-1.5 rounded-xl glass border border-white/10 flex items-center gap-2 text-xs font-mono text-slate-300">
+            <span class="text-base">🇩🇪</span>
+            <span class="font-medium">Germany</span>
+            <span class="px-1.5 py-0.5 rounded-md bg-white/5 text-slate-400 border border-white/5 text-[10px] font-bold">3</span>
+          </div>
+          <div class="shrink-0 px-3 py-1.5 rounded-xl glass border border-white/10 flex items-center gap-2 text-xs font-mono text-slate-300">
+            <span class="text-base">🇬🇧</span>
+            <span class="font-medium">United Kingdom</span>
+            <span class="px-1.5 py-0.5 rounded-md bg-white/5 text-slate-400 border border-white/5 text-[10px] font-bold">2</span>
+          </div>
+          <div class="shrink-0 px-3 py-1.5 rounded-xl glass border border-white/10 flex items-center gap-2 text-xs font-mono text-slate-300">
+            <span class="text-base">🇦🇺</span>
+            <span class="font-medium">Australia</span>
+            <span class="px-1.5 py-0.5 rounded-md bg-white/5 text-slate-400 border border-white/5 text-[10px] font-bold">2</span>
+          </div>
+          <div class="shrink-0 px-3 py-1.5 rounded-xl glass border border-white/10 flex items-center gap-2 text-xs font-mono text-slate-300">
+            <span class="text-base">🇳🇱</span>
+            <span class="font-medium">Netherlands</span>
+            <span class="px-1.5 py-0.5 rounded-md bg-white/5 text-slate-400 border border-white/5 text-[10px] font-bold">1</span>
+          </div>
+        </div>
+      </div>
+
       <div class="pt-10 border-t border-white/10 text-xs font-mono text-slate-400 flex flex-col sm:flex-row items-center justify-between gap-4">
         <div data-i18n="footerCopy">&copy; 2026 Jaya Hartono Pinuyut. Kotamobagu, Sulawesi Utara, Indonesia.</div>
         <div class="flex items-center gap-4">
@@ -837,6 +911,10 @@
         contactDesc: "Tersedia untuk proyek pengembangan aplikasi, sistem instansi/bisnis, evaluasi model AI, maupun remote engineering.",
         contactBtnCopy: "Salin Email",
         contactCopied: "Email berhasil disalin!",
+        visitorTitle: "Log Pengunjung Global Berdasarkan Negara",
+        visitorVisits: "Kunjungan",
+        visitorUnique: "Negara Terdeteksi",
+        visitorLive: "Traffic Aktif",
         footerCopy: "© 2026 Jaya Hartono Pinuyut. Kotamobagu, Sulawesi Utara, Indonesia."
       },
       en: {
@@ -876,6 +954,10 @@
         contactDesc: "Available for software engineering contracts, institutional/enterprise systems, AI model evaluation, and remote roles.",
         contactBtnCopy: "Copy Email",
         contactCopied: "Email copied to clipboard!",
+        visitorTitle: "Global Visitor Logs by Country",
+        visitorVisits: "Visits",
+        visitorUnique: "Countries Detected",
+        visitorLive: "Live Traffic",
         footerCopy: "© 2026 Jaya Hartono Pinuyut. Kotamobagu, North Sulawesi, Indonesia."
       }
     };
@@ -916,6 +998,41 @@
     window.addEventListener('DOMContentLoaded', () => {
       setLanguage(currentLang);
     });
+  </script>
+
+
+  <!-- LIVE VISITOR LOG SYNC -->
+  <script>
+    async function loadLiveVisitors() {
+      try {
+        const res = await fetch('https://marry.myap.web.id/api/visitors');
+        if (!res.ok) return;
+        const data = await res.json();
+        if (data.total) {
+          const totalEl = document.getElementById('visitorTotal');
+          if (totalEl) totalEl.innerText = data.total + '+';
+        }
+        if (data.uniqueCountries) {
+          const countriesEl = document.getElementById('visitorCountries');
+          if (countriesEl) countriesEl.innerText = data.uniqueCountries;
+        }
+        if (data.topCountries && data.topCountries.length > 0) {
+          const container = document.getElementById('visitorCountriesContainer');
+          if (container) {
+            container.innerHTML = data.topCountries.map((c, i) => `
+              <div class="shrink-0 px-3 py-1.5 rounded-xl glass ${i === 0 ? 'border border-cyan-500/40' : 'border border-white/10'} flex items-center gap-2 text-xs font-mono text-slate-200">
+                <span class="text-base">${c.flag || '🌐'}</span>
+                <span class="font-medium">${c.name}</span>
+                <span class="px-1.5 py-0.5 rounded-md ${i === 0 ? 'bg-cyan-950/80 text-cyan-300 border border-cyan-800' : 'bg-white/5 text-slate-400 border border-white/5'} text-[10px] font-bold">${c.count}</span>
+              </div>
+            `).join('');
+          }
+        }
+      } catch (err) {
+        console.debug('Visitor sync fallback active:', err);
+      }
+    }
+    window.addEventListener('DOMContentLoaded', loadLiveVisitors);
   </script>
 
 </body>
