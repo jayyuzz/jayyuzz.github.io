@@ -1,1039 +1,919 @@
 <!DOCTYPE html>
-<html lang="id" class="dark scroll-smooth">
+<html lang="id">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Jaya Hartono Pinuyut — 3D Interactive Portfolio | Full-Stack & AI</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Jaya Hartono Pinuyut — Full-Stack Engineer & AI Specialist Portfolio</title>
   
-  <!-- Fonts -->
+  <meta name="description" content="Portfolio of Jaya Hartono Pinuyut (jayyuzz) — Full-Stack Software Engineer, EdTech & AI Evaluation Specialist.">
+  <meta property="og:title" content="Jaya Hartono Pinuyut — Interactive Console Portfolio">
+  <meta property="og:description" content="Full-Stack Engineer, EdTech & AI Evaluation Specialist. Interactive console experience.">
+  <meta property="og:url" content="https://jayyuzz.github.io/">
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-  
-  <!-- Tailwind CSS CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Three.js CDN -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-  <!-- Lucide Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="./ps5-hub.css?v=15">
   <script src="https://unpkg.com/lucide@latest"></script>
 
-  <script>
-    tailwind.config = {
-      darkMode: 'class',
-      theme: {
-        extend: {
-          fontFamily: {
-            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
-            display: ['"Space Grotesk"', 'sans-serif'],
-            mono: ['"JetBrains Mono"', 'monospace'],
-          },
-          colors: {
-            cyber: {
-              900: '#060814',
-              800: '#0c1024',
-              700: '#141a38',
-              accent: '#38bdf8',
-              purple: '#a855f7',
-              emerald: '#10b981',
-              amber: '#f59e0b',
-            }
-          }
-        }
-      }
-    }
-  </script>
-
   <style>
-    body {
-      background-color: #060814;
-      color: #e2e8f0;
-      overflow-x: hidden;
+    :root {
+      --ps-cyan: #38bdf8;
+      --ps-purple: #a855f7;
+      --ps-emerald: #10b981;
+      --ps-amber: #f59e0b;
+      --font-mono: 'JetBrains Mono', monospace;
     }
-    
-    #canvas3d {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      z-index: 0;
+
+    /* Custom tweaks on top of ps5-hub.css */
+    .ps5-tile {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      padding: 6px;
+      cursor: pointer;
+      user-select: none;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .ps5-tile-icon {
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 10px;
+      pointer-events: none;
+      transition: transform 0.3s cubic-bezier(0.34, 1.25, 0.64, 1);
+    }
+    .ps5-tile.active .ps5-tile-icon {
+      transform: scale(1.15);
+    }
+    .ps5-tile-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.2px;
+      color: #cbd5e1;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 100%;
       pointer-events: none;
     }
-
-    .glass {
-      background: rgba(12, 16, 36, 0.72);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border: 1px solid rgba(255, 255, 255, 0.08);
+    .ps5-tile.active .ps5-tile-label {
+      color: #ffffff;
     }
 
-    .glass-hover {
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    /* Backdrop gradient themes per active item */
+    .backdrop-absensi {
+      background: radial-gradient(ellipse 90% 70% at 75% 25%, rgba(6, 182, 212, 0.25) 0%, transparent 60%),
+                  linear-gradient(135deg, #04121d 0%, #03080e 100%);
     }
-    .glass-hover:hover {
-      background: rgba(20, 26, 56, 0.85);
-      border-color: rgba(56, 189, 248, 0.35);
-      box-shadow: 0 12px 40px -10px rgba(56, 189, 248, 0.2);
+    .backdrop-marry {
+      background: radial-gradient(ellipse 90% 70% at 75% 25%, rgba(168, 85, 247, 0.25) 0%, transparent 60%),
+                  linear-gradient(135deg, #180829 0%, #08030f 100%);
     }
-
-    /* 3D Card Tilt Effect */
-    .tilt-card {
-      transform-style: preserve-3d;
-      perspective: 1000px;
-      transition: transform 0.15s ease-out, box-shadow 0.3s ease;
+    .backdrop-cafe {
+      background: radial-gradient(ellipse 90% 70% at 75% 25%, rgba(16, 185, 129, 0.25) 0%, transparent 60%),
+                  linear-gradient(135deg, #041a13 0%, #020b08 100%);
     }
-    .tilt-content {
-      transform: translateZ(30px);
-      transform-style: preserve-3d;
+    .backdrop-school {
+      background: radial-gradient(ellipse 90% 70% at 75% 25%, rgba(59, 130, 246, 0.25) 0%, transparent 60%),
+                  linear-gradient(135deg, #09152b 0%, #030814 100%);
     }
-
-    /* Subtle Animated Glow */
-    .glow-cyan {
-      box-shadow: 0 0 50px -10px rgba(56, 189, 248, 0.25);
+    .backdrop-edtech {
+      background: radial-gradient(ellipse 90% 70% at 75% 25%, rgba(245, 158, 11, 0.22) 0%, transparent 60%),
+                  linear-gradient(135deg, #1f1404 0%, #0a0601 100%);
     }
-    .glow-purple {
-      box-shadow: 0 0 50px -10px rgba(168, 85, 247, 0.25);
+    .backdrop-cv {
+      background: radial-gradient(ellipse 90% 70% at 75% 25%, rgba(14, 165, 233, 0.22) 0%, transparent 60%),
+                  linear-gradient(135deg, #081a28 0%, #02080f 100%);
     }
 
-    /* Custom Scrollbar */
-    ::-webkit-scrollbar {
-      width: 8px;
+    /* Modal / Drawer for Project Details & Guide */
+    .ps5-subpage-modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(3, 5, 8, 0.94);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      z-index: 100;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex;
+      flex-direction: column;
     }
-    ::-webkit-scrollbar-track {
-      background: #060814;
+    .ps5-subpage-modal.is-open {
+      opacity: 1;
+      visibility: visible;
     }
-    ::-webkit-scrollbar-thumb {
-      background: #1e293b;
-      border-radius: 4px;
+
+    /* Language Switcher in System Bar */
+    .ps5-lang-toggle {
+      display: flex;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 20px;
+      padding: 2px;
+      gap: 2px;
+      height: 32px;
     }
-    ::-webkit-scrollbar-thumb:hover {
-      background: #38bdf8;
+    .ps5-lang-btn {
+      background: transparent;
+      border: none;
+      color: rgba(255, 255, 255, 0.6);
+      font-size: 11px;
+      font-weight: 700;
+      font-family: var(--font-family);
+      padding: 3px 9px;
+      border-radius: 14px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .ps5-lang-btn.active {
+      background: #ffffff;
+      color: #000000;
+      box-shadow: 0 2px 8px rgba(255, 255, 255, 0.25);
+    }
+
+    /* Visitor Pill in Top Bar */
+    .ps5-visitor-pill {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      padding: 4px 10px;
+      font-size: 11px;
+      font-family: var(--font-mono);
+      color: #94a3b8;
+    }
+    .live-dot {
+      width: 6px;
+      height: 6px;
+      background: #10b981;
+      border-radius: 50%;
+      box-shadow: 0 0 8px #10b981;
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.85); }
+    }
+
+    /* Tech Stack Pills in Details */
+    .ps5-tech-pill {
+      font-size: 11px;
+      font-family: var(--font-mono);
+      padding: 3px 8px;
+      border-radius: 6px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: #cbd5e1;
     }
   </style>
 </head>
-<body class="selection:bg-cyan-500/30 selection:text-cyan-200">
+<body>
 
-  <!-- 3D Background Canvas -->
-  <canvas id="canvas3d"></canvas>
+  <!-- Dynamic Backdrop Layers -->
+  <div class="ps5-backdrop-container" id="backdrop-container">
+    <div class="ps5-backdrop-layer active backdrop-absensi" id="backdrop-layer"></div>
+    <div class="ps5-vignette"></div>
+    <div class="ps5-glow-beam"></div>
+  </div>
 
-  <!-- Navigation -->
-  <header class="fixed top-0 left-0 right-0 z-50 px-4 sm:px-8 py-4">
-    <nav class="max-w-6xl mx-auto glass rounded-2xl px-5 py-3 flex items-center justify-between border border-white/10 shadow-lg">
-      <a href="#hero" class="flex items-center gap-3 group">
-        <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-cyan-500 to-purple-600 flex items-center justify-center font-display font-bold text-white shadow-md shadow-cyan-500/20 group-hover:scale-105 transition-transform">
-          JP
-        </div>
-        <div>
-          <span class="font-display font-bold tracking-tight text-white group-hover:text-cyan-400 transition-colors">Jaya H. Pinuyut</span>
-          <span class="hidden sm:inline-block text-xs font-mono text-cyan-400/80 ml-2 py-0.5 px-2 rounded-full bg-cyan-950/60 border border-cyan-800/50">@jayyuzz</span>
-        </div>
-      </a>
+  <!-- Noise Overlay -->
+  <div class="noise-overlay"></div>
 
-      <div class="flex items-center gap-6 text-sm font-medium">
-        <a href="#projects" data-i18n="navProjects" class="text-slate-300 hover:text-cyan-400 transition-colors hidden md:inline-block">Proyek</a>
-        <a href="#ai-linguistics" data-i18n="navAi" class="text-slate-300 hover:text-cyan-400 transition-colors hidden md:inline-block">EdTech &amp; AI</a>
-        <a href="#skills" data-i18n="navSkills" class="text-slate-300 hover:text-cyan-400 transition-colors hidden md:inline-block">Tech Stack</a>
-        <!-- Bilingual Switcher Pill -->
-        <div class="flex items-center rounded-xl glass p-0.5 border border-white/10 text-xs font-mono mr-1">
-          <button id="btnLangId" onclick="setLanguage('id')" class="px-2.5 py-1 rounded-lg transition-all font-semibold text-cyan-300 bg-cyan-950/80 border border-cyan-800/60">ID</button>
-          <button id="btnLangEn" onclick="setLanguage('en')" class="px-2.5 py-1 rounded-lg transition-all font-semibold text-slate-400 hover:text-white">EN</button>
+  <!-- PS5 Application Surface -->
+  <div class="ps5-app">
+
+    <!-- 1. TOP BAR -->
+    <header class="ps5-topbar">
+      <!-- Hub Switcher (Category Tabs) -->
+      <nav class="ps5-hub-tabs" aria-label="Main Navigation">
+        <button class="ps5-hub-tab active" id="tab-all" onclick="filterCategory('all')" type="button">All Works</button>
+        <button class="ps5-hub-tab" id="tab-production" onclick="filterCategory('production')" type="button">Production Systems</button>
+        <button class="ps5-hub-tab" id="tab-ai" onclick="filterCategory('ai')" type="button">EdTech &amp; AI</button>
+        <button class="ps5-hub-tab" id="tab-credentials" onclick="filterCategory('credentials')" type="button">Credentials</button>
+      </nav>
+
+      <!-- System Status Bar -->
+      <div class="ps5-system-bar">
+        <!-- Live Visitor Stat Badge -->
+        <div class="ps5-visitor-pill hidden md:flex" title="Live Global Traffic">
+          <span class="live-dot"></span>
+          <span id="top-visitor-stat">140+ Visits</span>
         </div>
-        <a href="#contact" data-i18n="navContact" class="px-4 py-2 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-semibold text-xs tracking-wide uppercase transition-all shadow-md shadow-cyan-500/20">
-          Kontak
-        </a>
+
+        <!-- Language Switcher [ ID | EN ] -->
+        <div class="ps5-lang-toggle">
+          <button class="ps5-lang-btn active" id="btnLangId" onclick="switchLang('id')">ID</button>
+          <button class="ps5-lang-btn" id="btnLangEn" onclick="switchLang('en')">EN</button>
+        </div>
+
+        <!-- Right System Actions -->
+        <div class="ps5-system-actions">
+          <a class="ps5-sys-btn" href="https://github.com/jayyuzz" target="_blank" rel="noopener" aria-label="GitHub Profile" title="GitHub: @jayyuzz">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/>
+            </svg>
+          </a>
+          <a class="ps5-sys-btn" href="https://www.linkedin.com/in/jaya-hartono-pinuyut-1827b6410" target="_blank" rel="noopener" aria-label="LinkedIn" title="LinkedIn Profile">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+            </svg>
+          </a>
+          <a class="ps5-sys-btn" href="https://t.me/jayyuzz" target="_blank" rel="noopener" aria-label="Telegram" title="Telegram: @jayyuzz">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221l-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.446 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.121l-6.871 4.326-2.962-.924c-.643-.204-.657-.643.136-.953l11.57-4.461c.537-.194 1.006.128.832.942z"/>
+            </svg>
+          </a>
+          <span class="ps5-clock" id="live-clock">--:--</span>
+        </div>
       </div>
-    </nav>
-  </header>
+    </header>
 
-  <!-- Main Content Wrapper -->
-  <main class="relative z-10 pt-28 pb-20 px-4 sm:px-8 max-w-6xl mx-auto space-y-32">
-
-    <!-- HERO SECTION -->
-    <section id="hero" class="min-h-[80vh] flex flex-col justify-center items-start text-left pt-6 sm:pt-12">
-      <!-- Status Badge -->
-      <div class="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full glass border border-cyan-500/30 text-cyan-300 text-xs font-mono mb-6 shadow-sm">
-        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
-        <span class="w-2 h-2 rounded-full bg-emerald-400 -ml-4.5"></span>
-        <span data-i18n="heroBadge">Open for Full-Stack, AI Evaluation &amp; Contract Work</span>
-      </div>
-
-      <h1 class="text-4xl sm:text-6xl lg:text-7xl font-display font-extrabold text-white tracking-tight leading-[1.1] mb-6">
-        Architecting <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-sky-300 to-purple-400">Real Systems</span>,<br>
-        Evaluating <span class="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-pink-400 to-amber-300">Frontier AI</span>.
-      </h1>
-
-      <p data-i18n="heroDesc" class="max-w-2xl text-slate-300 text-base sm:text-lg leading-relaxed mb-8 font-normal">
-        Halo, saya <strong class="text-white font-semibold">Jaya Hartono Pinuyut</strong> (<span class="font-mono text-cyan-300">jayyuzz</span>), Full-Stack Developer &amp; Educator berbasis di Kotamobagu, Sulawesi Utara. Membangun aplikasi produksi skala instansi, sistem absensi biometrik &amp; GPS, cloud POS, serta evaluasi bahasa &amp; reasoning untuk LLM mutakhir.
-      </p>
-
-      <!-- Quick Action Buttons -->
-      <div class="flex flex-wrap items-center gap-4 mb-14">
-        <a href="#projects" class="px-6 py-3.5 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-semibold text-sm flex items-center gap-2 shadow-lg shadow-cyan-500/25 transition-all">
-          <i data-lucide="layers" class="w-4 h-4"></i>
-          <span data-i18n="heroBtnProjects">Lihat Karya Produksi</span>
-        </a>
-        <a href="https://github.com/jayyuzz" target="_blank" rel="noopener" class="px-6 py-3.5 rounded-xl glass hover:border-cyan-400/50 text-white font-semibold text-sm flex items-center gap-2 transition-all">
-          <i data-lucide="github" class="w-4 h-4 text-cyan-400"></i>
-          GitHub Profile
-        </a>
-        <a href="https://ko-fi.com/marry2" target="_blank" rel="noopener" class="px-5 py-3.5 rounded-xl glass hover:border-amber-400/50 text-amber-300 font-medium text-sm flex items-center gap-2 transition-all">
-          <i data-lucide="coffee" class="w-4 h-4 text-amber-400"></i>
-          Ko-fi
-        </a>
-        <a href="CV_Jaya_Hartono_Pinuyut.pdf" target="_blank" class="px-5 py-3.5 rounded-xl glass hover:border-emerald-400/50 text-emerald-300 font-semibold text-sm flex items-center gap-2 transition-all">
-          <i data-lucide="file-text" class="w-4 h-4 text-emerald-400"></i>
-          <span data-i18n="heroBtnCv">Unduh CV (PDF)</span>
-        </a>
-      </div>
-
-      <!-- Quick Stats / Metrics Row -->
-      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 w-full">
-        <div class="glass p-5 rounded-2xl border border-white/5">
-          <div class="text-3xl font-display font-extrabold text-cyan-400">1,500+</div>
-          <div data-i18n="heroStat1Label" class="text-xs font-medium text-slate-400 mt-1">Pengguna Terlayani (Siswa &amp; Guru)</div>
-        </div>
-        <div class="glass p-5 rounded-2xl border border-white/5">
-          <div class="text-3xl font-display font-extrabold text-purple-400">4</div>
-          <div data-i18n="heroStat2Label" class="text-xs font-medium text-slate-400 mt-1">Platform Produksi Aktif</div>
-        </div>
-        <div class="glass p-5 rounded-2xl border border-white/5">
-          <div class="text-3xl font-display font-extrabold text-emerald-400">100%</div>
-          <div class="text-xs font-medium text-slate-400 mt-1">Native Indonesian LLM Benchmarking</div>
-        </div>
-        <div class="glass p-5 rounded-2xl border border-white/5">
-          <div class="text-3xl font-display font-extrabold text-amber-400">Next.js 16</div>
-          <div class="text-xs font-medium text-slate-400 mt-1">App Router + Supabase RLS Stack</div>
+    <!-- 2. CENTER SECTION: HORIZONTAL RIBBON TRACK -->
+    <section class="ps5-center-section">
+      <div class="ps5-ribbon-wrapper" id="ribbon-wrapper">
+        <div class="ps5-tiles-track" id="tiles-track" role="listbox">
+          <!-- Populated dynamically via JS -->
         </div>
       </div>
     </section>
 
-    <!-- INTERACTIVE 3D CONTROLLER HELPER -->
-    <div class="glass py-2 px-4 rounded-xl flex items-center justify-between text-xs text-slate-400 font-mono border border-cyan-500/20">
-      <span class="flex items-center gap-2">
-        <i data-lucide="sparkles" class="w-4 h-4 text-cyan-400"></i>
-        <span data-i18n="sceneTip">3D Scene interaktif di latar belakang: gerakkan mouse / kursor untuk mengarahkan rotasi partikel dan poligon.</span>
-      </span>
-      <span class="hidden sm:inline-block text-cyan-400/80">WebGL Active</span>
+    <!-- 3. DETAILS SECTION: ACTIVE ITEM HERO -->
+    <section class="ps5-details-section">
+      <div class="ps5-game-info">
+        <!-- Badge Pill Hierarchy -->
+        <div class="ps5-edition-badge">
+          <span class="ps-badge-pill" id="item-tag">Production Platform</span>
+          <span class="ps-badge-meta" id="item-edition">Multi-Role System</span>
+          <span class="ps-badge-sep">•</span>
+          <span class="ps-badge-meta" id="item-meta">1,500+ Daily Users</span>
+        </div>
+
+        <h1 class="ps5-game-title" id="item-title">SMK3 Absensi Digital</h1>
+
+        <p class="ps5-game-desc" id="item-desc">
+          Sistem kehadiran multi-peran dengan verifikasi biometrik wajah di browser (face-api.js), validasi GPS geofencing (Haversine), dan notifikasi otomatis WhatsApp.
+        </p>
+
+        <!-- Tech Stack Pills Row -->
+        <div class="flex flex-wrap items-center gap-1.5 pb-2" id="item-tech-stack">
+          <!-- Rendered via JS -->
+        </div>
+
+        <!-- Quick Action Buttons -->
+        <div class="ps5-actions-row">
+          <a class="ps5-btn-primary" id="btn-live-launch" href="#" target="_blank" rel="noopener" title="Buka Aplikasi Langsung">
+            <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+            <span id="btn-live-text">Launch Live App</span>
+          </a>
+
+          <button class="ps5-btn-circle" id="btn-view-details" onclick="openDetailsModal()" type="button" title="Lihat Detail Arsitektur & Dokumentasi">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="12" y1="16" x2="12" y2="12"></line>
+              <line x1="12" y1="8" x2="12.01" y2="8"></line>
+            </svg>
+          </button>
+
+          <a class="ps5-btn-circle" id="btn-github-link" href="https://github.com/jayyuzz" target="_blank" rel="noopener" title="Lihat Showcase di GitHub">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- Mobile Controller Remote Controls -->
+      <div class="ps5-mobile-remote" id="ps5-mobile-remote" role="group" aria-label="Remote navigation">
+        <div class="ps5-remote-cluster">
+          <div class="ps5-remote-keys">
+            <button class="kbd ps5-remote-key" id="remote-prev" onclick="navigateItem(-1)" type="button" aria-label="Previous item">
+              <svg class="kbd-arrow" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="19" y1="12" x2="5" y2="12"></line>
+                <polyline points="12 19 5 12 12 5"></polyline>
+              </svg>
+            </button>
+            <button class="kbd ps5-remote-key" id="remote-next" onclick="navigateItem(1)" type="button" aria-label="Next item">
+              <svg class="kbd-arrow" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="ps5-remote-cluster">
+          <button class="kbd ps5-remote-key ps5-remote-key--wide" onclick="launchActiveItem()" type="button">Enter</button>
+        </div>
+
+        <div class="ps5-remote-cluster">
+          <button class="kbd ps5-remote-key ps5-remote-key--wide" onclick="cycleHubTab()" type="button">Tab</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. BOTTOM HELPER / CONTROLLER BAR -->
+    <footer class="ps5-bottom-bar">
+      <div class="ps5-controls-legend">
+        <!-- Far Left: Contact Quick Link -->
+        <a class="ps5-back-to-web-btn" href="mailto:jaya.pinuyut@gmail.com" title="Email: jaya.pinuyut@gmail.com">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="4" width="20" height="16" rx="2"></rect>
+            <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
+          </svg>
+          <span>Email</span>
+        </a>
+
+        <!-- Keyboard Shortcut Legend -->
+        <span class="ps5-key-pill">
+          <kbd class="kbd">←</kbd>
+          <span class="kbd-sep">/</span>
+          <kbd class="kbd">→</kbd>
+          <span class="kbd-label" data-i18n="legendNavigate">Navigate</span>
+        </span>
+
+        <span class="ps5-key-pill">
+          <kbd class="kbd">Enter</kbd>
+          <span class="kbd-label" data-i18n="legendLaunch">Launch</span>
+        </span>
+
+        <span class="ps5-key-pill">
+          <kbd class="kbd">D</kbd>
+          <span class="kbd-label" data-i18n="legendDetails">Details</span>
+        </span>
+
+        <span class="ps5-key-pill">
+          <kbd class="kbd">M</kbd>
+          <span class="kbd-label" data-i18n="legendCategory">Category</span>
+        </span>
+
+        <span class="ps5-key-pill">
+          <kbd class="kbd">L</kbd>
+          <span class="kbd-label">ID / EN</span>
+        </span>
+      </div>
+    </footer>
+
+  </div>
+
+  <!-- DETAILS & DOCUMENTATION MODAL / SUBPAGE -->
+  <div class="ps5-subpage-modal" id="details-modal">
+    <div class="ps5-subpage-shell flex-1 flex flex-col overflow-hidden">
+      <header class="ps5-subpage-topbar shrink-0">
+        <div class="ps5-subpage-top-left">
+          <button class="ps5-subpage-back-btn" onclick="closeDetailsModal()" type="button" title="Close (Esc)">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="15 18 9 12 15 6"></polyline>
+            </svg>
+            <span data-i18n="btnBack">Back</span>
+            <kbd class="kbd ps5-btn-hint-badge">Esc</kbd>
+          </button>
+          <div class="ps5-subpage-crumb">
+            <span class="crumb-hub" id="modal-crumb-cat">Portfolio</span>
+            <span class="crumb-sep">/</span>
+            <span class="crumb-current" id="modal-crumb-title">SMK3 Absensi</span>
+          </div>
+        </div>
+        <div class="ps5-subpage-actions-right">
+          <span class="ps-subpage-badge font-mono" id="modal-badge-id">JAYA-PINUYUT</span>
+        </div>
+      </header>
+
+      <main class="ps5-subpage-scroll flex-1 overflow-y-auto p-6 sm:p-12">
+        <div class="max-w-4xl mx-auto space-y-8">
+          <div class="flex flex-col sm:flex-row items-start sm:items-center gap-6 pb-6 border-b border-white/10">
+            <div class="w-16 h-16 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center shrink-0" id="modal-icon-box">
+              <i data-lucide="layers" class="w-8 h-8 text-cyan-400"></i>
+            </div>
+            <div>
+              <div class="text-xs font-mono text-cyan-400 uppercase tracking-widest" id="modal-meta-top">Production Platform</div>
+              <h2 class="text-3xl sm:text-4xl font-display font-extrabold text-white mt-1" id="modal-title">SMK3 Absensi</h2>
+              <p class="text-slate-300 text-sm sm:text-base mt-2" id="modal-summary">Deskripsi lengkap proyek</p>
+            </div>
+          </div>
+
+          <!-- Modal Body Content -->
+          <div class="space-y-6 text-slate-300 text-sm leading-relaxed" id="modal-body-content">
+            <!-- Injected dynamically -->
+          </div>
+
+          <!-- Modal Action Links -->
+          <div class="pt-6 border-t border-white/10 flex flex-wrap items-center gap-4" id="modal-actions-footer">
+            <!-- Injected dynamically -->
+          </div>
+        </div>
+      </main>
     </div>
+  </div>
 
-    <!-- FEATURED PROJECTS SECTION -->
-    <section id="projects" class="space-y-10">
-      <div>
-        <div class="text-xs font-mono text-cyan-400 uppercase tracking-widest mb-2 flex items-center gap-2">
-          <span class="w-8 h-px bg-cyan-400"></span>
-          <span>Production Portfolio</span>
-        </div>
-        <h2 data-i18n="projectsTitle" class="text-3xl sm:text-5xl font-display font-bold text-white tracking-tight">
-          Sistem Nyata yang Beroperasi
-        </h2>
-        <p data-i18n="projectsDesc" class="text-slate-400 text-sm sm:text-base mt-2 max-w-2xl">
-          Setiap proyek di bawah ini aktif di domain produksi, memiliki arsitektur terstruktur, dan melayani operasional harian organisasi.
-        </p>
-      </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-
-        <!-- PROJECT 1: SMK3 Absensi -->
-        <div class="tilt-card glass rounded-3xl p-7 border border-white/10 glass-hover flex flex-col justify-between" data-tilt>
-          <div class="tilt-content space-y-5">
-            <div class="flex items-start justify-between">
-              <span class="px-3 py-1 rounded-full text-xs font-mono font-medium bg-cyan-950/70 border border-cyan-800 text-cyan-300">
-                PWA + Mobile + Biometrics
-              </span>
-              <a href="https://pr.smkn3kotamobagu.sch.id" target="_blank" rel="noopener" class="p-2 rounded-xl bg-white/5 hover:bg-cyan-500/20 text-slate-300 hover:text-cyan-300 transition-colors">
-                <i data-lucide="external-link" class="w-4 h-4"></i>
-              </a>
-            </div>
-
-            <div>
-              <h3 class="text-2xl font-display font-bold text-white group-hover:text-cyan-300 transition-colors">
-                SMK3 Absensi Digital
-              </h3>
-              <p class="text-xs font-mono text-cyan-400 mt-1">pr.smkn3kotamobagu.sch.id</p>
-            </div>
-
-            <p data-i18n="p1Desc" class="text-slate-300 text-sm leading-relaxed">
-              Sistem presensi multi-peran (Kepsek, Admin, Guru, TU, Siswa, Wali Kelas, Orang Tua) untuk SMK Negeri 3 Kotamobagu. Dilengkapi verifikasi wajah di browser (face-api.js), validasi radius GPS (Haversine), pengajuan izin, dan notifikasi otomatis WhatsApp.
-            </p>
-
-            <div class="flex flex-wrap gap-1.5 pt-2">
-              <span class="px-2.5 py-1 rounded-lg text-xs font-mono bg-white/5 text-slate-300 border border-white/5">Next.js 16</span>
-              <span class="px-2.5 py-1 rounded-lg text-xs font-mono bg-white/5 text-slate-300 border border-white/5">React 19</span>
-              <span class="px-2.5 py-1 rounded-lg text-xs font-mono bg-white/5 text-slate-300 border border-white/5">Supabase Auth/RLS</span>
-              <span class="px-2.5 py-1 rounded-lg text-xs font-mono bg-white/5 text-slate-300 border border-white/5">face-api.js</span>
-              <span class="px-2.5 py-1 rounded-lg text-xs font-mono bg-white/5 text-slate-300 border border-white/5">WhatsApp API</span>
-              <span class="px-2.5 py-1 rounded-lg text-xs font-mono bg-white/5 text-slate-300 border border-white/5">Expo RN</span>
-            </div>
-          </div>
-
-          <div class="pt-6 mt-6 border-t border-white/10 flex items-center justify-between">
-            <a href="https://pr.smkn3kotamobagu.sch.id" target="_blank" rel="noopener" class="text-sm font-semibold text-cyan-400 hover:text-cyan-300 flex items-center gap-1.5 transition-colors">
-              <span data-i18n="p1Live">Buka Aplikasi Live</span> <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
-            </a>
-            <a href="https://github.com/jayyuzz/smk3-absensi-showcase" target="_blank" rel="noopener" class="text-xs font-mono text-slate-400 hover:text-white flex items-center gap-1 transition-colors">
-              <i data-lucide="github" class="w-3.5 h-3.5"></i> Showcase Repo
-            </a>
-          </div>
-        </div>
-
-        <!-- PROJECT 2: marry -->
-        <div class="tilt-card glass rounded-3xl p-7 border border-white/10 glass-hover flex flex-col justify-between" data-tilt>
-          <div class="tilt-content space-y-5">
-            <div class="flex items-start justify-between">
-              <span class="px-3 py-1 rounded-full text-xs font-mono font-medium bg-purple-950/70 border border-purple-800 text-purple-300">
-                AI Product &amp; Market Intelligence
-              </span>
-              <a href="https://marry.myap.web.id" target="_blank" rel="noopener" class="p-2 rounded-xl bg-white/5 hover:bg-purple-500/20 text-slate-300 hover:text-purple-300 transition-colors">
-                <i data-lucide="external-link" class="w-4 h-4"></i>
-              </a>
-            </div>
-
-            <div>
-              <h3 class="text-2xl font-display font-bold text-white group-hover:text-purple-300 transition-colors">
-                marry 💍
-              </h3>
-              <p class="text-xs font-mono text-purple-400 mt-1">marry.myap.web.id</p>
-            </div>
-
-            <p data-i18n="p2Desc" class="text-slate-300 text-sm leading-relaxed">
-              Platform analisis peluang pasar global untuk produk digital mandiri (ebook, micro-SaaS, template, preset). Mengolah estimasi demand, pricing tier, analisis kompetisi, dan langkah eksekusi roadmap dalam 50+ bahasa via AI gateway berkecepatan tinggi.
-            </p>
-
-            <div class="flex flex-wrap gap-1.5 pt-2">
-              <span class="px-2.5 py-1 rounded-lg text-xs font-mono bg-white/5 text-slate-300 border border-white/5">Node.js Express</span>
-              <span class="px-2.5 py-1 rounded-lg text-xs font-mono bg-white/5 text-slate-300 border border-white/5">Supabase Auth</span>
-              <span class="px-2.5 py-1 rounded-lg text-xs font-mono bg-white/5 text-slate-300 border border-white/5">Ko-fi Webhook</span>
-              <span class="px-2.5 py-1 rounded-lg text-xs font-mono bg-white/5 text-slate-300 border border-white/5">LLM Streaming</span>
-              <span class="px-2.5 py-1 rounded-lg text-xs font-mono bg-white/5 text-slate-300 border border-white/5">Vercel Serverless</span>
-            </div>
-          </div>
-
-          <div class="pt-6 mt-6 border-t border-white/10 flex items-center justify-between">
-            <a href="https://marry.myap.web.id" target="_blank" rel="noopener" class="text-sm font-semibold text-purple-400 hover:text-purple-300 flex items-center gap-1.5 transition-colors">
-              <span data-i18n="p2Live">Analisis Produk Sekarang</span> <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
-            </a>
-            <a href="https://github.com/jayyuzz/marry" target="_blank" rel="noopener" class="text-xs font-mono text-slate-400 hover:text-white flex items-center gap-1 transition-colors">
-              <i data-lucide="github" class="w-3.5 h-3.5"></i> Open Source Repo
-            </a>
-          </div>
-        </div>
-
-        <!-- PROJECT 3: Cafe POS -->
-        <div class="tilt-card glass rounded-3xl p-7 border border-white/10 glass-hover flex flex-col justify-between" data-tilt>
-          <div class="tilt-content space-y-5">
-            <div class="flex items-start justify-between">
-              <span class="px-3 py-1 rounded-full text-xs font-mono font-medium bg-emerald-950/70 border border-emerald-800 text-emerald-300">
-                POS &amp; Inventory Management
-              </span>
-              <a href="https://cafe.mve.my.id" target="_blank" rel="noopener" class="p-2 rounded-xl bg-white/5 hover:bg-emerald-500/20 text-slate-300 hover:text-emerald-300 transition-colors">
-                <i data-lucide="external-link" class="w-4 h-4"></i>
-              </a>
-            </div>
-
-            <div>
-              <h3 class="text-2xl font-display font-bold text-white group-hover:text-emerald-300 transition-colors">
-                Paylabs Cafe POS
-              </h3>
-              <p class="text-xs font-mono text-emerald-400 mt-1">cafe.mve.my.id</p>
-            </div>
-
-            <p data-i18n="p3Desc" class="text-slate-300 text-sm leading-relaxed">
-              Sistem kasir dan operasional back-office cafe terintegrasi. Manajemen shift kasir, dapur (Kitchen Display System), pesanan mandiri via QR meja, modul delivery &amp; driver checklist, pengurangan stok bahan baku otomatis berbasis resep, serta laporan laba kotor.
-            </p>
-
-            <div class="flex flex-wrap gap-1.5 pt-2">
-              <span class="px-2.5 py-1 rounded-lg text-xs font-mono bg-white/5 text-slate-300 border border-white/5">Next.js</span>
-              <span class="px-2.5 py-1 rounded-lg text-xs font-mono bg-white/5 text-slate-300 border border-white/5">TypeScript</span>
-              <span class="px-2.5 py-1 rounded-lg text-xs font-mono bg-white/5 text-slate-300 border border-white/5">Supabase PostgreSQL</span>
-              <span class="px-2.5 py-1 rounded-lg text-xs font-mono bg-white/5 text-slate-300 border border-white/5">Recharts Analytics</span>
-              <span class="px-2.5 py-1 rounded-lg text-xs font-mono bg-white/5 text-slate-300 border border-white/5">Thermal Print API</span>
-            </div>
-          </div>
-
-          <div class="pt-6 mt-6 border-t border-white/10 flex items-center justify-between">
-            <a href="https://cafe.mve.my.id" target="_blank" rel="noopener" class="text-sm font-semibold text-emerald-400 hover:text-emerald-300 flex items-center gap-1.5 transition-colors">
-              <span data-i18n="p3Live">Portal Kasir</span> <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
-            </a>
-            <a href="https://github.com/jayyuzz/cafe-pos-showcase" target="_blank" rel="noopener" class="text-xs font-mono text-slate-400 hover:text-white flex items-center gap-1 transition-colors">
-              <i data-lucide="github" class="w-3.5 h-3.5"></i> Showcase Repo
-            </a>
-          </div>
-        </div>
-
-        <!-- PROJECT 4: SMKN 3 Website -->
-        <div class="tilt-card glass rounded-3xl p-7 border border-white/10 glass-hover flex flex-col justify-between" data-tilt>
-          <div class="tilt-content space-y-5">
-            <div class="flex items-start justify-between">
-              <span class="px-3 py-1 rounded-full text-xs font-mono font-medium bg-sky-950/70 border border-sky-800 text-sky-300">
-                Institutional Portal
-              </span>
-              <a href="https://smkn3kotamobagu.sch.id" target="_blank" rel="noopener" class="p-2 rounded-xl bg-white/5 hover:bg-sky-500/20 text-slate-300 hover:text-sky-300 transition-colors">
-                <i data-lucide="external-link" class="w-4 h-4"></i>
-              </a>
-            </div>
-
-            <div>
-              <h3 class="text-2xl font-display font-bold text-white group-hover:text-sky-300 transition-colors">
-                Portal SMKN 3 Kotamobagu
-              </h3>
-              <p class="text-xs font-mono text-sky-400 mt-1">smkn3kotamobagu.sch.id</p>
-            </div>
-
-            <p data-i18n="p4Desc" class="text-slate-300 text-sm leading-relaxed">
-              Portal informasi publik dan berita sekolah resmi. Mengelola publikasi akademik, pencapaian prestasi siswa, agenda kegiatan, portal alumni, serta integrasi e-learning dengan sistem audit log aktivitas admin yang ketat.
-            </p>
-
-            <div class="flex flex-wrap gap-1.5 pt-2">
-              <span class="px-2.5 py-1 rounded-lg text-xs font-mono bg-white/5 text-slate-300 border border-white/5">Laravel</span>
-              <span class="px-2.5 py-1 rounded-lg text-xs font-mono bg-white/5 text-slate-300 border border-white/5">MySQL</span>
-              <span class="px-2.5 py-1 rounded-lg text-xs font-mono bg-white/5 text-slate-300 border border-white/5">Sanctum</span>
-              <span class="px-2.5 py-1 rounded-lg text-xs font-mono bg-white/5 text-slate-300 border border-white/5">Activity Logger</span>
-              <span class="px-2.5 py-1 rounded-lg text-xs font-mono bg-white/5 text-slate-300 border border-white/5">Tailwind CSS</span>
-            </div>
-          </div>
-
-          <div class="pt-6 mt-6 border-t border-white/10 flex items-center justify-between">
-            <a href="https://smkn3kotamobagu.sch.id" target="_blank" rel="noopener" class="text-sm font-semibold text-sky-400 hover:text-sky-300 flex items-center gap-1.5 transition-colors">
-              <span data-i18n="p4Live">Kunjungi Portal</span> <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
-            </a>
-            <a href="https://github.com/jayyuzz/smkn3-website-showcase" target="_blank" rel="noopener" class="text-xs font-mono text-slate-400 hover:text-white flex items-center gap-1 transition-colors">
-              <i data-lucide="github" class="w-3.5 h-3.5"></i> Showcase Repo
-            </a>
-          </div>
-        </div>
-
-      </div>
-    </section>
-
-    <!-- AI EVALUATION & LINGUISTICS SECTION -->
-    <section id="ai-linguistics" class="glass rounded-3xl p-8 sm:p-10 border border-purple-500/20 glow-purple">
-      <div class="flex flex-col lg:flex-row gap-8 items-start justify-between">
-        <div class="space-y-4 max-w-2xl">
-          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-mono bg-purple-950/80 text-purple-300 border border-purple-800">
-            <i data-lucide="brain-circuit" class="w-3.5 h-3.5 text-purple-400"></i>
-            <span>Frontier Model Evaluation</span>
-          </div>
-          <h2 data-i18n="aiTitle" class="text-2xl sm:text-4xl font-display font-bold text-white tracking-tight">
-            Spesialis Pendidik Teknologi (EdTech) &amp; Evaluator AI
-          </h2>
-          <p data-i18n="aiDesc" class="text-slate-300 text-sm sm:text-base leading-relaxed">
-            Berpengalaman dalam penilaian presisi LLM (RLHF, instruction-following, adversarial testing, hallucination detection) dengan fokus mendalam pada tata bahasa, sintaksis, konteks budaya, dan register bahasa Indonesia.
-          </p>
-          <div class="space-y-2 pt-2 text-sm text-slate-300">
-            <div class="flex items-center gap-2.5">
-              <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-400 shrink-0"></i>
-              <span data-i18n="aiBullet1"><strong>AI Avatar &amp; Cloud Education Evaluator:</strong> Penilaian kualitas narasi AI Avatar &amp; akurasi lokalisasi materi teknis (AWS Skill Builder — RAG, Amazon Bedrock &amp; Cloud Security) dalam Bahasa Indonesia.</span>
-            </div>
-            <div class="flex items-center gap-2.5">
-              <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-400 shrink-0"></i>
-              <span data-i18n="aiBulletAgent"><strong>Mercor Certified — Introduction to Agents:</strong> Terverifikasi resmi (<a href="https://work.mercor.com/learn/verify/MRC-2026-5XW2RQSG" target="_blank" rel="noopener" class="text-purple-300 underline font-mono">MRC-2026-5XW2RQSG</a>) dalam evaluasi AI agents, demonstrasi rigor, kalibrasi, dan kejelasan benchmark agent.</span>
-            </div>
-            <div class="flex items-center gap-2.5">
-              <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-400 shrink-0"></i>
-              <span data-i18n="aiBullet2"><strong>Approved Mercor Expert:</strong> Indonesian Linguistic Specialist untuk project AI frontier lab.</span>
-            </div>
-            <div class="flex items-center gap-2.5">
-              <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-400 shrink-0"></i>
-              <span data-i18n="aiBullet3"><strong>Bilingual Fluency:</strong> Penilaian teks terjemahan, penalaran logika, dan gaya komunikasi natural vs. kaku.</span>
-            </div>
-            <div class="flex items-center gap-2.5">
-              <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-400 shrink-0"></i>
-              <span data-i18n="aiBullet4"><strong>Annotation &amp; Prompt Engineering:</strong> Kurasi data latih berakurasi tinggi untuk fine-tuning model generatif.</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="w-full lg:w-72 glass p-6 rounded-2xl border border-white/10 space-y-4 shrink-0">
-          <div class="text-xs font-mono text-slate-400 uppercase tracking-wider">Verification Badges</div>
-          <div class="p-3 rounded-xl bg-blue-900/30 border border-blue-700/40">
-            <div class="text-sm font-semibold text-blue-300">Enterprise AI Evaluator</div>
-            <div class="text-xs text-slate-400 mt-0.5">AI Avatar &amp; Cloud Localization</div>
-          </div>
-          <a href="https://work.mercor.com/learn/verify/MRC-2026-5XW2RQSG" target="_blank" rel="noopener" class="block p-3 rounded-xl bg-gradient-to-r from-purple-950/80 to-purple-900/40 border border-purple-500/50 hover:border-purple-400 transition-all group">
-            <div class="flex items-center justify-between">
-              <div class="text-sm font-semibold text-purple-200 group-hover:text-white transition-colors">Mercor Certified</div>
-              <i data-lucide="external-link" class="w-3.5 h-3.5 text-purple-400 group-hover:text-purple-300"></i>
-            </div>
-            <div class="text-xs text-purple-300/80 mt-0.5">Introduction to Agents (Evaluation)</div>
-            <div class="text-[10px] font-mono text-purple-400/90 mt-1">MRC-2026-5XW2RQSG ↗</div>
-          </a>
-          <div class="p-3 rounded-xl bg-purple-900/30 border border-purple-700/40">
-            <div class="text-sm font-semibold text-purple-300">Mercor Approved</div>
-            <div class="text-xs text-slate-400 mt-0.5">Indonesian Linguistic Expert</div>
-          </div>
-          <a href="https://edu.google.accredible.com/293b680b-115e-42e7-b917-6eccf1dcfe66#acc.7EKIO5ai" target="_blank" rel="noopener" class="block p-3 rounded-xl bg-gradient-to-r from-sky-950/80 to-blue-900/40 border border-sky-500/50 hover:border-sky-400 transition-all group">
-            <div class="flex items-center justify-between">
-              <div class="text-sm font-semibold text-sky-200 group-hover:text-white transition-colors">Gemini Certified Educator</div>
-              <i data-lucide="external-link" class="w-3.5 h-3.5 text-sky-400 group-hover:text-sky-300"></i>
-            </div>
-            <div class="text-xs text-sky-300/80 mt-0.5">Google for Education</div>
-            <div class="text-[10px] font-mono text-sky-400/90 mt-1">Accredible Verified ↗</div>
-          </a>
-          <a href="https://edu.google.accredible.com/e9a8d3a3-0f05-4f4d-9558-e976d04c848e#acc.wVqtE6Pa" target="_blank" rel="noopener" class="block p-3 rounded-xl bg-gradient-to-r from-cyan-950/80 to-cyan-900/40 border border-cyan-500/50 hover:border-cyan-400 transition-all group">
-            <div class="flex items-center justify-between">
-              <div class="text-sm font-semibold text-cyan-200 group-hover:text-white transition-colors">Google Certified Educator</div>
-              <i data-lucide="external-link" class="w-3.5 h-3.5 text-cyan-400 group-hover:text-cyan-300"></i>
-            </div>
-            <div class="text-xs text-cyan-300/80 mt-0.5">Level 1 &amp; Level 2 Certified</div>
-            <div class="text-[10px] font-mono text-cyan-400/90 mt-1">Accredible Verified (L1 &amp; L2) ↗</div>
-          </a>
-          <div class="p-3 rounded-xl bg-emerald-900/30 border border-emerald-700/40">
-            <div class="text-sm font-semibold text-emerald-300">Verified Identity</div>
-            <div class="text-xs text-slate-400 mt-0.5">Ruang GTK / Kemendikdasmen</div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- TECH STACK & METHODOLOGY SECTION -->
-    <section id="skills" class="space-y-8">
-      <div>
-        <div class="text-xs font-mono text-cyan-400 uppercase tracking-widest mb-2 flex items-center gap-2">
-          <span class="w-8 h-px bg-cyan-400"></span>
-          <span>Core Capabilities</span>
-        </div>
-        <h2 data-i18n="skillsTitle" class="text-3xl sm:text-4xl font-display font-bold text-white tracking-tight">
-          Teknologi &amp; Arsitektur
-        </h2>
-      </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <!-- Frontend -->
-        <div class="glass p-6 rounded-3xl border border-white/5 space-y-4">
-          <div class="w-10 h-10 rounded-xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400">
-            <i data-lucide="layout" class="w-5 h-5"></i>
-          </div>
-          <h3 class="text-lg font-display font-bold text-white">Frontend &amp; Mobile</h3>
-          <p data-i18n="s1Desc" class="text-xs text-slate-400 leading-relaxed">
-            Membangun antarmuka responsif performa tinggi, PWA offline-first, dan aplikasi mobile multiplatform.
-          </p>
-          <div class="flex flex-wrap gap-1.5 pt-2">
-            <span class="px-2.5 py-1 rounded-lg text-xs font-mono bg-white/5 text-slate-300">Next.js 16 (App Router)</span>
-            <span class="px-2.5 py-1 rounded-lg text-xs font-mono bg-white/5 text-slate-300">React 19</span>
-            <span class="px-2.5 py-1 rounded-lg text-xs font-mono bg-white/5 text-slate-300">TypeScript</span>
-            <span class="px-2.5 py-1 rounded-lg text-xs font-mono bg-white/5 text-slate-300">Tailwind CSS v4</span>
-            <span class="px-2.5 py-1 rounded-lg text-xs font-mono bg-white/5 text-slate-300">Expo / React Native</span>
-            <span class="px-2.5 py-1 rounded-lg text-xs font-mono bg-white/5 text-slate-300">Three.js / WebGL</span>
-          </div>
-        </div>
-
-        <!-- Backend & DB -->
-        <div class="glass p-6 rounded-3xl border border-white/5 space-y-4">
-          <div class="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400">
-            <i data-lucide="database" class="w-5 h-5"></i>
-          </div>
-          <h3 class="text-lg font-display font-bold text-white">Backend &amp; Security</h3>
-          <p data-i18n="s2Desc" class="text-xs text-slate-400 leading-relaxed">
-            Infrastruktur database dengan kontrol keamanan data ketat (Row-Level Security) dan integrasi serverless.
-          </p>
-          <div class="flex flex-wrap gap-1.5 pt-2">
-            <span class="px-2.5 py-1 rounded-lg text-xs font-mono bg-white/5 text-slate-300">Supabase (PostgreSQL)</span>
-            <span class="px-2.5 py-1 rounded-lg text-xs font-mono bg-white/5 text-slate-300">Row Level Security (RLS)</span>
-            <span class="px-2.5 py-1 rounded-lg text-xs font-mono bg-white/5 text-slate-300">Node.js Express</span>
-            <span class="px-2.5 py-1 rounded-lg text-xs font-mono bg-white/5 text-slate-300">Laravel / PHP</span>
-            <span class="px-2.5 py-1 rounded-lg text-xs font-mono bg-white/5 text-slate-300">MySQL / SQLite</span>
-            <span class="px-2.5 py-1 rounded-lg text-xs font-mono bg-white/5 text-slate-300">Server Actions</span>
-          </div>
-        </div>
-
-        <!-- AI & Integrations -->
-        <div class="glass p-6 rounded-3xl border border-white/5 space-y-4">
-          <div class="w-10 h-10 rounded-xl bg-purple-500/10 border border-purple-500/30 flex items-center justify-center text-purple-400">
-            <i data-lucide="cpu" class="w-5 h-5"></i>
-          </div>
-          <h3 class="text-lg font-display font-bold text-white">AI &amp; Integrations</h3>
-          <p data-i18n="s3Desc" class="text-xs text-slate-400 leading-relaxed">
-            Integrasi biometrik klien, model AI, webhook pembayaran, dan gateway pesan WhatsApp.
-          </p>
-          <div class="flex flex-wrap gap-1.5 pt-2">
-            <span class="px-2.5 py-1 rounded-lg text-xs font-mono bg-white/5 text-slate-300">face-api.js (Biometrik)</span>
-            <span class="px-2.5 py-1 rounded-lg text-xs font-mono bg-white/5 text-slate-300">GPS Haversine Geofence</span>
-            <span class="px-2.5 py-1 rounded-lg text-xs font-mono bg-white/5 text-slate-300">Gemini / OpenAI API</span>
-            <span class="px-2.5 py-1 rounded-lg text-xs font-mono bg-white/5 text-slate-300">Fonnte / KirimDev WA</span>
-            <span class="px-2.5 py-1 rounded-lg text-xs font-mono bg-white/5 text-slate-300">Ko-fi Webhook Pay</span>
-            <span class="px-2.5 py-1 rounded-lg text-xs font-mono bg-white/5 text-slate-300">RLHF Annotation</span>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- CONTACT & FOOTER SECTION -->
-    <section id="contact" class="glass rounded-3xl p-8 sm:p-12 border border-white/10 glow-cyan text-center space-y-6">
-      <div class="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-cyan-500/20 text-cyan-400 mx-auto">
-        <i data-lucide="mail" class="w-6 h-6"></i>
-      </div>
-      
-      <div class="space-y-2 max-w-xl mx-auto">
-        <h2 data-i18n="contactTitle" class="text-3xl sm:text-4xl font-display font-bold text-white">
-          Mari Berkolaborasi
-        </h2>
-        <p data-i18n="contactDesc" class="text-slate-300 text-sm sm:text-base">
-          Tersedia untuk proyek pengembangan aplikasi, sistem instansi/bisnis, evaluasi model AI, maupun remote engineering.
-        </p>
-      </div>
-
-      <div class="flex flex-wrap items-center justify-center gap-3 pt-4">
-        <a href="mailto:jaya.pinuyut@gmail.com" class="px-5 py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-semibold text-sm flex items-center gap-2 shadow-lg shadow-cyan-500/20 transition-all">
-          <i data-lucide="mail" class="w-4 h-4"></i>
-          jaya.pinuyut@gmail.com
-        </a>
-        <a href="https://www.linkedin.com/in/jaya-hartono-pinuyut-1827b6410" target="_blank" rel="noopener" class="px-4 py-3 rounded-xl glass hover:border-sky-400/60 text-sky-300 hover:text-white text-sm font-semibold flex items-center gap-2 transition-all">
-          <i data-lucide="linkedin" class="w-4 h-4 text-sky-400"></i>
-          LinkedIn
-        </a>
-        <a href="https://t.me/jayyuzz" target="_blank" rel="noopener" class="px-4 py-3 rounded-xl glass hover:border-cyan-400/60 text-cyan-300 hover:text-white text-sm font-semibold flex items-center gap-2 transition-all">
-          <i data-lucide="send" class="w-4 h-4 text-cyan-400"></i>
-          Telegram (@jayyuzz)
-        </a>
-        <a href="https://github.com/jayyuzz" target="_blank" rel="noopener" class="px-4 py-3 rounded-xl glass hover:border-slate-400 text-slate-300 hover:text-white text-sm font-semibold flex items-center gap-2 transition-all">
-          <i data-lucide="github" class="w-4 h-4"></i>
-          GitHub
-        </a>
-        <a href="https://www.facebook.com/jayapinuyut" target="_blank" rel="noopener" class="px-4 py-3 rounded-xl glass hover:border-blue-400/60 text-blue-300 hover:text-white text-sm font-semibold flex items-center gap-2 transition-all">
-          <i data-lucide="facebook" class="w-4 h-4 text-blue-400"></i>
-          Facebook
-        </a>
-        <button onclick="navigator.clipboard.writeText('jaya.pinuyut@gmail.com'); alert('Email berhasil disalin!');" class="px-3.5 py-3 rounded-xl glass hover:border-cyan-400 text-slate-400 hover:text-white text-xs font-mono flex items-center gap-1.5 transition-all">
-          <i data-lucide="copy" class="w-3.5 h-3.5"></i>
-          <span data-i18n="contactBtnCopy">Salin Email</span>
-        </button>
-      </div>
-
-            <!-- VISITOR LOG BY COUNTRY (HORIZONTAL) -->
-      <div class="pt-8 border-t border-white/10 text-left">
-        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
-          <div class="flex items-center gap-2">
-            <span class="relative flex h-2.5 w-2.5">
-              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-              <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
-            </span>
-            <span class="text-xs font-mono font-semibold tracking-wider uppercase text-cyan-300" data-i18n="visitorTitle">
-              Log Pengunjung Global Berdasarkan Negara
-            </span>
-          </div>
-          <div class="flex items-center gap-4 text-xs font-mono text-slate-400">
-            <span><strong id="visitorTotal" class="text-white font-bold">140+</strong> <span data-i18n="visitorVisits">Kunjungan</span></span>
-            <span>•</span>
-            <span><strong id="visitorCountries" class="text-cyan-300 font-bold">8</strong> <span data-i18n="visitorUnique">Negara Terdeteksi</span></span>
-            <span>•</span>
-            <span class="text-emerald-400 flex items-center gap-1 font-semibold">
-              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
-              <span data-i18n="visitorLive">Traffic Aktif</span>
-            </span>
-          </div>
-        </div>
-
-        <!-- Horizontal Scrollable Container -->
-        <div id="visitorCountriesContainer" class="flex items-center gap-2.5 overflow-x-auto pb-2 scrollbar-thin">
-          <div class="shrink-0 px-3 py-1.5 rounded-xl glass border border-cyan-500/30 flex items-center gap-2 text-xs font-mono text-slate-200">
-            <span class="text-base">🇮🇩</span>
-            <span class="font-medium">Indonesia</span>
-            <span class="px-1.5 py-0.5 rounded-md bg-cyan-950/80 text-cyan-300 border border-cyan-800 text-[10px] font-bold">135+</span>
-          </div>
-          <div class="shrink-0 px-3 py-1.5 rounded-xl glass border border-white/10 flex items-center gap-2 text-xs font-mono text-slate-300">
-            <span class="text-base">🇺🇸</span>
-            <span class="font-medium">United States</span>
-            <span class="px-1.5 py-0.5 rounded-md bg-white/5 text-slate-400 border border-white/5 text-[10px] font-bold">12</span>
-          </div>
-          <div class="shrink-0 px-3 py-1.5 rounded-xl glass border border-white/10 flex items-center gap-2 text-xs font-mono text-slate-300">
-            <span class="text-base">🇸🇬</span>
-            <span class="font-medium">Singapore</span>
-            <span class="px-1.5 py-0.5 rounded-md bg-white/5 text-slate-400 border border-white/5 text-[10px] font-bold">8</span>
-          </div>
-          <div class="shrink-0 px-3 py-1.5 rounded-xl glass border border-white/10 flex items-center gap-2 text-xs font-mono text-slate-300">
-            <span class="text-base">🇲🇾</span>
-            <span class="font-medium">Malaysia</span>
-            <span class="px-1.5 py-0.5 rounded-md bg-white/5 text-slate-400 border border-white/5 text-[10px] font-bold">6</span>
-          </div>
-          <div class="shrink-0 px-3 py-1.5 rounded-xl glass border border-white/10 flex items-center gap-2 text-xs font-mono text-slate-300">
-            <span class="text-base">🇯🇵</span>
-            <span class="font-medium">Japan</span>
-            <span class="px-1.5 py-0.5 rounded-md bg-white/5 text-slate-400 border border-white/5 text-[10px] font-bold">4</span>
-          </div>
-          <div class="shrink-0 px-3 py-1.5 rounded-xl glass border border-white/10 flex items-center gap-2 text-xs font-mono text-slate-300">
-            <span class="text-base">🇩🇪</span>
-            <span class="font-medium">Germany</span>
-            <span class="px-1.5 py-0.5 rounded-md bg-white/5 text-slate-400 border border-white/5 text-[10px] font-bold">3</span>
-          </div>
-          <div class="shrink-0 px-3 py-1.5 rounded-xl glass border border-white/10 flex items-center gap-2 text-xs font-mono text-slate-300">
-            <span class="text-base">🇬🇧</span>
-            <span class="font-medium">United Kingdom</span>
-            <span class="px-1.5 py-0.5 rounded-md bg-white/5 text-slate-400 border border-white/5 text-[10px] font-bold">2</span>
-          </div>
-          <div class="shrink-0 px-3 py-1.5 rounded-xl glass border border-white/10 flex items-center gap-2 text-xs font-mono text-slate-300">
-            <span class="text-base">🇦🇺</span>
-            <span class="font-medium">Australia</span>
-            <span class="px-1.5 py-0.5 rounded-md bg-white/5 text-slate-400 border border-white/5 text-[10px] font-bold">2</span>
-          </div>
-          <div class="shrink-0 px-3 py-1.5 rounded-xl glass border border-white/10 flex items-center gap-2 text-xs font-mono text-slate-300">
-            <span class="text-base">🇳🇱</span>
-            <span class="font-medium">Netherlands</span>
-            <span class="px-1.5 py-0.5 rounded-md bg-white/5 text-slate-400 border border-white/5 text-[10px] font-bold">1</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="pt-10 border-t border-white/10 text-xs font-mono text-slate-400 flex flex-col sm:flex-row items-center justify-between gap-4">
-        <div data-i18n="footerCopy">&copy; 2026 Jaya Hartono Pinuyut. Kotamobagu, Sulawesi Utara, Indonesia.</div>
-        <div class="flex items-center gap-4">
-          <a href="https://marry.myap.web.id" target="_blank" class="hover:text-cyan-400">marry</a>
-          <span>·</span>
-          <a href="https://pr.smkn3kotamobagu.sch.id" target="_blank" class="hover:text-cyan-400">SMK3 Absensi</a>
-          <span>·</span>
-          <a href="https://cafe.mve.my.id" target="_blank" class="hover:text-cyan-400">Paylabs POS</a>
-        </div>
-      </div>
-    </section>
-
-  </main>
-
-  <!-- THREE.JS 3D BACKGROUND ENGINE -->
+  <!-- PS5 AUDIO & LOGIC SCRIPT -->
   <script>
-    lucide.createIcons();
-
-    // --- THREE.JS SCENE SETUP ---
-    const canvas = document.getElementById('canvas3d');
-    const scene = new THREE.Scene();
-    scene.fog = new THREE.FogExp2(0x060814, 0.0018);
-
-    const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
-    camera.position.z = 40;
-
-    const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: true });
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-    renderer.setSize(window.innerWidth, window.innerHeight);
-
-    // --- LIGHTING ---
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.4);
-    scene.add(ambientLight);
-
-    const pointCyan = new THREE.PointLight(0x38bdf8, 2.5, 120);
-    pointCyan.position.set(20, 20, 20);
-    scene.add(pointCyan);
-
-    const pointPurple = new THREE.PointLight(0xa855f7, 2.5, 120);
-    pointPurple.position.set(-20, -20, 20);
-    scene.add(pointPurple);
-
-    // --- 3D FLOATING OBJECTS GROUP ---
-    const group = new THREE.Group();
-    scene.add(group);
-
-    // 1. Central Wireframe Icosahedron
-    const icoGeo = new THREE.IcosahedronGeometry(12, 1);
-    const icoMat = new THREE.MeshStandardMaterial({
-      color: 0x38bdf8,
-      wireframe: true,
-      transparent: true,
-      opacity: 0.28,
-      roughness: 0.2,
-      metalness: 0.8
-    });
-    const icosahedron = new THREE.Mesh(icoGeo, icoMat);
-    group.add(icosahedron);
-
-    // 2. Inner Glowing Core
-    const coreGeo = new THREE.OctahedronGeometry(6, 0);
-    const coreMat = new THREE.MeshStandardMaterial({
-      color: 0xa855f7,
-      wireframe: true,
-      transparent: true,
-      opacity: 0.45,
-    });
-    const core = new THREE.Mesh(coreGeo, coreMat);
-    group.add(core);
-
-    // 3. Floating Torus Knot
-    const knotGeo = new THREE.TorusKnotGeometry(8, 1.2, 100, 16);
-    const knotMat = new THREE.MeshStandardMaterial({
-      color: 0x06b6d4,
-      wireframe: true,
-      transparent: true,
-      opacity: 0.18,
-    });
-    const knot = new THREE.Mesh(knotGeo, knotMat);
-    knot.position.set(18, -10, -10);
-    group.add(knot);
-
-    // 4. Starfield Particles
-    const particleCount = 600;
-    const particleGeo = new THREE.BufferGeometry();
-    const positions = new Float32Array(particleCount * 3);
-    const colors = new Float32Array(particleCount * 3);
-
-    const colorChoices = [
-      new THREE.Color(0x38bdf8),
-      new THREE.Color(0xa855f7),
-      new THREE.Color(0x10b981),
-      new THREE.Color(0xffffff)
+    // --- PORTFOLIO DATA HUB ---
+    const portfolioData = [
+      {
+        id: "absensi",
+        category: "production",
+        title: "SMK3 Absensi Digital",
+        tag: "PWA + Mobile + Biometrics",
+        edition: "Institutional Platform",
+        meta: "1,500+ Daily Users",
+        icon: "fingerprint",
+        color: "cyan",
+        backdropClass: "backdrop-absensi",
+        liveUrl: "https://pr.smkn3kotamobagu.sch.id",
+        githubUrl: "https://github.com/jayyuzz/smk3-absensi-showcase",
+        tech: ["Next.js 16", "React 19", "TypeScript", "Tailwind v4", "Supabase Auth/RLS", "face-api.js", "Expo RN"],
+        desc: {
+          id: "Sistem presensi terintegrasi untuk seluruh warga SMKN 3 Kotamobagu (Kepsek, Admin, Guru, TU, Siswa, Wali Kelas, Orang Tua). Memakai pengenalan wajah di browser via face-api.js, validasi radius GPS Haversine, approval izin, dan notifikasi WhatsApp otomatis.",
+          en: "Integrated digital attendance platform for SMKN 3 Kotamobagu serving 1,500+ users (Principal, Admin, Teachers, Staff, Students, Parents). Features client-side face recognition via face-api.js, GPS Haversine geofencing, leave workflows, and automated WhatsApp alerts."
+        },
+        deepDive: {
+          id: `
+            <h3 class="text-lg font-bold text-white mb-2">Arsitektur &amp; Keamanan Data</h3>
+            <p>Sistem ini dirancang untuk mencegah titip absen secara menyeluruh dengan kombinasi <strong>Identitas + Face Recognition + Liveness Detection + GPS + Timestamp</strong>. Berjalan di Next.js 16 App Router dengan Supabase PostgreSQL, diamankan dengan Row-Level Security (RLS) ketat untuk memisahkan data antar peran pengguna.</p>
+            <h3 class="text-lg font-bold text-white mt-4 mb-2">Fitur Utama:</h3>
+            <ul class="list-disc pl-5 space-y-1">
+              <li>Check-in biometrik wajah langsung pada peramban web dan aplikasi mobile Expo.</li>
+              <li>Validasi GPS geofencing dengan toleransi akurasi koordinat server-side.</li>
+              <li>Pusat approval pengajuan izin oleh wali kelas dan kepala sekolah.</li>
+              <li>Webhook gateway WhatsApp otomatis (Fonnte / KirimDev) untuk pelaporan kehadiran harian ke orang tua siswa.</li>
+            </ul>
+          `,
+          en: `
+            <h3 class="text-lg font-bold text-white mb-2">Architecture &amp; Data Security</h3>
+            <p>Engineered to eliminate proxy check-ins using a multi-factor verification pipeline: <strong>Identity + Face Recognition + Liveness Detection + GPS Geofencing + Server Timestamp</strong>. Built on Next.js 16 App Router with Supabase PostgreSQL, enforced via Row-Level Security (RLS) policies.</p>
+            <h3 class="text-lg font-bold text-white mt-4 mb-2">Core Capabilities:</h3>
+            <ul class="list-disc pl-5 space-y-1">
+              <li>Browser-based face recognition running lightweight model shards client-side.</li>
+              <li>Server-side Haversine geofencing validating radius and coordinates.</li>
+              <li>Multi-tiered leave request approval hierarchy (Homeroom Teachers, Admin, Principal).</li>
+              <li>Automated WhatsApp reporting gateways (Fonnte/KirimDev) delivering real-time logs to parents.</li>
+            </ul>
+          `
+        }
+      },
+      {
+        id: "marry",
+        category: "production",
+        title: "marry 💍",
+        tag: "AI Market Intelligence SaaS",
+        edition: "Global SaaS Product",
+        meta: "50+ Languages Supported",
+        icon: "sparkles",
+        color: "purple",
+        backdropClass: "backdrop-marry",
+        liveUrl: "https://marry.myap.web.id",
+        githubUrl: "https://github.com/jayyuzz/marry",
+        tech: ["Node.js Express", "Supabase Auth", "OpenAI Gateway", "Ko-fi Webhook", "Vercel Serverless"],
+        desc: {
+          id: "Platform analisis prospek pasar global untuk produk digital kecil (ebook, micro-SaaS, template, preset). Menghasilkan estimasi demand, pricing tier, analisis kompetisi, dan langkah eksekusi roadmap dalam 50+ bahasa.",
+          en: "Global market intelligence platform for independent digital creators. Analyzes international demand, competitor pricing, score metrics, and step-by-step roadmap generation across 50+ languages."
+        },
+        deepDive: {
+          id: `
+            <h3 class="text-lg font-bold text-white mb-2">Desain Sistem &amp; AI Pipeline</h3>
+            <p>Dibangun untuk membantu kreator produk digital mengukur kelayakan pasar luar negeri sebelum mulai membangun. Menggunakan arsitektur Express.js yang terhubung dengan OpenAI-compatible inference gateways dengan parsing skema ketat untuk menjamin hasil JSON konsisten.</p>
+            <h3 class="text-lg font-bold text-white mt-4 mb-2">Fitur Unggulan:</h3>
+            <ul class="list-disc pl-5 space-y-1">
+              <li>Endpoint analisis pasar (<code>/api/analyze</code>) dan generator roadmap (<code>/api/roadmap</code>).</li>
+              <li>Basis data 140+ ide produk digital trending siap klik.</li>
+              <li>Monetisasi otomatis: integrasi membership Supabase via webhook pembayaran Ko-fi.</li>
+              <li>Rate-limiting cerdas untuk mencegah penyalahgunaan inferensi AI.</li>
+            </ul>
+          `,
+          en: `
+            <h3 class="text-lg font-bold text-white mb-2">System Design &amp; AI Pipeline</h3>
+            <p>Engineered to help indie creators validate international viability before building. Connects to OpenAI-compatible high-speed inference endpoints with strict schema normalization and deterministic JSON output validation.</p>
+            <h3 class="text-lg font-bold text-white mt-4 mb-2">Core Features:</h3>
+            <ul class="list-disc pl-5 space-y-1">
+              <li>Market analysis (<code>/api/analyze</code>) and execution roadmap (<code>/api/roadmap</code>) APIs.</li>
+              <li>140+ curated trending product sparks database.</li>
+              <li>Automated membership upgrades via Ko-fi webhook integration.</li>
+              <li>Inference rate limiting and multi-country visitor telemetry.</li>
+            </ul>
+          `
+        }
+      },
+      {
+        id: "cafe",
+        category: "production",
+        title: "Paylabs Cafe POS",
+        tag: "Point of Sale & Inventory",
+        edition: "Cloud Restaurant Suite",
+        meta: "Shift & Recipe Management",
+        icon: "coffee",
+        color: "emerald",
+        backdropClass: "backdrop-cafe",
+        liveUrl: "https://cafe.mve.my.id",
+        githubUrl: "https://github.com/jayyuzz/cafe-pos-showcase",
+        tech: ["Next.js", "TypeScript", "Supabase PostgreSQL", "Recharts", "Thermal Print API"],
+        desc: {
+          id: "Sistem operasional kasir & resto terintegrasi. Manajemen shift kasir, dapur (Kitchen Display System), pesanan mandiri via QR meja, modul delivery & driver checklist, serta pemotongan stok bahan baku otomatis berbasis resep.",
+          en: "Integrated POS and restaurant back-office system. Features shift reconciliation, Kitchen Display System (KDS), table QR ordering, delivery driver dispatch, and recipe-based automated raw material stock deduction."
+        },
+        deepDive: {
+          id: `
+            <h3 class="text-lg font-bold text-white mb-2">Otomasi Alur Restoran &amp; HPP</h3>
+            <p>Solusi kasir modern yang dirancang untuk kecepatan kasir dan akurasi stok bahan baku. Ketika menu terjual, sistem otomatis menghitung HPP (COGS) dan memotong gramatur bahan baku di gudang secara real-time.</p>
+            <h3 class="text-lg font-bold text-white mt-4 mb-2">Modul Utama:</h3>
+            <ul class="list-disc pl-5 space-y-1">
+              <li>POS Kasir: Buka/tutup shift, rekonsiliasi selisih kas, dan cetak struk thermal.</li>
+              <li>Kitchen Display: Pesanan masuk langsung terkirim ke layar chef/barista.</li>
+              <li>Inventaris Resep: Bill of Materials (BOM) otomatis per cangkir/porsi.</li>
+              <li>Analitik Bisnis: Grafik penjualan harian/bulanan dengan visualisasi Recharts.</li>
+            </ul>
+          `,
+          en: `
+            <h3 class="text-lg font-bold text-white mb-2">Restaurant Workflow &amp; COGS Automation</h3>
+            <p>Built for high-volume cashier operations and strict inventory accounting. Deducts raw material stock in real-time based on recipe definitions (BOM) and computes gross profit margins on the fly.</p>
+            <h3 class="text-lg font-bold text-white mt-4 mb-2">Key Modules:</h3>
+            <ul class="list-disc pl-5 space-y-1">
+              <li>Cashier POS: Shift management, cash discrepancy tracking, thermal receipt API.</li>
+              <li>Kitchen Display (KDS): Real-time ticket dispatch to kitchen/bar stations.</li>
+              <li>Recipe Inventory: Automated Bill of Materials deduction per menu item.</li>
+              <li>BI Analytics: Sales dashboards and category breakdowns powered by Recharts.</li>
+            </ul>
+          `
+        }
+      },
+      {
+        id: "school",
+        category: "production",
+        title: "Portal SMKN 3 Kotamobagu",
+        tag: "Official School Portal",
+        edition: "Institutional Portal",
+        meta: "Laravel + MySQL",
+        icon: "school",
+        color: "blue",
+        backdropClass: "backdrop-school",
+        liveUrl: "https://smkn3kotamobagu.sch.id",
+        githubUrl: "https://github.com/jayyuzz/smkn3-website-showcase",
+        tech: ["Laravel (PHP)", "MySQL", "Sanctum", "Activity Logger", "Tailwind CSS"],
+        desc: {
+          id: "Portal resmi berita dan publikasi akademik SMK Negeri 3 Kotamobagu. Mengelola pengumuman, prestasi, agenda kegiatan, portal alumni, serta integrasi e-learning dengan pengawasan audit log aktivitas admin yang ketat.",
+          en: "Official news and academic publication portal for SMK Negeri 3 Kotamobagu. Manages announcements, student achievements, event calendars, alumni network, and e-learning access with strict audit logging."
+        },
+        deepDive: {
+          id: `
+            <h3 class="text-lg font-bold text-white mb-2">Publikasi Informasi &amp; Kepatuhan Instansi</h3>
+            <p>Portal publik institusi pendidikan yang andal dengan sistem manajemen konten modular berbasis Laravel. Memiliki sistem proteksi akses multi-operator sekolah dengan pencatatan audit log untuk setiap perubahan data.</p>
+          `,
+          en: `
+            <h3 class="text-lg font-bold text-white mb-2">Institutional Publishing &amp; Governance</h3>
+            <p>Robust educational institutional portal with modular content publishing built on Laravel. Features multi-operator administrative roles and activity logging for full transparency.</p>
+          `
+        }
+      },
+      {
+        id: "edtech",
+        category: "ai",
+        title: "EdTech & AI Evaluation",
+        tag: "Frontier AI & Pedagogy",
+        edition: "Mercor & Google Certified",
+        meta: "Agent Evaluation Specialist",
+        icon: "brain-circuit",
+        color: "amber",
+        backdropClass: "backdrop-edtech",
+        liveUrl: "https://work.mercor.com/learn/verify/MRC-2026-5XW2RQSG",
+        githubUrl: "https://github.com/jayyuzz",
+        tech: ["Mercor Agents (MRC-2026-5XW2RQSG)", "Gemini Certified", "Google Educator L1 & L2", "RLHF Benchmark", "AWS Skill Builder"],
+        desc: {
+          id: "Spesialisasi ganda sebagai Pendidik Teknologi Komputer bersertifikasi (Gemini & Google Educator) serta Evaluator AI Terverifikasi Mercor (Introduction to Agents). Berpengalaman mengaudit alur kerja agen otonom dan kualitas lokalisasi materi teknis AI.",
+          en: "Dual specialization as a Certified Computer Science Educator (Google/Gemini Certified) and Verified Mercor AI Agent Evaluator (MRC-2026-5XW2RQSG). Experienced in auditing autonomous agent workflows and technical localization benchmarks."
+        },
+        deepDive: {
+          id: `
+            <h3 class="text-lg font-bold text-white mb-2">Kredensial AI &amp; Evaluasi Model</h3>
+            <ul class="list-disc pl-5 space-y-2">
+              <li><strong>Mercor Certified — Introduction to Agents:</strong> Kredensial resmi (<a href="https://work.mercor.com/learn/verify/MRC-2026-5XW2RQSG" target="_blank" class="text-purple-300 underline font-mono">MRC-2026-5XW2RQSG</a>) dalam evaluasi agen AI otonom, validasi tool-calling, dan kalibrasi metrik.</li>
+              <li><strong>Google &amp; Gemini Certified Educator:</strong> Terverifikasi resmi di Accredible untuk Gemini Educator, Google Educator Level 1, dan Level 2.</li>
+              <li><strong>Evaluator Materi Teknis AWS:</strong> Pengalaman menguji kualitas narasi AI Avatar dan kurasi modul teknis AWS Skill Builder (RAG, Bedrock, Cloud Security).</li>
+              <li><strong>Approved Mercor Expert:</strong> Indonesian Linguistic Specialist untuk riset model frontier lab dunia.</li>
+            </ul>
+          `,
+          en: `
+            <h3 class="text-lg font-bold text-white mb-2">AI Credentials &amp; Model Benchmarking</h3>
+            <ul class="list-disc pl-5 space-y-2">
+              <li><strong>Mercor Certified — Introduction to Agents:</strong> Verified credential (<a href="https://work.mercor.com/learn/verify/MRC-2026-5XW2RQSG" target="_blank" class="text-purple-300 underline font-mono">MRC-2026-5XW2RQSG</a>) in evaluating autonomous AI agent trajectories and tool-use fidelity.</li>
+              <li><strong>Google &amp; Gemini Certified Educator:</strong> Accredible-verified in Gemini AI pedagogy, Google Educator Level 1 &amp; Level 2.</li>
+              <li><strong>AWS Technical Curriculum Evaluator:</strong> Benchmarking AI avatar narration and Indonesian localization accuracy for RAG, Amazon Bedrock, and Cloud Security.</li>
+              <li><strong>Mercor Approved Linguistic Expert:</strong> Evaluating frontier language model alignment and reasoning.</li>
+            </ul>
+          `
+        }
+      },
+      {
+        id: "cv",
+        category: "credentials",
+        title: "Curriculum Vitae",
+        tag: "Official Resume & Credentials",
+        edition: "ATS & Executive Ready",
+        meta: "Updated October 2026",
+        icon: "file-text",
+        color: "cyan",
+        backdropClass: "backdrop-cv",
+        liveUrl: "./CV_Jaya_Hartono_Pinuyut.pdf",
+        githubUrl: "https://www.linkedin.com/in/jaya-hartono-pinuyut-1827b6410",
+        tech: ["PDF Vector", "Word DOCX", "Accredible Links", "Mercor Verification"],
+        desc: {
+          id: "Dokumen CV resmi Jaya Hartono Pinuyut, S.T. memuat 14+ tahun rekam jejak rekayasa sistem, status Pendidik PNS (Penata Muda Tk. I / III/b), sertifikasi Google & Mercor, serta portofolio proyek produksi.",
+          en: "Official Curriculum Vitae of Jaya Hartono Pinuyut, S.T. detailing 14+ years in software engineering, civil service education (Rank III/b), Google & Mercor certifications, and production software deliveries."
+        },
+        deepDive: {
+          id: `
+            <h3 class="text-lg font-bold text-white mb-2">Unduh Berkas CV Resmi</h3>
+            <p class="mb-4">Tersedia dalam dua format siap unduh yang telah disinkronkan dengan seluruh proyek dan kredensial:</p>
+            <div class="flex flex-wrap gap-3">
+              <a href="./CV_Jaya_Hartono_Pinuyut.pdf" target="_blank" class="px-4 py-2 rounded-xl bg-cyan-500 text-white font-bold text-xs flex items-center gap-2">
+                <i data-lucide="download" class="w-4 h-4"></i> Unduh PDF (Cetak / ATS)
+              </a>
+              <a href="./CV_Jaya_Hartono_Pinuyut_Updated.docx" download class="px-4 py-2 rounded-xl glass border border-white/20 text-slate-200 font-bold text-xs flex items-center gap-2">
+                <i data-lucide="file-text" class="w-4 h-4"></i> Unduh Word (.docx)
+              </a>
+            </div>
+          `,
+          en: `
+            <h3 class="text-lg font-bold text-white mb-2">Download Official CV Files</h3>
+            <p class="mb-4">Available in two high-fidelity formats aligned with all live systems and verified credentials:</p>
+            <div class="flex flex-wrap gap-3">
+              <a href="./CV_Jaya_Hartono_Pinuyut.pdf" target="_blank" class="px-4 py-2 rounded-xl bg-cyan-500 text-white font-bold text-xs flex items-center gap-2">
+                <i data-lucide="download" class="w-4 h-4"></i> Download PDF (ATS Ready)
+              </a>
+              <a href="./CV_Jaya_Hartono_Pinuyut_Updated.docx" download class="px-4 py-2 rounded-xl glass border border-white/20 text-slate-200 font-bold text-xs flex items-center gap-2">
+                <i data-lucide="file-text" class="w-4 h-4"></i> Download Word (.docx)
+              </a>
+            </div>
+          `
+        }
+      }
     ];
 
-    for (let i = 0; i < particleCount * 3; i += 3) {
-      positions[i] = (Math.random() - 0.5) * 160;
-      positions[i + 1] = (Math.random() - 0.5) * 160;
-      positions[i + 2] = (Math.random() - 0.5) * 120;
-
-      const c = colorChoices[Math.floor(Math.random() * colorChoices.length)];
-      colors[i] = c.r;
-      colors[i + 1] = c.g;
-      colors[i + 2] = c.b;
-    }
-
-    particleGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-    particleGeo.setAttribute('color', new THREE.BufferAttribute(colors, 3));
-
-    const particleMat = new THREE.PointsMaterial({
-      size: 0.8,
-      vertexColors: true,
-      transparent: true,
-      opacity: 0.75,
-    });
-    const starField = new THREE.Points(particleGeo, particleMat);
-    scene.add(starField);
-
-    // --- MOUSE PARALLAX & INTERACTION ---
-    let mouseX = 0;
-    let mouseY = 0;
-    let targetX = 0;
-    let targetY = 0;
-    const windowHalfX = window.innerWidth / 2;
-    const windowHalfY = window.innerHeight / 2;
-
-    document.addEventListener('mousemove', (e) => {
-      mouseX = (e.clientX - windowHalfX) * 0.001;
-      mouseY = (e.clientY - windowHalfY) * 0.001;
-    });
-
-    // Window Resize
-    window.addEventListener('resize', () => {
-      camera.aspect = window.innerWidth / window.innerHeight;
-      camera.updateProjectionMatrix();
-      renderer.setSize(window.innerWidth, window.innerHeight);
-    });
-
-    // Scroll Reaction
-    let scrollY = 0;
-    window.addEventListener('scroll', () => {
-      scrollY = window.scrollY * 0.02;
-    });
-
-    // Animation Loop
-    const clock = new THREE.Clock();
-    function animate() {
-      requestAnimationFrame(animate);
-      const elapsed = clock.getElapsedTime();
-
-      // Smooth mouse lerp
-      targetX += (mouseX - targetX) * 0.05;
-      targetY += (mouseY - targetY) * 0.05;
-
-      // Rotate geometric meshes
-      icosahedron.rotation.x = elapsed * 0.15 + targetY;
-      icosahedron.rotation.y = elapsed * 0.2 + targetX;
-
-      core.rotation.x = -elapsed * 0.25;
-      core.rotation.y = -elapsed * 0.3;
-
-      knot.rotation.x = elapsed * 0.1;
-      knot.rotation.y = elapsed * 0.12;
-
-      // Group drift and scroll offset
-      group.position.x = targetX * 15;
-      group.position.y = -targetY * 15 - (scrollY * 0.3);
-      group.rotation.z = elapsed * 0.03;
-
-      starField.rotation.y = elapsed * 0.02;
-      starField.rotation.x = elapsed * 0.01;
-
-      renderer.render(scene, camera);
-    }
-    animate();
-
-    // --- 3D TILT CARDS SCRIPT ---
-    const cards = document.querySelectorAll('.tilt-card');
-    cards.forEach(card => {
-      card.addEventListener('mousemove', (e) => {
-        const rect = card.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        const centerX = rect.width / 2;
-        const centerY = rect.height / 2;
-
-        const rotateX = ((y - centerY) / centerY) * -10;
-        const rotateY = ((x - centerX) / centerX) * 10;
-
-        card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
-      });
-
-      card.addEventListener('mouseleave', () => {
-        card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
-      });
-    });
-  </script>
-
-  <!-- INTERNATIONALIZATION (ID / EN) SCRIPT -->
-  <script>
-    const i18n = {
-      id: {
-        navProjects: "Proyek",
-        navAi: "EdTech & AI",
-        navSkills: "Tech Stack",
-        navContact: "Kontak",
-        heroBadge: "Tersedia untuk Full-Stack, AI Evaluation & Proyek Kontrak",
-        heroDesc: 'Halo, saya <strong class="text-white font-semibold">Jaya Hartono Pinuyut</strong> (<span class="font-mono text-cyan-300">jayyuzz</span>), Full-Stack Developer & Educator berbasis di Kotamobagu, Sulawesi Utara. Membangun aplikasi produksi skala instansi, sistem absensi biometrik & GPS, cloud POS, serta evaluasi bahasa & reasoning untuk LLM mutakhir.',
-        heroBtnProjects: "Lihat Karya Produksi",
-        heroBtnCv: "Unduh CV (PDF)",
-        heroStat1Label: "Pengguna Terlayani (Siswa & Guru)",
-        heroStat2Label: "Platform Produksi Aktif",
-        sceneTip: "3D Scene interaktif di latar belakang: gerakkan mouse / kursor untuk mengarahkan rotasi partikel dan poligon.",
-        projectsTitle: "Sistem Nyata yang Beroperasi",
-        projectsDesc: "Setiap proyek di bawah ini aktif di domain produksi, memiliki arsitektur terstruktur, dan melayani operasional harian organisasi.",
-        p1Desc: "Sistem presensi multi-peran (Kepsek, Admin, Guru, TU, Siswa, Wali Kelas, Orang Tua) untuk SMK Negeri 3 Kotamobagu. Dilengkapi verifikasi wajah di browser (face-api.js), validasi radius GPS (Haversine), pengajuan izin, dan notifikasi otomatis WhatsApp.",
-        p1Live: "Buka Aplikasi Live",
-        p2Desc: "Platform analisis peluang pasar global untuk produk digital mandiri (ebook, micro-SaaS, template, preset). Mengolah estimasi demand, pricing tier, analisis kompetisi, dan langkah eksekusi roadmap dalam 50+ bahasa via AI gateway berkecepatan tinggi.",
-        p2Live: "Analisis Produk Sekarang",
-        p3Desc: "Sistem kasir dan operasional back-office cafe terintegrasi. Manajemen shift kasir, dapur (Kitchen Display System), pesanan mandiri via QR meja, modul delivery & driver checklist, pengurangan stok bahan baku otomatis berbasis resep, serta laporan laba kotor.",
-        p3Live: "Portal Kasir",
-        p4Desc: "Portal informasi publik dan berita sekolah resmi. Mengelola publikasi akademik, pencapaian prestasi siswa, agenda kegiatan, portal alumni, serta integrasi e-learning dengan sistem audit log aktivitas admin yang ketat.",
-        p4Live: "Kunjungi Portal",
-        aiTitle: "Spesialis Pendidik Teknologi (EdTech) & Evaluator AI",
-        aiDesc: "Berpengalaman dalam penilaian presisi LLM (RLHF, instruction-following, adversarial testing, hallucination detection) dengan fokus mendalam pada tata bahasa, sintaksis, konteks budaya, dan register bahasa Indonesia.",
-        aiBullet1: "<strong>AI Avatar & Cloud Education Evaluator:</strong> Penilaian kualitas narasi AI Avatar & akurasi lokalisasi materi teknis (AWS Skill Builder — RAG, Amazon Bedrock & Cloud Security) dalam Bahasa Indonesia.",
-        aiBulletAgent: '<strong>Mercor Certified — Introduction to Agents:</strong> Terverifikasi resmi (<a href="https://work.mercor.com/learn/verify/MRC-2026-5XW2RQSG" target="_blank" rel="noopener" class="text-purple-300 underline font-mono">MRC-2026-5XW2RQSG</a>) dalam evaluasi AI agents, demonstrasi rigor, kalibrasi, dan kejelasan benchmark agent.',
-        aiBullet2: "<strong>Approved Mercor Expert:</strong> Indonesian Linguistic Specialist untuk project AI frontier lab.",
-        aiBullet3: "<strong>Bilingual Fluency:</strong> Penilaian teks terjemahan, penalaran logika, dan gaya komunikasi natural vs. kaku.",
-        aiBullet4: "<strong>Annotation & Prompt Engineering:</strong> Kurasi data latih berakurasi tinggi untuk fine-tuning model generatif.",
-        skillsTitle: "Teknologi & Arsitektur",
-        s1Desc: "Membangun antarmuka responsif performa tinggi, PWA offline-first, dan aplikasi mobile multiplatform.",
-        s2Desc: "Infrastruktur database dengan kontrol keamanan data ketat (Row-Level Security) dan integrasi serverless.",
-        s3Desc: "Integrasi biometrik klien, model AI, webhook pembayaran, dan gateway pesan WhatsApp.",
-        contactTitle: "Mari Berkolaborasi",
-        contactDesc: "Tersedia untuk proyek pengembangan aplikasi, sistem instansi/bisnis, evaluasi model AI, maupun remote engineering.",
-        contactBtnCopy: "Salin Email",
-        contactCopied: "Email berhasil disalin!",
-        visitorTitle: "Log Pengunjung Global Berdasarkan Negara",
-        visitorVisits: "Kunjungan",
-        visitorUnique: "Negara Terdeteksi",
-        visitorLive: "Traffic Aktif",
-        footerCopy: "© 2026 Jaya Hartono Pinuyut. Kotamobagu, Sulawesi Utara, Indonesia."
-      },
-      en: {
-        navProjects: "Projects",
-        navAi: "EdTech & AI",
-        navSkills: "Tech Stack",
-        navContact: "Contact",
-        heroBadge: "Available for Full-Stack, AI Evaluation & Contract Roles",
-        heroDesc: 'Hello, I am <strong class="text-white font-semibold">Jaya Hartono Pinuyut</strong> (<span class="font-mono text-cyan-300">jayyuzz</span>), a Full-Stack Developer & Educator based in Kotamobagu, North Sulawesi, Indonesia. I build production-grade systems for institutions, biometric & GPS attendance platforms, cloud POS, and evaluate linguistic quality & reasoning for frontier LLMs.',
-        heroBtnProjects: "View Production Work",
-        heroBtnCv: "Download CV (PDF)",
-        heroStat1Label: "Users Served (Students & Teachers)",
-        heroStat2Label: "Active Production Platforms",
-        sceneTip: "Interactive 3D scene in the background: move your mouse / cursor to direct particle and polygon rotation.",
-        projectsTitle: "Real Systems in Operation",
-        projectsDesc: "Each project below is live in production, architected with modern standards, and actively serving daily organizational operations.",
-        p1Desc: "Multi-role attendance system (Principal, Admin, Teachers, Staff, Students, Homeroom, Parents) for SMKN 3 Kotamobagu. Features in-browser face verification (face-api.js), GPS geofencing (Haversine), leave request workflows, and automated WhatsApp notifications.",
-        p1Live: "Open Live App",
-        p2Desc: "Global market intelligence platform for independent digital products (ebooks, micro-SaaS, templates, presets). Estimates demand, optimal pricing tiers, competitive landscape, and an execution roadmap across 50+ languages via a high-speed AI gateway.",
-        p2Live: "Analyze Products Now",
-        p3Desc: "Integrated point-of-sale and back-office management system for cafes & restaurants. Features cashier shift reconciliation, Kitchen Display System (KDS), table QR ordering, delivery dispatch & driver checklist, recipe-based automated stock deduction, and gross profit analytics.",
-        p3Live: "Cashier Portal",
-        p4Desc: "Official public information and school news portal. Manages academic publications, student achievements, event calendars, alumni directories, and e-learning access with strict administrative audit logging.",
-        p4Live: "Visit Portal",
-        aiTitle: "Educational Technology (EdTech) & AI Evaluation Specialist",
-        aiDesc: "Experienced in precision LLM benchmarking (RLHF, instruction-following, adversarial testing, hallucination detection) with deep specialization in Indonesian grammar, syntax, cultural nuances, and linguistic register.",
-        aiBullet1: "<strong>AI Avatar & Cloud Education Evaluator:</strong> Evaluation of AI Avatar narration quality and technical localization accuracy (AWS Skill Builder — RAG, Amazon Bedrock & Cloud Security) in Indonesian.",
-        aiBulletAgent: '<strong>Mercor Certified — Introduction to Agents:</strong> Officially verified (<a href="https://work.mercor.com/learn/verify/MRC-2026-5XW2RQSG" target="_blank" rel="noopener" class="text-purple-300 underline font-mono">MRC-2026-5XW2RQSG</a>) in AI agent evaluation, demonstrating rigor, calibration, and clarity in agent benchmarking.',
-        aiBullet2: "<strong>Approved Mercor Expert:</strong> Indonesian Linguistic Specialist for frontier AI lab research projects.",
-        aiBullet3: "<strong>Bilingual Fluency:</strong> Assessment of machine translation quality, logical reasoning, and natural vs. synthetic communication registers.",
-        aiBullet4: "<strong>Annotation & Prompt Engineering:</strong> High-precision training data curation and prompt engineering for generative model fine-tuning.",
-        skillsTitle: "Technologies & Architecture",
-        s1Desc: "Building high-performance responsive interfaces, offline-first PWAs, and multiplatform mobile applications.",
-        s2Desc: "Robust database infrastructure with strict Row-Level Security (RLS) policies and serverless integrations.",
-        s3Desc: "Integrating client-side biometrics, generative AI models, payment webhooks, and WhatsApp messaging gateways.",
-        contactTitle: "Let's Collaborate",
-        contactDesc: "Available for software engineering contracts, institutional/enterprise systems, AI model evaluation, and remote roles.",
-        contactBtnCopy: "Copy Email",
-        contactCopied: "Email copied to clipboard!",
-        visitorTitle: "Global Visitor Logs by Country",
-        visitorVisits: "Visits",
-        visitorUnique: "Countries Detected",
-        visitorLive: "Live Traffic",
-        footerCopy: "© 2026 Jaya Hartono Pinuyut. Kotamobagu, North Sulawesi, Indonesia."
-      }
-    };
-
+    let currentCategory = 'all';
+    let activeIndex = 0;
     let currentLang = localStorage.getItem('portfolio_lang') || 'id';
 
-    function setLanguage(lang) {
-      if (!i18n[lang]) return;
+    // Filter items based on active hub category
+    function getFilteredItems() {
+      if (currentCategory === 'all') return portfolioData;
+      return portfolioData.filter(item => item.category === currentCategory);
+    }
+
+    // Render ribbon tiles
+    function renderRibbon() {
+      const track = document.getElementById('tiles-track');
+      const items = getFilteredItems();
+      track.innerHTML = '';
+
+      items.forEach((item, idx) => {
+        const tile = document.createElement('div');
+        tile.className = `ps5-tile ${idx === activeIndex ? 'active' : ''}`;
+        tile.setAttribute('role', 'option');
+        tile.setAttribute('aria-selected', idx === activeIndex);
+        tile.setAttribute('data-id', item.id);
+        tile.onclick = () => selectItem(idx);
+
+        const iconBg = item.color === 'purple' ? 'bg-purple-900/60 text-purple-300' :
+                       item.color === 'emerald' ? 'bg-emerald-900/60 text-emerald-300' :
+                       item.color === 'amber' ? 'bg-amber-900/60 text-amber-300' :
+                       item.color === 'blue' ? 'bg-blue-900/60 text-blue-300' :
+                       'bg-cyan-900/60 text-cyan-300';
+
+        tile.innerHTML = `
+          <div class="ps5-tile-icon ${iconBg}">
+            <i data-lucide="${item.icon}" class="w-5 h-5"></i>
+          </div>
+          <span class="ps5-tile-label">${item.title}</span>
+        `;
+        track.appendChild(tile);
+      });
+
+      lucide.createIcons();
+      updateDetails();
+      scrollToActiveTile();
+    }
+
+    function scrollToActiveTile() {
+      const track = document.getElementById('tiles-track');
+      const activeTile = track.children[activeIndex];
+      if (activeTile) {
+        activeTile.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+      }
+    }
+
+    // Select an item by index in current filtered list
+    function selectItem(idx) {
+      const items = getFilteredItems();
+      if (idx < 0) idx = 0;
+      if (idx >= items.length) idx = items.length - 1;
+      activeIndex = idx;
+
+      // Update active tile DOM
+      const track = document.getElementById('tiles-track');
+      Array.from(track.children).forEach((el, i) => {
+        el.classList.toggle('active', i === activeIndex);
+        el.setAttribute('aria-selected', i === activeIndex);
+      });
+
+      updateDetails();
+      scrollToActiveTile();
+    }
+
+    function navigateItem(dir) {
+      const items = getFilteredItems();
+      let next = activeIndex + dir;
+      if (next < 0) next = items.length - 1;
+      if (next >= items.length) next = 0;
+      selectItem(next);
+    }
+
+    // Update details section with current item
+    function updateDetails() {
+      const items = getFilteredItems();
+      const item = items[activeIndex];
+      if (!item) return;
+
+      document.getElementById('item-tag').innerText = item.tag;
+      document.getElementById('item-edition').innerText = item.edition;
+      document.getElementById('item-meta').innerText = item.meta;
+      document.getElementById('item-title').innerText = item.title;
+      document.getElementById('item-desc').innerText = item.desc[currentLang] || item.desc['id'];
+
+      // Tech Stack
+      const techBox = document.getElementById('item-tech-stack');
+      techBox.innerHTML = item.tech.map(t => `<span class="ps5-tech-pill">${t}</span>`).join('');
+
+      // Buttons
+      const launchBtn = document.getElementById('btn-live-launch');
+      const launchText = document.getElementById('btn-live-text');
+      launchBtn.href = item.liveUrl;
+      launchText.innerText = currentLang === 'en' ? 'Launch Live' : 'Buka Aplikasi';
+
+      const ghBtn = document.getElementById('btn-github-link');
+      ghBtn.href = item.githubUrl;
+
+      // Backdrop Transition
+      const layer = document.getElementById('backdrop-layer');
+      layer.className = `ps5-backdrop-layer active ${item.backdropClass}`;
+    }
+
+    // Filter Categories
+    function filterCategory(cat) {
+      currentCategory = cat;
+      activeIndex = 0;
+
+      // Update tabs style
+      ['all', 'production', 'ai', 'credentials'].forEach(c => {
+        const btn = document.getElementById(`tab-${c}`);
+        if (btn) btn.classList.toggle('active', c === cat);
+      });
+
+      renderRibbon();
+    }
+
+    function cycleHubTab() {
+      const cats = ['all', 'production', 'ai', 'credentials'];
+      const curIdx = cats.indexOf(currentCategory);
+      const nextCat = cats[(curIdx + 1) % cats.length];
+      filterCategory(nextCat);
+    }
+
+    function launchActiveItem() {
+      const items = getFilteredItems();
+      const item = items[activeIndex];
+      if (item && item.liveUrl) {
+        window.open(item.liveUrl, '_blank', 'noopener');
+      }
+    }
+
+    // Language Toggle
+    function switchLang(lang) {
       currentLang = lang;
       localStorage.setItem('portfolio_lang', lang);
 
-      // Update button styles
-      const btnId = document.getElementById('btnLangId');
-      const btnEn = document.getElementById('btnLangEn');
-      if (btnId && btnEn) {
-        if (lang === 'id') {
-          btnId.className = "px-2.5 py-1 rounded-lg transition-all font-semibold text-cyan-300 bg-cyan-950/80 border border-cyan-800/60";
-          btnEn.className = "px-2.5 py-1 rounded-lg transition-all font-semibold text-slate-400 hover:text-white";
-        } else {
-          btnEn.className = "px-2.5 py-1 rounded-lg transition-all font-semibold text-cyan-300 bg-cyan-950/80 border border-cyan-800/60";
-          btnId.className = "px-2.5 py-1 rounded-lg transition-all font-semibold text-slate-400 hover:text-white";
-        }
+      document.getElementById('btnLangId').classList.toggle('active', lang === 'id');
+      document.getElementById('btnLangEn').classList.toggle('active', lang === 'en');
+
+      // Update static texts
+      document.querySelector('[data-i18n="legendNavigate"]').innerText = lang === 'en' ? 'Navigate' : 'Geser';
+      document.querySelector('[data-i18n="legendLaunch"]').innerText = lang === 'en' ? 'Launch' : 'Buka';
+      document.querySelector('[data-i18n="legendDetails"]').innerText = lang === 'en' ? 'Details' : 'Detail';
+      document.querySelector('[data-i18n="legendCategory"]').innerText = lang === 'en' ? 'Category' : 'Kategori';
+      document.querySelector('[data-i18n="btnBack"]').innerText = lang === 'en' ? 'Back' : 'Kembali';
+
+      updateDetails();
+      if (document.getElementById('details-modal').classList.contains('is-open')) {
+        populateModal();
       }
-
-      // Update elements with data-i18n
-      document.querySelectorAll('[data-i18n]').forEach(el => {
-        const key = el.getAttribute('data-i18n');
-        if (i18n[lang] && i18n[lang][key] !== undefined) {
-          el.innerHTML = i18n[lang][key];
-        }
-      });
-
-      // Update html lang attribute
-      document.documentElement.lang = lang;
     }
 
-    // Initialize on load
-    window.addEventListener('DOMContentLoaded', () => {
-      setLanguage(currentLang);
+    // Details Modal
+    function openDetailsModal() {
+      populateModal();
+      document.getElementById('details-modal').classList.add('is-open');
+    }
+
+    function closeDetailsModal() {
+      document.getElementById('details-modal').classList.remove('is-open');
+    }
+
+    function populateModal() {
+      const items = getFilteredItems();
+      const item = items[activeIndex];
+      if (!item) return;
+
+      document.getElementById('modal-crumb-cat').innerText = item.edition;
+      document.getElementById('modal-crumb-title').innerText = item.title;
+      document.getElementById('modal-meta-top').innerText = item.tag;
+      document.getElementById('modal-title').innerText = item.title;
+      document.getElementById('modal-summary').innerText = item.desc[currentLang] || item.desc['id'];
+
+      const iconBox = document.getElementById('modal-icon-box');
+      iconBox.innerHTML = `<i data-lucide="${item.icon}" class="w-8 h-8 text-cyan-400"></i>`;
+
+      const body = document.getElementById('modal-body-content');
+      body.innerHTML = item.deepDive[currentLang] || item.deepDive['id'];
+
+      const footer = document.getElementById('modal-actions-footer');
+      footer.innerHTML = `
+        <a href="${item.liveUrl}" target="_blank" rel="noopener" class="px-5 py-2.5 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-white font-bold text-xs flex items-center gap-2">
+          <i data-lucide="external-link" class="w-4 h-4"></i> ${currentLang === 'en' ? 'Open Live Deployment' : 'Buka Layanan Live'}
+        </a>
+        <a href="${item.githubUrl}" target="_blank" rel="noopener" class="px-4 py-2.5 rounded-xl glass border border-white/20 text-slate-300 hover:text-white font-semibold text-xs flex items-center gap-2">
+          <i data-lucide="github" class="w-4 h-4"></i> ${currentLang === 'en' ? 'GitHub Showcase' : 'Showcase Repository'}
+        </a>
+      `;
+
+      lucide.createIcons();
+    }
+
+    // Keyboard Shortcuts (PS5 Controller Style)
+    window.addEventListener('keydown', (e) => {
+      // If modal open, allow Esc to close
+      if (document.getElementById('details-modal').classList.contains('is-open')) {
+        if (e.key === 'Escape') closeDetailsModal();
+        return;
+      }
+
+      if (e.key === 'ArrowLeft') {
+        navigateItem(-1);
+      } else if (e.key === 'ArrowRight') {
+        navigateItem(1);
+      } else if (e.key === 'Enter') {
+        launchActiveItem();
+      } else if (e.key === 'd' || e.key === 'D') {
+        openDetailsModal();
+      } else if (e.key === 'm' || e.key === 'M') {
+        cycleHubTab();
+      } else if (e.key === 'l' || e.key === 'L') {
+        switchLang(currentLang === 'id' ? 'en' : 'id');
+      }
     });
-  </script>
 
+    // Clock
+    function updateClock() {
+      const now = new Date();
+      let hours = now.getHours();
+      let minutes = now.getMinutes();
+      const ampm = hours >= 12 ? 'PM' : 'AM';
+      hours = hours % 12;
+      hours = hours ? hours : 12;
+      minutes = minutes < 10 ? '0' + minutes : minutes;
+      const str = hours + ':' + minutes + ' ' + ampm;
+      const el = document.getElementById('live-clock');
+      if (el) el.innerText = str;
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
 
-  <!-- LIVE VISITOR LOG SYNC -->
-  <script>
-    async function loadLiveVisitors() {
+    // Visitor sync
+    async function syncVisitors() {
       try {
         const res = await fetch('https://marry.myap.web.id/api/visitors');
         if (!res.ok) return;
         const data = await res.json();
         if (data.total) {
-          const totalEl = document.getElementById('visitorTotal');
-          if (totalEl) totalEl.innerText = data.total + '+';
+          const el = document.getElementById('top-visitor-stat');
+          if (el) el.innerText = `${data.total}+ Visits`;
         }
-        if (data.uniqueCountries) {
-          const countriesEl = document.getElementById('visitorCountries');
-          if (countriesEl) countriesEl.innerText = data.uniqueCountries;
-        }
-        if (data.topCountries && data.topCountries.length > 0) {
-          const container = document.getElementById('visitorCountriesContainer');
-          if (container) {
-            container.innerHTML = data.topCountries.map((c, i) => `
-              <div class="shrink-0 px-3 py-1.5 rounded-xl glass ${i === 0 ? 'border border-cyan-500/40' : 'border border-white/10'} flex items-center gap-2 text-xs font-mono text-slate-200">
-                <span class="text-base">${c.flag || '🌐'}</span>
-                <span class="font-medium">${c.name}</span>
-                <span class="px-1.5 py-0.5 rounded-md ${i === 0 ? 'bg-cyan-950/80 text-cyan-300 border border-cyan-800' : 'bg-white/5 text-slate-400 border border-white/5'} text-[10px] font-bold">${c.count}</span>
-              </div>
-            `).join('');
-          }
-        }
-      } catch (err) {
-        console.debug('Visitor sync fallback active:', err);
-      }
+      } catch (err) {}
     }
-    window.addEventListener('DOMContentLoaded', loadLiveVisitors);
-  </script>
+    syncVisitors();
 
+    // Init
+    window.addEventListener('DOMContentLoaded', () => {
+      switchLang(currentLang);
+      renderRibbon();
+    });
+  </script>
 </body>
 </html>
