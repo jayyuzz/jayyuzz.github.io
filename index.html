@@ -273,13 +273,24 @@
         margin-bottom: 12px;
       }
     }
+
+    /* 3D Neural Network AI Canvas Background */
+    #neural-canvas {
+      position: fixed;
+      inset: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 1;
+      pointer-events: none;
+    }
 </style>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 </head>
 <body>
 
-  <!-- Dynamic Backdrop Layers -->
+  <!-- 3D Neural AI Background Canvas -->
+  <canvas id="neural-canvas"></canvas>
   <div class="ps5-backdrop-container" id="backdrop-container">
-    <div class="ps5-backdrop-layer active backdrop-absensi" id="backdrop-layer"></div>
     <div class="ps5-vignette"></div>
     <div class="ps5-glow-beam"></div>
   </div>
@@ -902,6 +913,16 @@
       const ghBtn = document.getElementById('btn-github-link');
       ghBtn.href = item.githubUrl;
 
+      // Update 3D Neural AI Background Color
+      const neuralHex = item.color === 'purple' ? 0xa855f7 :
+                        item.color === 'emerald' ? 0x10b981 :
+                        item.color === 'amber' ? 0xf59e0b :
+                        item.color === 'blue' ? 0x3b82f6 :
+                        0x38bdf8;
+      if (typeof setNeuralThemeColor === 'function') {
+        setNeuralThemeColor(neuralHex);
+      }
+
       // Backdrop Transition
       const layer = document.getElementById('backdrop-layer');
       layer.className = `ps5-backdrop-layer active ${item.backdropClass}`;
@@ -1056,5 +1077,170 @@
       renderRibbon();
     });
   </script>
+<script>
+    // ==========================================
+    // 3D NEURAL AI BACKGROUND ENGINE (Three.js)
+    // ==========================================
+    const neuralCanvas = document.getElementById('neural-canvas');
+    const nScene = new THREE.Scene();
+    nScene.fog = new THREE.FogExp2(0x030712, 0.0018);
+
+    const nCamera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
+    nCamera.position.z = 45;
+
+    const nRenderer = new THREE.WebGLRenderer({ canvas: neuralCanvas, alpha: true, antialias: true });
+    nRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    nRenderer.setSize(window.innerWidth, window.innerHeight);
+
+    // Neural Network Nodes & Synapses
+    const nodeCount = 85;
+    const nodeGroup = new THREE.Group();
+    nScene.add(nodeGroup);
+
+    const nodesData = [];
+    const nodeGeo = new THREE.SphereGeometry(0.38, 16, 16);
+    let currentThemeColor = new THREE.Color(0x38bdf8);
+
+    const nodeMat = new THREE.MeshBasicMaterial({
+      color: currentThemeColor,
+      transparent: true,
+      opacity: 0.85
+    });
+
+    for (let i = 0; i < nodeCount; i++) {
+      const mesh = new THREE.Mesh(nodeGeo, nodeMat.clone());
+      const pos = new THREE.Vector3(
+        (Math.random() - 0.5) * 85,
+        (Math.random() - 0.5) * 60,
+        (Math.random() - 0.5) * 50
+      );
+      mesh.position.copy(pos);
+      nodeGroup.add(mesh);
+
+      nodesData.push({
+        mesh: mesh,
+        velocity: new THREE.Vector3(
+          (Math.random() - 0.5) * 0.04,
+          (Math.random() - 0.5) * 0.04,
+          (Math.random() - 0.5) * 0.03
+        ),
+        originalPos: pos.clone()
+      });
+    }
+
+    const maxDistance = 16;
+    const maxConnections = 140;
+    const linePositions = new Float32Array(maxConnections * 2 * 3);
+    const lineColors = new Float32Array(maxConnections * 2 * 3);
+
+    const lineGeo = new THREE.BufferGeometry();
+    lineGeo.setAttribute('position', new THREE.BufferAttribute(linePositions, 3));
+    lineGeo.setAttribute('color', new THREE.BufferAttribute(lineColors, 3));
+
+    const lineMat = new THREE.LineBasicMaterial({
+      vertexColors: true,
+      transparent: true,
+      opacity: 0.45,
+      blending: THREE.AdditiveBlending
+    });
+
+    const synapseLines = new THREE.LineSegments(lineGeo, lineMat);
+    nodeGroup.add(synapseLines);
+
+    // Central Core Neural Cluster Wireframe
+    const clusterGeo = new THREE.IcosahedronGeometry(14, 2);
+    const clusterMat = new THREE.MeshBasicMaterial({
+      color: currentThemeColor,
+      wireframe: true,
+      transparent: true,
+      opacity: 0.12
+    });
+    const neuralCluster = new THREE.Mesh(clusterGeo, clusterMat);
+    nodeGroup.add(neuralCluster);
+
+    // Mouse Parallax
+    let mouseX = 0, mouseY = 0;
+    let targetX = 0, targetY = 0;
+    window.addEventListener('mousemove', (e) => {
+      mouseX = (e.clientX - window.innerWidth / 2) * 0.0008;
+      mouseY = (e.clientY - window.innerHeight / 2) * 0.0008;
+    });
+
+    window.addEventListener('resize', () => {
+      nCamera.aspect = window.innerWidth / window.innerHeight;
+      nCamera.updateProjectionMatrix();
+      nRenderer.setSize(window.innerWidth, window.innerHeight);
+    });
+
+    function setNeuralThemeColor(hex) {
+      const targetColor = new THREE.Color(hex);
+      currentThemeColor.lerp(targetColor, 0.4);
+      clusterMat.color.copy(currentThemeColor);
+      nodesData.forEach(n => {
+        n.mesh.material.color.copy(currentThemeColor);
+      });
+    }
+
+    const nClock = new THREE.Clock();
+    function animateNeural() {
+      requestAnimationFrame(animateNeural);
+      const delta = nClock.getDelta();
+      const elapsed = nClock.getElapsedTime();
+
+      targetX += (mouseX - targetX) * 0.05;
+      targetY += (mouseY - targetY) * 0.05;
+
+      nodeGroup.rotation.y = elapsed * 0.04 + targetX * 8;
+      nodeGroup.rotation.x = Math.sin(elapsed * 0.03) * 0.1 + targetY * 8;
+
+      neuralCluster.rotation.y = -elapsed * 0.06;
+      neuralCluster.rotation.z = elapsed * 0.03;
+
+      for (let i = 0; i < nodesData.length; i++) {
+        const nd = nodesData[i];
+        nd.mesh.position.add(nd.velocity);
+        if (Math.abs(nd.mesh.position.x) > 45) nd.velocity.x *= -1;
+        if (Math.abs(nd.mesh.position.y) > 32) nd.velocity.y *= -1;
+        if (Math.abs(nd.mesh.position.z) > 28) nd.velocity.z *= -1;
+      }
+
+      let lineIdx = 0;
+      let colorIdx = 0;
+      const positions = synapseLines.geometry.attributes.position.array;
+      const colors = synapseLines.geometry.attributes.color.array;
+
+      for (let i = 0; i < nodesData.length && lineIdx < maxConnections * 6; i++) {
+        for (let j = i + 1; j < nodesData.length && lineIdx < maxConnections * 6; j++) {
+          const dist = nodesData[i].mesh.position.distanceTo(nodesData[j].mesh.position);
+          if (dist < maxDistance) {
+            const p1 = nodesData[i].mesh.position;
+            const p2 = nodesData[j].mesh.position;
+
+            positions[lineIdx++] = p1.x;
+            positions[lineIdx++] = p1.y;
+            positions[lineIdx++] = p1.z;
+            positions[lineIdx++] = p2.x;
+            positions[lineIdx++] = p2.y;
+            positions[lineIdx++] = p2.z;
+
+            const alpha = 1.0 - (dist / maxDistance);
+            colors[colorIdx++] = currentThemeColor.r * alpha;
+            colors[colorIdx++] = currentThemeColor.g * alpha;
+            colors[colorIdx++] = currentThemeColor.b * alpha;
+            colors[colorIdx++] = currentThemeColor.r * alpha;
+            colors[colorIdx++] = currentThemeColor.g * alpha;
+            colors[colorIdx++] = currentThemeColor.b * alpha;
+          }
+        }
+      }
+
+      lineGeo.setDrawRange(0, lineIdx / 3);
+      lineGeo.attributes.position.needsUpdate = true;
+      lineGeo.attributes.color.needsUpdate = true;
+
+      nRenderer.render(nScene, nCamera);
+    }
+    animateNeural();
+</script>
 </body>
 </html>
