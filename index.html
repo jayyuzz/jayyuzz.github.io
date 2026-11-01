@@ -283,6 +283,85 @@
       z-index: 1;
       pointer-events: none;
     }
+
+    /* --- STYLE-UI & ANTISLOP-UI POLISH --- */
+    
+    /* Text reveal animation on item change */
+    .ps5-reveal {
+      animation: ps5Reveal 0.38s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+    @keyframes ps5Reveal {
+      0% {
+        opacity: 0;
+        transform: translateY(7px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Specular Light Sheen Reflection on Left Card */
+    .ps5-thumb-card-left::after {
+      content: "";
+      position: absolute;
+      top: -50%;
+      left: -60%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(
+        115deg,
+        transparent 35%,
+        rgba(255, 255, 255, 0.04) 42%,
+        rgba(255, 255, 255, 0.22) 50%,
+        rgba(255, 255, 255, 0.04) 58%,
+        transparent 65%
+      );
+      transform: translateX(-100%) rotate(25deg);
+      transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+      pointer-events: none;
+      z-index: 6;
+    }
+    .ps5-thumb-card-left:hover::after,
+    .ps5-thumb-card-left.trigger-sheen::after {
+      transform: translateX(100%) rotate(25deg);
+    }
+
+    /* Refined Button Micro-Interactions */
+    .ps5-btn-primary {
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .ps5-btn-primary:hover {
+      transform: translateY(-2px) scale(1.02);
+      box-shadow: 0 8px 24px -4px rgba(255, 255, 255, 0.3);
+    }
+    .ps5-btn-primary:active {
+      transform: translateY(0) scale(0.98);
+    }
+    .ps5-btn-circle {
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .ps5-btn-circle:hover {
+      transform: translateY(-2px) scale(1.08);
+      border-color: rgba(255, 255, 255, 0.45);
+      background: rgba(255, 255, 255, 0.16);
+    }
+    .ps5-btn-circle:active {
+      transform: translateY(0) scale(0.95);
+    }
+
+    /* Smooth touch momentum for tiles ribbon */
+    .ps5-ribbon-wrapper {
+      cursor: grab;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+    .ps5-ribbon-wrapper:active {
+      cursor: grabbing;
+    }
+    .ps5-ribbon-wrapper::-webkit-scrollbar {
+      display: none;
+    }
 </style>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 </head>
@@ -875,11 +954,26 @@
       const item = items[activeIndex];
       if (!item) return;
 
-      document.getElementById('item-tag').innerText = item.tag;
-      document.getElementById('item-edition').innerText = item.edition;
-      document.getElementById('item-meta').innerText = item.meta;
-      document.getElementById('item-title').innerText = item.title;
-      document.getElementById('item-desc').innerText = item.desc[currentLang] || item.desc['id'];
+      const tagEl = document.getElementById('item-tag');
+      const editionEl = document.getElementById('item-edition');
+      const metaEl = document.getElementById('item-meta');
+      const titleEl = document.getElementById('item-title');
+      const descEl = document.getElementById('item-desc');
+
+      // Kinetic Text Reveal
+      [tagEl, editionEl, metaEl, titleEl, descEl].forEach(el => {
+        if (el) {
+          el.classList.remove('ps5-reveal');
+          void el.offsetWidth; // trigger reflow
+          el.classList.add('ps5-reveal');
+        }
+      });
+
+      tagEl.innerText = item.tag;
+      editionEl.innerText = item.edition;
+      metaEl.innerText = item.meta;
+      titleEl.innerText = item.title;
+      descEl.innerText = item.desc[currentLang] || item.desc['id'];
 
       // Update Left Hero Thumbnail Card
       const heroThumbImg = document.getElementById('hero-thumb-img');
@@ -892,12 +986,17 @@
         heroThumbMeta.innerText = item.meta;
       }
       if (heroThumbCard) {
-        const glowColor = item.color === 'purple' ? 'rgba(168, 85, 247, 0.4)' :
-                          item.color === 'emerald' ? 'rgba(16, 185, 129, 0.4)' :
-                          item.color === 'amber' ? 'rgba(245, 158, 11, 0.4)' :
-                          item.color === 'blue' ? 'rgba(59, 130, 246, 0.4)' :
-                          'rgba(56, 189, 248, 0.4)';
-        heroThumbCard.style.boxShadow = `0 20px 50px -10px rgba(0, 0, 0, 0.8), 0 0 35px -5px ${glowColor}`;
+        const glowColor = item.color === 'purple' ? 'rgba(168, 85, 247, 0.42)' :
+                          item.color === 'emerald' ? 'rgba(16, 185, 129, 0.42)' :
+                          item.color === 'amber' ? 'rgba(245, 158, 11, 0.42)' :
+                          item.color === 'blue' ? 'rgba(59, 130, 246, 0.42)' :
+                          'rgba(56, 189, 248, 0.42)';
+        heroThumbCard.style.boxShadow = `0 20px 50px -10px rgba(0, 0, 0, 0.8), 0 0 40px -5px ${glowColor}`;
+        
+        // Trigger specular light sheen glide
+        heroThumbCard.classList.remove('trigger-sheen');
+        void heroThumbCard.offsetWidth;
+        heroThumbCard.classList.add('trigger-sheen');
       }
 
       // Tech Stack
@@ -1071,10 +1170,35 @@
     }
     syncVisitors();
 
+    // Ribbon Drag-to-Scroll & Touch Gestures (antislop-layoutmobile)
+    function setupRibbonDrag() {
+      const wrapper = document.getElementById('ribbon-wrapper');
+      if (!wrapper) return;
+      let isDown = false;
+      let startX = 0;
+      let scrollLeft = 0;
+
+      wrapper.addEventListener('mousedown', (e) => {
+        isDown = true;
+        startX = e.pageX - wrapper.offsetLeft;
+        scrollLeft = wrapper.scrollLeft;
+      });
+      wrapper.addEventListener('mouseleave', () => isDown = false);
+      wrapper.addEventListener('mouseup', () => isDown = false);
+      wrapper.addEventListener('mousemove', (e) => {
+        if (!isDown) return;
+        e.preventDefault();
+        const x = e.pageX - wrapper.offsetLeft;
+        const walk = (x - startX) * 1.6;
+        wrapper.scrollLeft = scrollLeft - walk;
+      });
+    }
+
     // Init
     window.addEventListener('DOMContentLoaded', () => {
       switchLang(currentLang);
       renderRibbon();
+      setupRibbonDrag();
     });
   </script>
 <script>
@@ -1174,10 +1298,13 @@
 
     function setNeuralThemeColor(hex) {
       const targetColor = new THREE.Color(hex);
-      currentThemeColor.lerp(targetColor, 0.4);
+      currentThemeColor.lerp(targetColor, 0.5);
       clusterMat.color.copy(currentThemeColor);
       nodesData.forEach(n => {
         n.mesh.material.color.copy(currentThemeColor);
+        // Excitation pulse burst on project switch
+        n.velocity.multiplyScalar(1.25);
+        setTimeout(() => n.velocity.multiplyScalar(0.8), 450);
       });
     }
 
