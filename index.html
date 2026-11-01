@@ -1,1373 +1,747 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="id" class="dark scroll-smooth">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Jaya Hartono Pinuyut — Full-Stack Engineer & AI Specialist Portfolio</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jaya Hartono Pinuyut — Full-Stack Software Engineer & AI Specialist</title>
   
-  <meta name="description" content="Portfolio of Jaya Hartono Pinuyut (jayyuzz) — Full-Stack Software Engineer, EdTech & AI Evaluation Specialist.">
-  <meta property="og:title" content="Jaya Hartono Pinuyut — Interactive Console Portfolio">
-  <meta property="og:description" content="Full-Stack Engineer, EdTech & AI Evaluation Specialist. Interactive console experience.">
+  <meta name="description" content="Portfolio of Jaya Hartono Pinuyut (jayyuzz) — Full-Stack Software Engineer, EdTech & AI Evaluation Specialist. Built with Linear.app precision design system.">
+  <meta property="og:title" content="Jaya Hartono Pinuyut — Full-Stack & AI Portfolio">
+  <meta property="og:description" content="Architecting Real Systems, Evaluating Frontier AI. Next.js 16, Supabase, Laravel, Mercor & Google Certified.">
   <meta property="og:url" content="https://jayyuzz.github.io/">
 
+  <!-- Google Fonts: Inter & JetBrains Mono (Linear.app specification) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="./ps5-hub.css?v=15">
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Lucide Icons -->
   <script src="https://unpkg.com/lucide@latest"></script>
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+            mono: ['JetBrains Mono', 'ui-monospace', 'monospace'],
+          },
+          colors: {
+            linear: {
+              bg: '#08090a',
+              panel: '#0f1011',
+              surface: '#141517',
+              elevated: '#191a1b',
+              border: 'rgba(255, 255, 255, 0.08)',
+              borderSubtle: 'rgba(255, 255, 255, 0.05)',
+              indigo: '#5e6ad2',
+              violet: '#7170ff',
+              hover: '#828fff',
+              textPrimary: '#f7f8f8',
+              textSecondary: '#d0d6e0',
+              textMuted: '#8a8f98',
+              textSubtle: '#62666d',
+            }
+          }
+        }
+      }
+    }
+  </script>
 
   <style>
     :root {
-      --ps-cyan: #38bdf8;
-      --ps-purple: #a855f7;
-      --ps-emerald: #10b981;
-      --ps-amber: #f59e0b;
-      --font-mono: 'JetBrains Mono', monospace;
+      color-scheme: dark;
+    }
+    body {
+      background-color: #08090a;
+      color: #d0d6e0;
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      font-feature-settings: 'cv01' on, 'ss03' on;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      overflow-x: hidden;
     }
 
-    /* Custom tweaks on top of ps5-hub.css */
-    .ps5-tile {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 4px;
-      padding: 6px;
-      cursor: pointer;
-      user-select: none;
-      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-    .ps5-tile-icon {
-      width: 32px;
-      height: 32px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 10px;
+    /* Linear Ambient Gradient Sheen at Top */
+    .linear-hero-glow {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      max-width: 1200px;
+      height: 480px;
+      background: radial-gradient(ellipse 70% 50% at 50% -10%, rgba(94, 106, 210, 0.18), transparent 75%);
       pointer-events: none;
-      transition: transform 0.3s cubic-bezier(0.34, 1.25, 0.64, 1);
+      z-index: 0;
     }
-    .ps5-tile.active .ps5-tile-icon {
-      transform: scale(1.15);
+
+    /* Linear Card Styling */
+    .linear-card {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
     }
-    .ps5-tile-label {
-      font-size: 10px;
-      font-weight: 700;
-      letter-spacing: 0.2px;
-      color: #cbd5e1;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      max-width: 100%;
-      pointer-events: none;
+    .linear-card:hover {
+      background: rgba(255, 255, 255, 0.04);
+      border-color: rgba(255, 255, 255, 0.14);
+      transform: translateY(-2px);
     }
-    .ps5-tile.active .ps5-tile-label {
+
+    /* Linear Primary Button */
+    .btn-linear-primary {
+      background-color: #5e6ad2;
       color: #ffffff;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .btn-linear-primary:hover {
+      background-color: #7170ff;
+      box-shadow: 0 0 20px -3px rgba(113, 112, 255, 0.5);
+      transform: translateY(-1px);
     }
 
-    /* Backdrop gradient themes per active item */
-    .ps5-backdrop-layer {
-      background-size: cover;
-      background-position: center 20%;
-      background-repeat: no-repeat;
-      transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    /* Linear Ghost Button */
+    .btn-linear-ghost {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      color: #f7f8f8;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
     }
-    .backdrop-absensi {
-      background-image: 
-        radial-gradient(ellipse 95% 80% at 70% 30%, rgba(6, 182, 212, 0.35) 0%, rgba(3, 8, 14, 0.85) 75%),
-        linear-gradient(180deg, rgba(3, 8, 14, 0.4) 0%, rgba(3, 8, 14, 0.95) 100%),
-        url('./assets/smk3-absensi.png');
-    }
-    .backdrop-marry {
-      background-image: 
-        radial-gradient(ellipse 95% 80% at 70% 30%, rgba(168, 85, 247, 0.35) 0%, rgba(10, 4, 18, 0.85) 75%),
-        linear-gradient(180deg, rgba(10, 4, 18, 0.4) 0%, rgba(10, 4, 18, 0.95) 100%),
-        url('./assets/marry-preview.png');
-    }
-    .backdrop-cafe {
-      background-image: 
-        radial-gradient(ellipse 95% 80% at 70% 30%, rgba(16, 185, 129, 0.35) 0%, rgba(3, 12, 8, 0.85) 75%),
-        linear-gradient(180deg, rgba(3, 12, 8, 0.4) 0%, rgba(3, 12, 8, 0.95) 100%),
-        url('./assets/cafe-pos.png');
-    }
-    .backdrop-school {
-      background-image: 
-        radial-gradient(ellipse 95% 80% at 70% 30%, rgba(59, 130, 246, 0.35) 0%, rgba(4, 10, 22, 0.85) 75%),
-        linear-gradient(180deg, rgba(4, 10, 22, 0.4) 0%, rgba(4, 10, 22, 0.95) 100%),
-        url('./assets/smkn3-website.png');
-    }
-    .backdrop-edtech {
-      background-image: 
-        radial-gradient(ellipse 95% 80% at 70% 30%, rgba(245, 158, 11, 0.32) 0%, rgba(18, 10, 3, 0.85) 75%),
-        linear-gradient(180deg, rgba(18, 10, 3, 0.4) 0%, rgba(18, 10, 3, 0.95) 100%),
-        url('./assets/edtech-preview.png');
-    }
-    .backdrop-cv {
-      background-image: 
-        radial-gradient(ellipse 95% 80% at 70% 30%, rgba(14, 165, 233, 0.32) 0%, rgba(3, 10, 18, 0.85) 75%),
-        linear-gradient(180deg, rgba(3, 10, 18, 0.4) 0%, rgba(3, 10, 18, 0.95) 100%),
-        url('./assets/cv-preview.png');
-    }
-
-    /* Modal / Drawer for Project Details & Guide */
-    .ps5-subpage-modal {
-      position: fixed;
-      inset: 0;
-      background: rgba(3, 5, 8, 0.94);
-      backdrop-filter: blur(24px);
-      -webkit-backdrop-filter: blur(24px);
-      z-index: 100;
-      opacity: 0;
-      visibility: hidden;
-      transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-      display: flex;
-      flex-direction: column;
-    }
-    .ps5-subpage-modal.is-open {
-      opacity: 1;
-      visibility: visible;
-    }
-
-    /* Language Switcher in System Bar */
-    .ps5-lang-toggle {
-      display: flex;
-      align-items: center;
-      background: rgba(255, 255, 255, 0.08);
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      border-radius: 20px;
-      padding: 2px;
-      gap: 2px;
-      height: 32px;
-    }
-    .ps5-lang-btn {
-      background: transparent;
-      border: none;
-      color: rgba(255, 255, 255, 0.6);
-      font-size: 11px;
-      font-weight: 700;
-      font-family: var(--font-family);
-      padding: 3px 9px;
-      border-radius: 14px;
-      cursor: pointer;
-      transition: all 0.2s ease;
-    }
-    .ps5-lang-btn.active {
-      background: #ffffff;
-      color: #000000;
-      box-shadow: 0 2px 8px rgba(255, 255, 255, 0.25);
-    }
-
-    /* Visitor Pill in Top Bar */
-    .ps5-visitor-pill {
-      display: flex;
-      align-items: center;
-      gap: 6px;
+    .btn-linear-ghost:hover {
       background: rgba(255, 255, 255, 0.06);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 16px;
-      padding: 4px 10px;
-      font-size: 11px;
-      font-family: var(--font-mono);
-      color: #94a3b8;
+      border-color: rgba(255, 255, 255, 0.18);
+      color: #ffffff;
+      transform: translateY(-1px);
     }
-    .live-dot {
+
+    /* Pill Badges */
+    .linear-pill {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      color: #8a8f98;
+      font-size: 11px;
+      font-weight: 500;
+    }
+
+    /* Status dot */
+    .status-dot-active {
       width: 6px;
       height: 6px;
-      background: #10b981;
       border-radius: 50%;
+      background-color: #10b981;
       box-shadow: 0 0 8px #10b981;
-      animation: pulse 2s infinite;
-    }
-    @keyframes pulse {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.4; transform: scale(0.85); }
     }
 
-    /* Tech Stack Pills in Details */
-    .ps5-tech-pill {
-      font-size: 11px;
-      font-family: var(--font-mono);
-      padding: 3px 8px;
-      border-radius: 6px;
-      background: rgba(255, 255, 255, 0.06);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      color: #cbd5e1;
+    /* Custom scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
     }
-  
-    /* Large Animated Project Showcase Card on Left */
-    .ps5-hero-layout {
-      display: flex;
-      align-items: center;
-      gap: clamp(24px, 3.5vw, 48px);
-      width: 100%;
+    ::-webkit-scrollbar-track {
+      background: #08090a;
     }
-    .ps5-thumb-card-left {
-      width: clamp(280px, 28vw, 420px);
-      height: clamp(175px, 17.5vw, 255px);
-      border-radius: 20px;
-      position: relative;
-      overflow: hidden;
-      flex-shrink: 0;
-      border: 1px solid rgba(255, 255, 255, 0.18);
-      background: #090d16;
-      box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.8), 0 0 35px -5px rgba(56, 189, 248, 0.28);
-      cursor: pointer;
-      transition: all 0.45s cubic-bezier(0.16, 1, 0.3, 1);
-      animation: floatHeroThumb 6s ease-in-out infinite;
+    ::-webkit-scrollbar-thumb {
+      background: #1e2024;
+      border-radius: 3px;
     }
-    @keyframes floatHeroThumb {
-      0%, 100% { transform: translateY(0px) rotate(0deg); }
-      50% { transform: translateY(-8px) rotate(0.4deg); }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #5e6ad2;
     }
-    .ps5-thumb-card-left:hover {
-      transform: translateY(-5px) scale(1.03);
-      border-color: rgba(255, 255, 255, 0.45);
-      box-shadow: 0 25px 60px -10px rgba(0, 0, 0, 0.9), 0 0 45px rgba(56, 189, 248, 0.45);
-    }
-    .ps5-thumb-img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: center top;
-      transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease;
-    }
-    .ps5-thumb-card-left:hover .ps5-thumb-img {
-      transform: scale(1.06);
-    }
-    .ps5-thumb-overlay {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(180deg, transparent 40%, rgba(3, 7, 18, 0.88) 100%);
-      pointer-events: none;
-    }
-    .ps5-thumb-badge-floating {
-      position: absolute;
-      bottom: 12px;
-      left: 12px;
-      right: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      font-size: 11px;
-      font-family: var(--font-mono);
-      color: #e2e8f0;
-      pointer-events: none;
-    }
-    .ps5-thumb-pill {
-      background: rgba(15, 23, 42, 0.85);
-      backdrop-filter: blur(8px);
-      padding: 3px 8px;
-      border-radius: 6px;
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      font-weight: 600;
-    }
-    @media (max-width: 900px) {
-      .ps5-hero-layout {
-        flex-direction: column-reverse;
-        align-items: stretch;
-      }
-      .ps5-thumb-card-left {
-        width: 100%;
-        height: 200px;
-        margin-bottom: 12px;
-      }
-    }
-
-    /* 3D Neural Network AI Canvas Background */
-    #neural-canvas {
-      position: fixed;
-      inset: 0;
-      width: 100vw;
-      height: 100vh;
-      z-index: 1;
-      pointer-events: none;
-    }
-
-    /* --- STYLE-UI & ANTISLOP-UI POLISH --- */
-    
-    /* Text reveal animation on item change */
-    .ps5-reveal {
-      animation: ps5Reveal 0.38s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-    }
-    @keyframes ps5Reveal {
-      0% {
-        opacity: 0;
-        transform: translateY(7px);
-      }
-      100% {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    /* Specular Light Sheen Reflection on Left Card */
-    .ps5-thumb-card-left::after {
-      content: "";
-      position: absolute;
-      top: -50%;
-      left: -60%;
-      width: 200%;
-      height: 200%;
-      background: linear-gradient(
-        115deg,
-        transparent 35%,
-        rgba(255, 255, 255, 0.04) 42%,
-        rgba(255, 255, 255, 0.22) 50%,
-        rgba(255, 255, 255, 0.04) 58%,
-        transparent 65%
-      );
-      transform: translateX(-100%) rotate(25deg);
-      transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-      pointer-events: none;
-      z-index: 6;
-    }
-    .ps5-thumb-card-left:hover::after,
-    .ps5-thumb-card-left.trigger-sheen::after {
-      transform: translateX(100%) rotate(25deg);
-    }
-
-    /* Refined Button Micro-Interactions */
-    .ps5-btn-primary {
-      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-    .ps5-btn-primary:hover {
-      transform: translateY(-2px) scale(1.02);
-      box-shadow: 0 8px 24px -4px rgba(255, 255, 255, 0.3);
-    }
-    .ps5-btn-primary:active {
-      transform: translateY(0) scale(0.98);
-    }
-    .ps5-btn-circle {
-      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-    .ps5-btn-circle:hover {
-      transform: translateY(-2px) scale(1.08);
-      border-color: rgba(255, 255, 255, 0.45);
-      background: rgba(255, 255, 255, 0.16);
-    }
-    .ps5-btn-circle:active {
-      transform: translateY(0) scale(0.95);
-    }
-
-    /* Smooth touch momentum for tiles ribbon */
-    .ps5-ribbon-wrapper {
-      cursor: grab;
-      -webkit-overflow-scrolling: touch;
-      scrollbar-width: none;
-    }
-    .ps5-ribbon-wrapper:active {
-      cursor: grabbing;
-    }
-    .ps5-ribbon-wrapper::-webkit-scrollbar {
-      display: none;
-    }
-</style>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  </style>
 </head>
-<body>
+<body class="selection:bg-linear-indigo/30 selection:text-white relative">
 
-  <!-- 3D Neural AI Background Canvas -->
-  <canvas id="neural-canvas"></canvas>
-  <div class="ps5-backdrop-container" id="backdrop-container">
-    <div class="ps5-vignette"></div>
-    <div class="ps5-glow-beam"></div>
-  </div>
+  <!-- Ambient Ambient Radial Sheen -->
+  <div class="linear-hero-glow"></div>
 
-  <!-- Noise Overlay -->
-  <div class="noise-overlay"></div>
+  <!-- STICKY NAVIGATION (Linear Style) -->
+  <header class="sticky top-0 z-50 w-full border-b border-white/[0.06] bg-[#08090a]/80 backdrop-blur-md">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between">
+      <!-- Logo & Profile -->
+      <a href="#hero" class="flex items-center gap-3 group">
+        <div class="w-7 h-7 rounded-lg bg-linear-indigo/20 border border-linear-indigo/40 flex items-center justify-center font-bold text-xs text-linear-violet group-hover:border-linear-violet transition-colors">
+          JP
+        </div>
+        <div class="flex items-center gap-2">
+          <span class="font-semibold text-sm text-[#f7f8f8] tracking-tight group-hover:text-white transition-colors">Jaya Hartono Pinuyut</span>
+          <span class="text-xs font-mono text-linear-textSubtle hidden sm:inline">/ @jayyuzz</span>
+        </div>
+      </a>
 
-  <!-- PS5 Application Surface -->
-  <div class="ps5-app">
-
-    <!-- 1. TOP BAR -->
-    <header class="ps5-topbar">
-      <!-- Hub Switcher (Category Tabs) -->
-      <nav class="ps5-hub-tabs" aria-label="Main Navigation">
-        <button class="ps5-hub-tab active" id="tab-all" onclick="filterCategory('all')" type="button">All Works</button>
-        <button class="ps5-hub-tab" id="tab-production" onclick="filterCategory('production')" type="button">Production Systems</button>
-        <button class="ps5-hub-tab" id="tab-ai" onclick="filterCategory('ai')" type="button">EdTech &amp; AI</button>
-        <button class="ps5-hub-tab" id="tab-credentials" onclick="filterCategory('credentials')" type="button">Credentials</button>
+      <!-- Center Links -->
+      <nav class="hidden md:flex items-center gap-6 text-[13px] text-linear-textMuted font-medium">
+        <a href="#projects" class="hover:text-linear-textPrimary transition-colors" data-i18n="navProjects">Projects</a>
+        <a href="#edtech-ai" class="hover:text-linear-textPrimary transition-colors" data-i18n="navAi">EdTech &amp; AI</a>
+        <a href="#stack" class="hover:text-linear-textPrimary transition-colors" data-i18n="navStack">Stack</a>
+        <a href="#credentials" class="hover:text-linear-textPrimary transition-colors" data-i18n="navCreds">Credentials</a>
+        <a href="#contact" class="hover:text-linear-textPrimary transition-colors" data-i18n="navContact">Contact</a>
       </nav>
 
-      <!-- System Status Bar -->
-      <div class="ps5-system-bar">
-        <!-- Live Visitor Stat Badge -->
-        <div class="ps5-visitor-pill hidden md:flex" title="Live Global Traffic">
-          <span class="live-dot"></span>
-          <span id="top-visitor-stat">140+ Visits</span>
+      <!-- Right Controls: Language & Socials -->
+      <div class="flex items-center gap-3">
+        <!-- Language Switcher Pill -->
+        <div class="flex items-center bg-white/[0.04] border border-white/[0.08] rounded-md p-0.5 text-xs font-mono">
+          <button id="btnLangId" onclick="switchLang('id')" class="px-2 py-0.5 rounded text-[11px] font-semibold text-white bg-white/[0.1] transition-all">ID</button>
+          <button id="btnLangEn" onclick="switchLang('en')" class="px-2 py-0.5 rounded text-[11px] font-semibold text-linear-textMuted hover:text-white transition-all">EN</button>
         </div>
 
-        <!-- Language Switcher [ ID | EN ] -->
-        <div class="ps5-lang-toggle">
-          <button class="ps5-lang-btn active" id="btnLangId" onclick="switchLang('id')">ID</button>
-          <button class="ps5-lang-btn" id="btnLangEn" onclick="switchLang('en')">EN</button>
-        </div>
-
-        <!-- Right System Actions -->
-        <div class="ps5-system-actions">
-          <a class="ps5-sys-btn" href="https://github.com/jayyuzz" target="_blank" rel="noopener" aria-label="GitHub Profile" title="GitHub: @jayyuzz">
-            <svg viewBox="0 0 24 24" fill="currentColor">
-              <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/>
-            </svg>
-          </a>
-          <a class="ps5-sys-btn" href="https://www.linkedin.com/in/jaya-hartono-pinuyut-1827b6410" target="_blank" rel="noopener" aria-label="LinkedIn" title="LinkedIn Profile">
-            <svg viewBox="0 0 24 24" fill="currentColor">
-              <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
-            </svg>
-          </a>
-          <a class="ps5-sys-btn" href="https://t.me/jayyuzz" target="_blank" rel="noopener" aria-label="Telegram" title="Telegram: @jayyuzz">
-            <svg viewBox="0 0 24 24" fill="currentColor">
-              <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221l-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.446 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.121l-6.871 4.326-2.962-.924c-.643-.204-.657-.643.136-.953l11.57-4.461c.537-.194 1.006.128.832.942z"/>
-            </svg>
-          </a>
-          <span class="ps5-clock" id="live-clock">--:--</span>
-        </div>
-      </div>
-    </header>
-
-    <!-- 2. CENTER SECTION: HORIZONTAL RIBBON TRACK -->
-    <section class="ps5-center-section">
-      <div class="ps5-ribbon-wrapper" id="ribbon-wrapper">
-        <div class="ps5-tiles-track" id="tiles-track" role="listbox">
-          <!-- Populated dynamically via JS -->
-        </div>
-      </div>
-    </section>
-
-    <!-- 3. DETAILS SECTION: ACTIVE ITEM HERO WITH ANIMATED LEFT THUMBNAIL -->
-    <section class="ps5-details-section">
-      <div class="ps5-hero-layout">
-        
-        <!-- Large Animated Thumbnail Card on Left -->
-        <div class="ps5-thumb-card-left" id="hero-thumb-card" onclick="openDetailsModal()" title="Klik untuk lihat detail arsitektur">
-          <img id="hero-thumb-img" src="./assets/smk3-absensi.png" alt="Project Thumbnail" class="ps5-thumb-img">
-          <div class="ps5-thumb-overlay"></div>
-          <div class="ps5-thumb-badge-floating">
-            <span class="ps5-thumb-pill flex items-center gap-1.5" id="hero-thumb-badge">
-              <span class="live-dot"></span> Live Preview
-            </span>
-            <span class="ps5-thumb-pill" id="hero-thumb-meta">1,500+ Users</span>
-          </div>
-        </div>
-
-        <!-- Details Info on Right -->
-        <div class="ps5-game-info">
-        <!-- Badge Pill Hierarchy -->
-        <div class="ps5-edition-badge">
-          <span class="ps-badge-pill" id="item-tag">Production Platform</span>
-          <span class="ps-badge-meta" id="item-edition">Multi-Role System</span>
-          <span class="ps-badge-sep">•</span>
-          <span class="ps-badge-meta" id="item-meta">1,500+ Daily Users</span>
-        </div>
-
-        <h1 class="ps5-game-title" id="item-title">SMK3 Absensi Digital</h1>
-
-        <p class="ps5-game-desc" id="item-desc">
-          Sistem kehadiran multi-peran dengan verifikasi biometrik wajah di browser (face-api.js), validasi GPS geofencing (Haversine), dan notifikasi otomatis WhatsApp.
-        </p>
-
-        <!-- Tech Stack Pills Row -->
-        <div class="flex flex-wrap items-center gap-1.5 pb-2" id="item-tech-stack">
-          <!-- Rendered via JS -->
-        </div>
-
-        <!-- Quick Action Buttons -->
-        <div class="ps5-actions-row">
-          <a class="ps5-btn-primary" id="btn-live-launch" href="#" target="_blank" rel="noopener" title="Buka Aplikasi Langsung">
-            <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
-            <span id="btn-live-text">Launch Live App</span>
-          </a>
-
-          <button class="ps5-btn-circle" id="btn-view-details" onclick="openDetailsModal()" type="button" title="Lihat Detail Arsitektur & Dokumentasi">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-              <circle cx="12" cy="12" r="10"></circle>
-              <line x1="12" y1="16" x2="12" y2="12"></line>
-              <line x1="12" y1="8" x2="12.01" y2="8"></line>
-            </svg>
-          </button>
-
-          <a class="ps5-btn-circle" id="btn-github-link" href="https://github.com/jayyuzz" target="_blank" rel="noopener" title="Lihat Showcase di GitHub">
-            <svg viewBox="0 0 24 24" fill="currentColor">
-              <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/>
-            </svg>
-          </a>
-        </div>
-        </div>
-      </div>
-
-      <!-- Mobile Controller Remote Controls -->
-      <div class="ps5-mobile-remote" id="ps5-mobile-remote" role="group" aria-label="Remote navigation">
-        <div class="ps5-remote-cluster">
-          <div class="ps5-remote-keys">
-            <button class="kbd ps5-remote-key" id="remote-prev" onclick="navigateItem(-1)" type="button" aria-label="Previous item">
-              <svg class="kbd-arrow" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
-                <line x1="19" y1="12" x2="5" y2="12"></line>
-                <polyline points="12 19 5 12 12 5"></polyline>
-              </svg>
-            </button>
-            <button class="kbd ps5-remote-key" id="remote-next" onclick="navigateItem(1)" type="button" aria-label="Next item">
-              <svg class="kbd-arrow" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
-                <line x1="5" y1="12" x2="19" y2="12"></line>
-                <polyline points="12 5 19 12 12 19"></polyline>
-              </svg>
-            </button>
-          </div>
-        </div>
-
-        <div class="ps5-remote-cluster">
-          <button class="kbd ps5-remote-key ps5-remote-key--wide" onclick="launchActiveItem()" type="button">Enter</button>
-        </div>
-
-        <div class="ps5-remote-cluster">
-          <button class="kbd ps5-remote-key ps5-remote-key--wide" onclick="cycleHubTab()" type="button">Tab</button>
-        </div>
-      </div>
-    </section>
-
-    <!-- 4. BOTTOM HELPER / CONTROLLER BAR -->
-    <footer class="ps5-bottom-bar">
-      <div class="ps5-controls-legend">
-        <!-- Far Left: Contact Quick Link -->
-        <a class="ps5-back-to-web-btn" href="mailto:jaya.pinuyut@gmail.com" title="Email: jaya.pinuyut@gmail.com">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <rect x="2" y="4" width="20" height="16" rx="2"></rect>
-            <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
-          </svg>
+        <a href="https://github.com/jayyuzz" target="_blank" rel="noopener" class="p-1.5 text-linear-textMuted hover:text-white transition-colors" title="GitHub: @jayyuzz">
+          <i data-lucide="github" class="w-4 h-4"></i>
+        </a>
+        <a href="https://www.linkedin.com/in/jaya-hartono-pinuyut-1827b6410" target="_blank" rel="noopener" class="p-1.5 text-linear-textMuted hover:text-white transition-colors" title="LinkedIn">
+          <i data-lucide="linkedin" class="w-4 h-4"></i>
+        </a>
+        <a href="mailto:jaya.pinuyut@gmail.com" class="hidden sm:inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-medium bg-white/[0.05] hover:bg-white/[0.09] text-white border border-white/[0.08] transition-all">
+          <i data-lucide="mail" class="w-3.5 h-3.5 text-linear-violet"></i>
           <span>Email</span>
         </a>
-
-        <!-- Keyboard Shortcut Legend -->
-        <span class="ps5-key-pill">
-          <kbd class="kbd">←</kbd>
-          <span class="kbd-sep">/</span>
-          <kbd class="kbd">→</kbd>
-          <span class="kbd-label" data-i18n="legendNavigate">Navigate</span>
-        </span>
-
-        <span class="ps5-key-pill">
-          <kbd class="kbd">Enter</kbd>
-          <span class="kbd-label" data-i18n="legendLaunch">Launch</span>
-        </span>
-
-        <span class="ps5-key-pill">
-          <kbd class="kbd">D</kbd>
-          <span class="kbd-label" data-i18n="legendDetails">Details</span>
-        </span>
-
-        <span class="ps5-key-pill">
-          <kbd class="kbd">M</kbd>
-          <span class="kbd-label" data-i18n="legendCategory">Category</span>
-        </span>
-
-        <span class="ps5-key-pill">
-          <kbd class="kbd">L</kbd>
-          <span class="kbd-label">ID / EN</span>
-        </span>
       </div>
-    </footer>
-
-  </div>
-
-  <!-- DETAILS & DOCUMENTATION MODAL / SUBPAGE -->
-  <div class="ps5-subpage-modal" id="details-modal">
-    <div class="ps5-subpage-shell flex-1 flex flex-col overflow-hidden">
-      <header class="ps5-subpage-topbar shrink-0">
-        <div class="ps5-subpage-top-left">
-          <button class="ps5-subpage-back-btn" onclick="closeDetailsModal()" type="button" title="Close (Esc)">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-              <polyline points="15 18 9 12 15 6"></polyline>
-            </svg>
-            <span data-i18n="btnBack">Back</span>
-            <kbd class="kbd ps5-btn-hint-badge">Esc</kbd>
-          </button>
-          <div class="ps5-subpage-crumb">
-            <span class="crumb-hub" id="modal-crumb-cat">Portfolio</span>
-            <span class="crumb-sep">/</span>
-            <span class="crumb-current" id="modal-crumb-title">SMK3 Absensi</span>
-          </div>
-        </div>
-        <div class="ps5-subpage-actions-right">
-          <span class="ps-subpage-badge font-mono" id="modal-badge-id">JAYA-PINUYUT</span>
-        </div>
-      </header>
-
-      <main class="ps5-subpage-scroll flex-1 overflow-y-auto p-6 sm:p-12">
-        <div class="max-w-4xl mx-auto space-y-8">
-          <div class="flex flex-col sm:flex-row items-start sm:items-center gap-6 pb-6 border-b border-white/10">
-            <div class="w-16 h-16 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center shrink-0" id="modal-icon-box">
-              <i data-lucide="layers" class="w-8 h-8 text-cyan-400"></i>
-            </div>
-            <div>
-              <div class="text-xs font-mono text-cyan-400 uppercase tracking-widest" id="modal-meta-top">Production Platform</div>
-              <h2 class="text-3xl sm:text-4xl font-display font-extrabold text-white mt-1" id="modal-title">SMK3 Absensi</h2>
-              <p class="text-slate-300 text-sm sm:text-base mt-2" id="modal-summary">Deskripsi lengkap proyek</p>
-            </div>
-          </div>
-
-          <!-- Modal Body Content -->
-          <div class="space-y-6 text-slate-300 text-sm leading-relaxed" id="modal-body-content">
-            <!-- Injected dynamically -->
-          </div>
-
-          <!-- Modal Action Links -->
-          <div class="pt-6 border-t border-white/10 flex flex-wrap items-center gap-4" id="modal-actions-footer">
-            <!-- Injected dynamically -->
-          </div>
-        </div>
-      </main>
     </div>
-  </div>
+  </header>
 
-  <!-- PS5 AUDIO & LOGIC SCRIPT -->
+  <!-- MAIN CONTAINER -->
+  <main class="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 pt-16 pb-24 space-y-28">
+
+    <!-- HERO SECTION -->
+    <section id="hero" class="space-y-6 max-w-3xl pt-4 sm:pt-10">
+      <!-- Status Badge -->
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full linear-pill text-xs">
+        <span class="status-dot-active"></span>
+        <span data-i18n="heroBadge">Available for Full-Stack, AI Evaluation &amp; Contract Roles</span>
+      </div>
+
+      <!-- Compressed Hero Headline -->
+      <h1 class="text-4xl sm:text-6xl font-semibold text-linear-textPrimary tracking-[-0.035em] leading-[1.08]">
+        Architecting <span class="text-white">real systems</span>,<br>
+        evaluating <span class="text-linear-violet">frontier AI</span>.
+      </h1>
+
+      <!-- Bio / Description -->
+      <p class="text-base sm:text-lg text-linear-textSecondary leading-relaxed font-normal" data-i18n="heroDesc">
+        Full-Stack Software Engineer &amp; Educator based in Kotamobagu, Indonesia. Experienced in building multi-role production platforms, client-side biometrics, cloud POS, and conducting rigorous AI evaluation &amp; localization for frontier research labs.
+      </p>
+
+      <!-- Action Buttons -->
+      <div class="flex flex-wrap items-center gap-3 pt-2">
+        <a href="#projects" class="btn-linear-primary px-4 py-2.5 rounded-lg text-xs font-medium flex items-center gap-2">
+          <i data-lucide="layers" class="w-4 h-4"></i>
+          <span data-i18n="btnViewWork">Explore Production Work</span>
+        </a>
+        <a href="CV_Jaya_Hartono_Pinuyut.pdf" target="_blank" class="btn-linear-ghost px-4 py-2.5 rounded-lg text-xs font-medium flex items-center gap-2">
+          <i data-lucide="file-text" class="w-4 h-4 text-linear-textMuted"></i>
+          <span data-i18n="btnCv">Curriculum Vitae (PDF)</span>
+        </a>
+        <a href="https://ko-fi.com/marry2" target="_blank" rel="noopener" class="btn-linear-ghost px-3.5 py-2.5 rounded-lg text-xs font-medium text-amber-300 hover:text-amber-200 flex items-center gap-1.5">
+          <i data-lucide="coffee" class="w-4 h-4 text-amber-400"></i>
+          <span>Ko-fi</span>
+        </a>
+      </div>
+
+      <!-- Key Metrics Row (Linear Precision Style) -->
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-8 border-t border-white/[0.06]">
+        <div class="p-3 rounded-lg linear-card">
+          <div class="text-2xl font-semibold text-white tracking-tight">1,500+</div>
+          <div class="text-xs text-linear-textMuted mt-0.5" data-i18n="statUsers">Users Served (Daily)</div>
+        </div>
+        <div class="p-3 rounded-lg linear-card">
+          <div class="text-2xl font-semibold text-linear-violet tracking-tight">4</div>
+          <div class="text-xs text-linear-textMuted mt-0.5" data-i18n="statPlatforms">Active Platforms</div>
+        </div>
+        <div class="p-3 rounded-lg linear-card">
+          <div class="text-2xl font-semibold text-emerald-400 tracking-tight">Mercor</div>
+          <div class="text-xs text-linear-textMuted mt-0.5">Certified Agent Evaluator</div>
+        </div>
+        <div class="p-3 rounded-lg linear-card">
+          <div class="text-2xl font-semibold text-linear-textPrimary tracking-tight">Next.js 16</div>
+          <div class="text-xs text-linear-textMuted mt-0.5">Supabase RLS Stack</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FEATURED PROJECTS (Linear Detailed Cards) -->
+    <section id="projects" class="space-y-6">
+      <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 pb-4 border-b border-white/[0.06]">
+        <div>
+          <div class="text-xs font-mono text-linear-violet uppercase tracking-wider">Production Engineering</div>
+          <h2 class="text-2xl sm:text-3xl font-semibold text-white tracking-tight mt-1" data-i18n="projectsHeading">
+            Featured Systems in Operation
+          </h2>
+        </div>
+        <div class="text-xs text-linear-textMuted font-mono">
+          4 LIVE DEPLOYMENTS
+        </div>
+      </div>
+
+      <!-- Project Cards Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+        <!-- PROJECT 1: SMK3 Absensi -->
+        <div class="linear-card rounded-xl p-5 sm:p-6 flex flex-col justify-between group">
+          <div class="space-y-4">
+            <div class="aspect-video w-full rounded-lg overflow-hidden border border-white/[0.06] bg-black/40 relative">
+              <img src="./assets/smk3-absensi.png" alt="SMK3 Absensi" class="w-full h-full object-cover object-top group-hover:scale-[1.02] transition-transform duration-300">
+              <div class="absolute bottom-2 left-2 px-2 py-0.5 rounded text-[10px] font-mono bg-black/70 backdrop-blur border border-white/10 text-cyan-300">
+                pr.smkn3kotamobagu.sch.id
+              </div>
+            </div>
+
+            <div>
+              <div class="flex items-center justify-between">
+                <h3 class="text-lg font-semibold text-white group-hover:text-linear-violet transition-colors">SMK3 Absensi Digital</h3>
+                <span class="text-xs font-mono text-emerald-400 bg-emerald-950/60 border border-emerald-800/60 px-2 py-0.5 rounded">1,500+ Users</span>
+              </div>
+              <p class="text-xs text-linear-textSecondary mt-2 leading-relaxed" data-i18n="p1Desc">
+                Multi-role digital attendance ecosystem for SMKN 3 Kotamobagu (Principal, Admin, Teachers, Staff, Students, Parents). Features in-browser biometric face verification (face-api.js), GPS Haversine geofencing, and automated WhatsApp alert gateways.
+              </p>
+            </div>
+
+            <div class="flex flex-wrap gap-1.5 pt-1">
+              <span class="linear-pill px-2 py-0.5 rounded">Next.js 16</span>
+              <span class="linear-pill px-2 py-0.5 rounded">React 19</span>
+              <span class="linear-pill px-2 py-0.5 rounded">TypeScript</span>
+              <span class="linear-pill px-2 py-0.5 rounded">Supabase RLS</span>
+              <span class="linear-pill px-2 py-0.5 rounded">face-api.js</span>
+              <span class="linear-pill px-2 py-0.5 rounded">Expo RN</span>
+            </div>
+          </div>
+
+          <div class="pt-5 mt-5 border-t border-white/[0.06] flex items-center justify-between text-xs">
+            <a href="https://pr.smkn3kotamobagu.sch.id" target="_blank" rel="noopener" class="text-linear-violet hover:text-linear-hover font-medium flex items-center gap-1">
+              <span>Open Deployment</span> <i data-lucide="arrow-up-right" class="w-3.5 h-3.5"></i>
+            </a>
+            <a href="https://github.com/jayyuzz/smk3-absensi-showcase" target="_blank" rel="noopener" class="text-linear-textMuted hover:text-white flex items-center gap-1">
+              <i data-lucide="github" class="w-3.5 h-3.5"></i> Showcase
+            </a>
+          </div>
+        </div>
+
+        <!-- PROJECT 2: marry -->
+        <div class="linear-card rounded-xl p-5 sm:p-6 flex flex-col justify-between group">
+          <div class="space-y-4">
+            <div class="aspect-video w-full rounded-lg overflow-hidden border border-white/[0.06] bg-black/40 relative">
+              <img src="./assets/marry-preview.png" alt="marry" class="w-full h-full object-cover object-top group-hover:scale-[1.02] transition-transform duration-300">
+              <div class="absolute bottom-2 left-2 px-2 py-0.5 rounded text-[10px] font-mono bg-black/70 backdrop-blur border border-white/10 text-purple-300">
+                marry.myap.web.id
+              </div>
+            </div>
+
+            <div>
+              <div class="flex items-center justify-between">
+                <h3 class="text-lg font-semibold text-white group-hover:text-linear-violet transition-colors">marry 💍</h3>
+                <span class="text-xs font-mono text-purple-400 bg-purple-950/60 border border-purple-800/60 px-2 py-0.5 rounded">50+ Languages</span>
+              </div>
+              <p class="text-xs text-linear-textSecondary mt-2 leading-relaxed" data-i18n="p2Desc">
+                AI-driven global market prospect analyzer for independent digital creators. Estimates international demand, competitor pricing tiers, and generates step-by-step roadmaps across 50+ languages with Ko-fi monetization webhooks.
+              </p>
+            </div>
+
+            <div class="flex flex-wrap gap-1.5 pt-1">
+              <span class="linear-pill px-2 py-0.5 rounded">Node.js Express</span>
+              <span class="linear-pill px-2 py-0.5 rounded">Supabase Auth</span>
+              <span class="linear-pill px-2 py-0.5 rounded">AI Gateway</span>
+              <span class="linear-pill px-2 py-0.5 rounded">Ko-fi Webhook</span>
+              <span class="linear-pill px-2 py-0.5 rounded">Vercel Serverless</span>
+            </div>
+          </div>
+
+          <div class="pt-5 mt-5 border-t border-white/[0.06] flex items-center justify-between text-xs">
+            <a href="https://marry.myap.web.id" target="_blank" rel="noopener" class="text-linear-violet hover:text-linear-hover font-medium flex items-center gap-1">
+              <span>Open Deployment</span> <i data-lucide="arrow-up-right" class="w-3.5 h-3.5"></i>
+            </a>
+            <a href="https://github.com/jayyuzz/marry" target="_blank" rel="noopener" class="text-linear-textMuted hover:text-white flex items-center gap-1">
+              <i data-lucide="github" class="w-3.5 h-3.5"></i> Open Source
+            </a>
+          </div>
+        </div>
+
+        <!-- PROJECT 3: Paylabs Cafe POS -->
+        <div class="linear-card rounded-xl p-5 sm:p-6 flex flex-col justify-between group">
+          <div class="space-y-4">
+            <div class="aspect-video w-full rounded-lg overflow-hidden border border-white/[0.06] bg-black/40 relative">
+              <img src="./assets/cafe-pos.png" alt="Cafe POS" class="w-full h-full object-cover object-top group-hover:scale-[1.02] transition-transform duration-300">
+              <div class="absolute bottom-2 left-2 px-2 py-0.5 rounded text-[10px] font-mono bg-black/70 backdrop-blur border border-white/10 text-emerald-300">
+                cafe.mve.my.id
+              </div>
+            </div>
+
+            <div>
+              <div class="flex items-center justify-between">
+                <h3 class="text-lg font-semibold text-white group-hover:text-linear-violet transition-colors">Paylabs Cafe POS</h3>
+                <span class="text-xs font-mono text-emerald-400 bg-emerald-950/60 border border-emerald-800/60 px-2 py-0.5 rounded">BOM Inventory</span>
+              </div>
+              <p class="text-xs text-linear-textSecondary mt-2 leading-relaxed" data-i18n="p3Desc">
+                Integrated cloud restaurant suite featuring cashier shift reconciliation, Kitchen Display System (KDS), table QR ordering, driver dispatch, and automated raw material stock deduction based on recipe definitions.
+              </p>
+            </div>
+
+            <div class="flex flex-wrap gap-1.5 pt-1">
+              <span class="linear-pill px-2 py-0.5 rounded">Next.js</span>
+              <span class="linear-pill px-2 py-0.5 rounded">TypeScript</span>
+              <span class="linear-pill px-2 py-0.5 rounded">Supabase PostgreSQL</span>
+              <span class="linear-pill px-2 py-0.5 rounded">Recharts</span>
+              <span class="linear-pill px-2 py-0.5 rounded">Thermal Print API</span>
+            </div>
+          </div>
+
+          <div class="pt-5 mt-5 border-t border-white/[0.06] flex items-center justify-between text-xs">
+            <a href="https://cafe.mve.my.id" target="_blank" rel="noopener" class="text-linear-violet hover:text-linear-hover font-medium flex items-center gap-1">
+              <span>Open Deployment</span> <i data-lucide="arrow-up-right" class="w-3.5 h-3.5"></i>
+            </a>
+            <a href="https://github.com/jayyuzz/cafe-pos-showcase" target="_blank" rel="noopener" class="text-linear-textMuted hover:text-white flex items-center gap-1">
+              <i data-lucide="github" class="w-3.5 h-3.5"></i> Showcase
+            </a>
+          </div>
+        </div>
+
+        <!-- PROJECT 4: SMKN 3 School Portal -->
+        <div class="linear-card rounded-xl p-5 sm:p-6 flex flex-col justify-between group">
+          <div class="space-y-4">
+            <div class="aspect-video w-full rounded-lg overflow-hidden border border-white/[0.06] bg-black/40 relative">
+              <img src="./assets/smkn3-website.png" alt="SMKN 3 Portal" class="w-full h-full object-cover object-top group-hover:scale-[1.02] transition-transform duration-300">
+              <div class="absolute bottom-2 left-2 px-2 py-0.5 rounded text-[10px] font-mono bg-black/70 backdrop-blur border border-white/10 text-blue-300">
+                smkn3kotamobagu.sch.id
+              </div>
+            </div>
+
+            <div>
+              <div class="flex items-center justify-between">
+                <h3 class="text-lg font-semibold text-white group-hover:text-linear-violet transition-colors">Portal SMKN 3 Kotamobagu</h3>
+                <span class="text-xs font-mono text-blue-400 bg-blue-950/60 border border-blue-800/60 px-2 py-0.5 rounded">Institutional</span>
+              </div>
+              <p class="text-xs text-linear-textSecondary mt-2 leading-relaxed" data-i18n="p4Desc">
+                Official institutional news and academic publishing portal for SMK Negeri 3 Kotamobagu. Manages announcements, achievements, event calendars, alumni network, and e-learning access with strict administrative audit logging.
+              </p>
+            </div>
+
+            <div class="flex flex-wrap gap-1.5 pt-1">
+              <span class="linear-pill px-2 py-0.5 rounded">Laravel</span>
+              <span class="linear-pill px-2 py-0.5 rounded">MySQL</span>
+              <span class="linear-pill px-2 py-0.5 rounded">Sanctum</span>
+              <span class="linear-pill px-2 py-0.5 rounded">Activity Logger</span>
+              <span class="linear-pill px-2 py-0.5 rounded">Tailwind CSS</span>
+            </div>
+          </div>
+
+          <div class="pt-5 mt-5 border-t border-white/[0.06] flex items-center justify-between text-xs">
+            <a href="https://smkn3kotamobagu.sch.id" target="_blank" rel="noopener" class="text-linear-violet hover:text-linear-hover font-medium flex items-center gap-1">
+              <span>Open Deployment</span> <i data-lucide="arrow-up-right" class="w-3.5 h-3.5"></i>
+            </a>
+            <a href="https://github.com/jayyuzz/smkn3-website-showcase" target="_blank" rel="noopener" class="text-linear-textMuted hover:text-white flex items-center gap-1">
+              <i data-lucide="github" class="w-3.5 h-3.5"></i> Showcase
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- EDTECH & AI EVALUATION (Specialized Section) -->
+    <section id="edtech-ai" class="space-y-6">
+      <div class="pb-4 border-b border-white/[0.06]">
+        <div class="text-xs font-mono text-linear-violet uppercase tracking-wider">AI Benchmarking &amp; Pedagogy</div>
+        <h2 class="text-2xl sm:text-3xl font-semibold text-white tracking-tight mt-1" data-i18n="edtechHeading">
+          Educational Technology (EdTech) &amp; AI Evaluation Specialist
+        </h2>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <!-- Main Description -->
+        <div class="lg:col-span-2 linear-card rounded-xl p-6 space-y-4">
+          <p class="text-sm text-linear-textSecondary leading-relaxed" data-i18n="edtechDesc">
+            Dual expertise as a Certified Computer Science Educator (14+ years in secondary/vocational education) and Verified AI Agent Evaluator. Skilled in benchmarking autonomous LLM agent trajectories, precision RLHF annotation, and cultural nuance alignment in Indonesian.
+          </p>
+          <div class="space-y-2.5 pt-2 text-xs text-linear-textSecondary">
+            <div class="flex items-start gap-2.5">
+              <i data-lucide="check" class="w-4 h-4 text-emerald-400 shrink-0 mt-0.5"></i>
+              <span data-i18n="edtechB1"><strong>Mercor Certified — Introduction to Agents:</strong> Officially verified credential (MRC-2026-5XW2RQSG) in evaluating autonomous agent trajectories and tool-use fidelity.</span>
+            </div>
+            <div class="flex items-start gap-2.5">
+              <i data-lucide="check" class="w-4 h-4 text-emerald-400 shrink-0 mt-0.5"></i>
+              <span data-i18n="edtechB2"><strong>Approved Mercor Expert:</strong> Indonesian Linguistic Specialist for frontier AI lab research projects.</span>
+            </div>
+            <div class="flex items-start gap-2.5">
+              <i data-lucide="check" class="w-4 h-4 text-emerald-400 shrink-0 mt-0.5"></i>
+              <span data-i18n="edtechB3"><strong>Technical Course Localization:</strong> Evaluated AI avatar narration and Indonesian localization accuracy for AWS Skill Builder modules (RAG, Bedrock, Cloud Security).</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Verified Credential Badges List -->
+        <div class="space-y-3">
+          <a href="https://work.mercor.com/learn/verify/MRC-2026-5XW2RQSG" target="_blank" rel="noopener" class="block p-3.5 rounded-xl linear-card hover:border-linear-violet/40 group">
+            <div class="flex items-center justify-between text-xs font-semibold text-white">
+              <span>Mercor Certified: Agents</span>
+              <i data-lucide="external-link" class="w-3.5 h-3.5 text-linear-textMuted group-hover:text-linear-violet transition-colors"></i>
+            </div>
+            <div class="text-[11px] text-linear-textMuted mt-0.5">ID: MRC-2026-5XW2RQSG</div>
+          </a>
+
+          <a href="https://edu.google.accredible.com/293b680b-115e-42e7-b917-6eccf1dcfe66#acc.7EKIO5ai" target="_blank" rel="noopener" class="block p-3.5 rounded-xl linear-card hover:border-sky-400/40 group">
+            <div class="flex items-center justify-between text-xs font-semibold text-white">
+              <span>Gemini Certified Educator</span>
+              <i data-lucide="external-link" class="w-3.5 h-3.5 text-linear-textMuted group-hover:text-sky-400 transition-colors"></i>
+            </div>
+            <div class="text-[11px] text-linear-textMuted mt-0.5">Google for Education (Accredible)</div>
+          </a>
+
+          <a href="https://edu.google.accredible.com/e9a8d3a3-0f05-4f4d-9558-e976d04c848e#acc.wVqtE6Pa" target="_blank" rel="noopener" class="block p-3.5 rounded-xl linear-card hover:border-cyan-400/40 group">
+            <div class="flex items-center justify-between text-xs font-semibold text-white">
+              <span>Google Certified Educator L2 &amp; L1</span>
+              <i data-lucide="external-link" class="w-3.5 h-3.5 text-linear-textMuted group-hover:text-cyan-400 transition-colors"></i>
+            </div>
+            <div class="text-[11px] text-linear-textMuted mt-0.5">Accredible Verified Credentials</div>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- CORE TECHNICAL STACK -->
+    <section id="stack" class="space-y-6">
+      <div class="pb-4 border-b border-white/[0.06]">
+        <div class="text-xs font-mono text-linear-violet uppercase tracking-wider">Architecture</div>
+        <h2 class="text-2xl sm:text-3xl font-semibold text-white tracking-tight mt-1" data-i18n="stackHeading">
+          Technical Stack &amp; Engineering Skills
+        </h2>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="linear-card rounded-xl p-5 space-y-3">
+          <div class="text-xs font-mono text-linear-textMuted uppercase tracking-wider">Frontend &amp; Mobile</div>
+          <div class="text-sm font-semibold text-white">Interface Engineering</div>
+          <p class="text-xs text-linear-textSecondary leading-relaxed">
+            Next.js 16 (App Router), React 19, TypeScript, Tailwind CSS v4, Progressive Web Apps (PWA), Expo / React Native, Three.js / WebGL.
+          </p>
+        </div>
+
+        <div class="linear-card rounded-xl p-5 space-y-3">
+          <div class="text-xs font-mono text-linear-textMuted uppercase tracking-wider">Backend &amp; Database</div>
+          <div class="text-sm font-semibold text-white">Data Infrastructure</div>
+          <p class="text-xs text-linear-textSecondary leading-relaxed">
+            Supabase (PostgreSQL), Row-Level Security (RLS), Node.js Express, Laravel (Sanctum), MySQL, SQLite, Server Actions, Vercel Serverless.
+          </p>
+        </div>
+
+        <div class="linear-card rounded-xl p-5 space-y-3">
+          <div class="text-xs font-mono text-linear-textMuted uppercase tracking-wider">AI, Systems &amp; APIs</div>
+          <div class="text-sm font-semibold text-white">Integrations &amp; Telemetry</div>
+          <p class="text-xs text-linear-textSecondary leading-relaxed">
+            face-api.js (Client Biometrics), GPS Haversine, OpenAI &amp; Gemini APIs, WhatsApp Gateways, Thermal Printer APIs, Linux, MikroTik.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- LIVE VISITOR TELEMETRY (Linear Horizontal Chips) -->
+    <section class="space-y-3 pt-6 border-t border-white/[0.06]">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs font-mono text-linear-textMuted">
+        <div class="flex items-center gap-2 text-white font-medium">
+          <span class="status-dot-active"></span>
+          <span data-i18n="visitorTitle">Global Telemetry by Country</span>
+        </div>
+        <div class="flex items-center gap-3">
+          <span><strong id="visitorTotal" class="text-white">140+</strong> <span data-i18n="visitorVisits">Visits</span></span>
+          <span>•</span>
+          <span><strong id="visitorCountries" class="text-linear-violet">8</strong> <span data-i18n="visitorUnique">Countries</span></span>
+          <span>•</span>
+          <span class="text-emerald-400">Live Traffic</span>
+        </div>
+      </div>
+
+      <div id="visitorCountriesContainer" class="flex items-center gap-2 overflow-x-auto pb-2">
+        <div class="shrink-0 px-2.5 py-1 rounded-md linear-card flex items-center gap-2 text-xs font-mono text-slate-200">
+          <span>🇮🇩</span> <span>Indonesia</span> <span class="text-[10px] text-linear-violet font-semibold">135+</span>
+        </div>
+        <div class="shrink-0 px-2.5 py-1 rounded-md linear-card flex items-center gap-2 text-xs font-mono text-slate-300">
+          <span>🇺🇸</span> <span>United States</span> <span class="text-[10px] text-linear-textMuted">12</span>
+        </div>
+        <div class="shrink-0 px-2.5 py-1 rounded-md linear-card flex items-center gap-2 text-xs font-mono text-slate-300">
+          <span>🇸🇬</span> <span>Singapore</span> <span class="text-[10px] text-linear-textMuted">8</span>
+        </div>
+        <div class="shrink-0 px-2.5 py-1 rounded-md linear-card flex items-center gap-2 text-xs font-mono text-slate-300">
+          <span>🇲🇾</span> <span>Malaysia</span> <span class="text-[10px] text-linear-textMuted">6</span>
+        </div>
+        <div class="shrink-0 px-2.5 py-1 rounded-md linear-card flex items-center gap-2 text-xs font-mono text-slate-300">
+          <span>🇯🇵</span> <span>Japan</span> <span class="text-[10px] text-linear-textMuted">4</span>
+        </div>
+        <div class="shrink-0 px-2.5 py-1 rounded-md linear-card flex items-center gap-2 text-xs font-mono text-slate-300">
+          <span>🇩🇪</span> <span>Germany</span> <span class="text-[10px] text-linear-textMuted">3</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT & FOOTER -->
+    <section id="contact" class="pt-8 border-t border-white/[0.06] space-y-6">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div>
+          <h3 class="text-xl font-semibold text-white tracking-tight" data-i18n="contactHeading">Let's Connect &amp; Collaborate</h3>
+          <p class="text-xs text-linear-textSecondary mt-1" data-i18n="contactSub">Available for software engineering contracts, AI evaluation, and full-time remote roles.</p>
+        </div>
+        <div class="flex flex-wrap items-center gap-2">
+          <a href="mailto:jaya.pinuyut@gmail.com" class="btn-linear-primary px-3.5 py-2 rounded-lg text-xs font-medium flex items-center gap-1.5">
+            <i data-lucide="mail" class="w-3.5 h-3.5"></i>
+            <span>jaya.pinuyut@gmail.com</span>
+          </a>
+          <button onclick="navigator.clipboard.writeText('jaya.pinuyut@gmail.com'); alert('Email copied!');" class="btn-linear-ghost px-2.5 py-2 rounded-lg text-xs font-mono" title="Copy email">
+            <i data-lucide="copy" class="w-3.5 h-3.5"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Links Row -->
+      <div class="flex flex-wrap items-center gap-4 text-xs text-linear-textMuted pt-2">
+        <a href="https://www.linkedin.com/in/jaya-hartono-pinuyut-1827b6410" target="_blank" rel="noopener" class="hover:text-white flex items-center gap-1">
+          <i data-lucide="linkedin" class="w-3.5 h-3.5"></i> LinkedIn
+        </a>
+        <a href="https://github.com/jayyuzz" target="_blank" rel="noopener" class="hover:text-white flex items-center gap-1">
+          <i data-lucide="github" class="w-3.5 h-3.5"></i> GitHub
+        </a>
+        <a href="https://t.me/jayyuzz" target="_blank" rel="noopener" class="hover:text-white flex items-center gap-1">
+          <i data-lucide="send" class="w-3.5 h-3.5"></i> Telegram
+        </a>
+        <a href="https://www.facebook.com/jayapinuyut" target="_blank" rel="noopener" class="hover:text-white flex items-center gap-1">
+          <i data-lucide="facebook" class="w-3.5 h-3.5"></i> Facebook
+        </a>
+        <a href="https://ko-fi.com/marry2" target="_blank" rel="noopener" class="hover:text-amber-400 flex items-center gap-1">
+          <i data-lucide="coffee" class="w-3.5 h-3.5"></i> Ko-fi
+        </a>
+      </div>
+
+      <div class="pt-6 border-t border-white/[0.04] text-[11px] font-mono text-linear-textSubtle flex flex-col sm:flex-row items-center justify-between gap-2">
+        <div>&copy; 2026 Jaya Hartono Pinuyut. Kotamobagu, North Sulawesi, Indonesia.</div>
+        <div>Linear Design System Precision</div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- BILINGUAL & TELEMETRY LOGIC -->
   <script>
-    // --- PORTFOLIO DATA HUB ---
-    const portfolioData = [
-      {
-        id: "absensi",
-        category: "production",
-        title: "SMK3 Absensi Digital",
-        tag: "PWA + Mobile + Biometrics",
-        edition: "Institutional Platform",
-        meta: "1,500+ Daily Users",
-        icon: "fingerprint",
-        thumb: "./assets/smk3-absensi.png",
-        color: "cyan",
-        backdropClass: "backdrop-absensi",
-        liveUrl: "https://pr.smkn3kotamobagu.sch.id",
-        githubUrl: "https://github.com/jayyuzz/smk3-absensi-showcase",
-        tech: ["Next.js 16", "React 19", "TypeScript", "Tailwind v4", "Supabase Auth/RLS", "face-api.js", "Expo RN"],
-        desc: {
-          id: "Sistem presensi terintegrasi untuk seluruh warga SMKN 3 Kotamobagu (Kepsek, Admin, Guru, TU, Siswa, Wali Kelas, Orang Tua). Memakai pengenalan wajah di browser via face-api.js, validasi radius GPS Haversine, approval izin, dan notifikasi WhatsApp otomatis.",
-          en: "Integrated digital attendance platform for SMKN 3 Kotamobagu serving 1,500+ users (Principal, Admin, Teachers, Staff, Students, Parents). Features client-side face recognition via face-api.js, GPS Haversine geofencing, leave workflows, and automated WhatsApp alerts."
-        },
-        deepDive: {
-          id: `
-            <h3 class="text-lg font-bold text-white mb-2">Arsitektur &amp; Keamanan Data</h3>
-            <p>Sistem ini dirancang untuk mencegah titip absen secara menyeluruh dengan kombinasi <strong>Identitas + Face Recognition + Liveness Detection + GPS + Timestamp</strong>. Berjalan di Next.js 16 App Router dengan Supabase PostgreSQL, diamankan dengan Row-Level Security (RLS) ketat untuk memisahkan data antar peran pengguna.</p>
-            <h3 class="text-lg font-bold text-white mt-4 mb-2">Fitur Utama:</h3>
-            <ul class="list-disc pl-5 space-y-1">
-              <li>Check-in biometrik wajah langsung pada peramban web dan aplikasi mobile Expo.</li>
-              <li>Validasi GPS geofencing dengan toleransi akurasi koordinat server-side.</li>
-              <li>Pusat approval pengajuan izin oleh wali kelas dan kepala sekolah.</li>
-              <li>Webhook gateway WhatsApp otomatis (Fonnte / KirimDev) untuk pelaporan kehadiran harian ke orang tua siswa.</li>
-            </ul>
-          `,
-          en: `
-            <h3 class="text-lg font-bold text-white mb-2">Architecture &amp; Data Security</h3>
-            <p>Engineered to eliminate proxy check-ins using a multi-factor verification pipeline: <strong>Identity + Face Recognition + Liveness Detection + GPS Geofencing + Server Timestamp</strong>. Built on Next.js 16 App Router with Supabase PostgreSQL, enforced via Row-Level Security (RLS) policies.</p>
-            <h3 class="text-lg font-bold text-white mt-4 mb-2">Core Capabilities:</h3>
-            <ul class="list-disc pl-5 space-y-1">
-              <li>Browser-based face recognition running lightweight model shards client-side.</li>
-              <li>Server-side Haversine geofencing validating radius and coordinates.</li>
-              <li>Multi-tiered leave request approval hierarchy (Homeroom Teachers, Admin, Principal).</li>
-              <li>Automated WhatsApp reporting gateways (Fonnte/KirimDev) delivering real-time logs to parents.</li>
-            </ul>
-          `
-        }
-      },
-      {
-        id: "marry",
-        category: "production",
-        title: "marry 💍",
-        tag: "AI Market Intelligence SaaS",
-        edition: "Global SaaS Product",
-        meta: "50+ Languages Supported",
-        icon: "sparkles",
-        thumb: "./assets/marry-preview.png",
-        color: "purple",
-        backdropClass: "backdrop-marry",
-        liveUrl: "https://marry.myap.web.id",
-        githubUrl: "https://github.com/jayyuzz/marry",
-        tech: ["Node.js Express", "Supabase Auth", "OpenAI Gateway", "Ko-fi Webhook", "Vercel Serverless"],
-        desc: {
-          id: "Platform analisis prospek pasar global untuk produk digital kecil (ebook, micro-SaaS, template, preset). Menghasilkan estimasi demand, pricing tier, analisis kompetisi, dan langkah eksekusi roadmap dalam 50+ bahasa.",
-          en: "Global market intelligence platform for independent digital creators. Analyzes international demand, competitor pricing, score metrics, and step-by-step roadmap generation across 50+ languages."
-        },
-        deepDive: {
-          id: `
-            <h3 class="text-lg font-bold text-white mb-2">Desain Sistem &amp; AI Pipeline</h3>
-            <p>Dibangun untuk membantu kreator produk digital mengukur kelayakan pasar luar negeri sebelum mulai membangun. Menggunakan arsitektur Express.js yang terhubung dengan OpenAI-compatible inference gateways dengan parsing skema ketat untuk menjamin hasil JSON konsisten.</p>
-            <h3 class="text-lg font-bold text-white mt-4 mb-2">Fitur Unggulan:</h3>
-            <ul class="list-disc pl-5 space-y-1">
-              <li>Endpoint analisis pasar (<code>/api/analyze</code>) dan generator roadmap (<code>/api/roadmap</code>).</li>
-              <li>Basis data 140+ ide produk digital trending siap klik.</li>
-              <li>Monetisasi otomatis: integrasi membership Supabase via webhook pembayaran Ko-fi.</li>
-              <li>Rate-limiting cerdas untuk mencegah penyalahgunaan inferensi AI.</li>
-            </ul>
-          `,
-          en: `
-            <h3 class="text-lg font-bold text-white mb-2">System Design &amp; AI Pipeline</h3>
-            <p>Engineered to help indie creators validate international viability before building. Connects to OpenAI-compatible high-speed inference endpoints with strict schema normalization and deterministic JSON output validation.</p>
-            <h3 class="text-lg font-bold text-white mt-4 mb-2">Core Features:</h3>
-            <ul class="list-disc pl-5 space-y-1">
-              <li>Market analysis (<code>/api/analyze</code>) and execution roadmap (<code>/api/roadmap</code>) APIs.</li>
-              <li>140+ curated trending product sparks database.</li>
-              <li>Automated membership upgrades via Ko-fi webhook integration.</li>
-              <li>Inference rate limiting and multi-country visitor telemetry.</li>
-            </ul>
-          `
-        }
-      },
-      {
-        id: "cafe",
-        category: "production",
-        title: "Paylabs Cafe POS",
-        tag: "Point of Sale & Inventory",
-        edition: "Cloud Restaurant Suite",
-        meta: "Shift & Recipe Management",
-        icon: "coffee",
-        thumb: "./assets/cafe-pos.png",
-        color: "emerald",
-        backdropClass: "backdrop-cafe",
-        liveUrl: "https://cafe.mve.my.id",
-        githubUrl: "https://github.com/jayyuzz/cafe-pos-showcase",
-        tech: ["Next.js", "TypeScript", "Supabase PostgreSQL", "Recharts", "Thermal Print API"],
-        desc: {
-          id: "Sistem operasional kasir & resto terintegrasi. Manajemen shift kasir, dapur (Kitchen Display System), pesanan mandiri via QR meja, modul delivery & driver checklist, serta pemotongan stok bahan baku otomatis berbasis resep.",
-          en: "Integrated POS and restaurant back-office system. Features shift reconciliation, Kitchen Display System (KDS), table QR ordering, delivery driver dispatch, and recipe-based automated raw material stock deduction."
-        },
-        deepDive: {
-          id: `
-            <h3 class="text-lg font-bold text-white mb-2">Otomasi Alur Restoran &amp; HPP</h3>
-            <p>Solusi kasir modern yang dirancang untuk kecepatan kasir dan akurasi stok bahan baku. Ketika menu terjual, sistem otomatis menghitung HPP (COGS) dan memotong gramatur bahan baku di gudang secara real-time.</p>
-            <h3 class="text-lg font-bold text-white mt-4 mb-2">Modul Utama:</h3>
-            <ul class="list-disc pl-5 space-y-1">
-              <li>POS Kasir: Buka/tutup shift, rekonsiliasi selisih kas, dan cetak struk thermal.</li>
-              <li>Kitchen Display: Pesanan masuk langsung terkirim ke layar chef/barista.</li>
-              <li>Inventaris Resep: Bill of Materials (BOM) otomatis per cangkir/porsi.</li>
-              <li>Analitik Bisnis: Grafik penjualan harian/bulanan dengan visualisasi Recharts.</li>
-            </ul>
-          `,
-          en: `
-            <h3 class="text-lg font-bold text-white mb-2">Restaurant Workflow &amp; COGS Automation</h3>
-            <p>Built for high-volume cashier operations and strict inventory accounting. Deducts raw material stock in real-time based on recipe definitions (BOM) and computes gross profit margins on the fly.</p>
-            <h3 class="text-lg font-bold text-white mt-4 mb-2">Key Modules:</h3>
-            <ul class="list-disc pl-5 space-y-1">
-              <li>Cashier POS: Shift management, cash discrepancy tracking, thermal receipt API.</li>
-              <li>Kitchen Display (KDS): Real-time ticket dispatch to kitchen/bar stations.</li>
-              <li>Recipe Inventory: Automated Bill of Materials deduction per menu item.</li>
-              <li>BI Analytics: Sales dashboards and category breakdowns powered by Recharts.</li>
-            </ul>
-          `
-        }
-      },
-      {
-        id: "school",
-        category: "production",
-        title: "Portal SMKN 3 Kotamobagu",
-        tag: "Official School Portal",
-        edition: "Institutional Portal",
-        meta: "Laravel + MySQL",
-        icon: "school",
-        thumb: "./assets/smkn3-website.png",
-        color: "blue",
-        backdropClass: "backdrop-school",
-        liveUrl: "https://smkn3kotamobagu.sch.id",
-        githubUrl: "https://github.com/jayyuzz/smkn3-website-showcase",
-        tech: ["Laravel (PHP)", "MySQL", "Sanctum", "Activity Logger", "Tailwind CSS"],
-        desc: {
-          id: "Portal resmi berita dan publikasi akademik SMK Negeri 3 Kotamobagu. Mengelola pengumuman, prestasi, agenda kegiatan, portal alumni, serta integrasi e-learning dengan pengawasan audit log aktivitas admin yang ketat.",
-          en: "Official news and academic publication portal for SMK Negeri 3 Kotamobagu. Manages announcements, student achievements, event calendars, alumni network, and e-learning access with strict audit logging."
-        },
-        deepDive: {
-          id: `
-            <h3 class="text-lg font-bold text-white mb-2">Publikasi Informasi &amp; Kepatuhan Instansi</h3>
-            <p>Portal publik institusi pendidikan yang andal dengan sistem manajemen konten modular berbasis Laravel. Memiliki sistem proteksi akses multi-operator sekolah dengan pencatatan audit log untuk setiap perubahan data.</p>
-          `,
-          en: `
-            <h3 class="text-lg font-bold text-white mb-2">Institutional Publishing &amp; Governance</h3>
-            <p>Robust educational institutional portal with modular content publishing built on Laravel. Features multi-operator administrative roles and activity logging for full transparency.</p>
-          `
-        }
-      },
-      {
-        id: "edtech",
-        category: "ai",
-        title: "EdTech & AI Evaluation",
-        tag: "Frontier AI & Pedagogy",
-        edition: "Mercor & Google Certified",
-        meta: "Agent Evaluation Specialist",
-        icon: "brain-circuit",
-        thumb: "./assets/edtech-preview.png",
-        color: "amber",
-        backdropClass: "backdrop-edtech",
-        liveUrl: "https://work.mercor.com/learn/verify/MRC-2026-5XW2RQSG",
-        githubUrl: "https://github.com/jayyuzz",
-        tech: ["Mercor Agents (MRC-2026-5XW2RQSG)", "Gemini Certified", "Google Educator L1 & L2", "RLHF Benchmark", "AWS Skill Builder"],
-        desc: {
-          id: "Spesialisasi ganda sebagai Pendidik Teknologi Komputer bersertifikasi (Gemini & Google Educator) serta Evaluator AI Terverifikasi Mercor (Introduction to Agents). Berpengalaman mengaudit alur kerja agen otonom dan kualitas lokalisasi materi teknis AI.",
-          en: "Dual specialization as a Certified Computer Science Educator (Google/Gemini Certified) and Verified Mercor AI Agent Evaluator (MRC-2026-5XW2RQSG). Experienced in auditing autonomous agent workflows and technical localization benchmarks."
-        },
-        deepDive: {
-          id: `
-            <h3 class="text-lg font-bold text-white mb-2">Kredensial AI &amp; Evaluasi Model</h3>
-            <ul class="list-disc pl-5 space-y-2">
-              <li><strong>Mercor Certified — Introduction to Agents:</strong> Kredensial resmi (<a href="https://work.mercor.com/learn/verify/MRC-2026-5XW2RQSG" target="_blank" class="text-purple-300 underline font-mono">MRC-2026-5XW2RQSG</a>) dalam evaluasi agen AI otonom, validasi tool-calling, dan kalibrasi metrik.</li>
-              <li><strong>Google &amp; Gemini Certified Educator:</strong> Terverifikasi resmi di Accredible untuk Gemini Educator, Google Educator Level 1, dan Level 2.</li>
-              <li><strong>Evaluator Materi Teknis AWS:</strong> Pengalaman menguji kualitas narasi AI Avatar dan kurasi modul teknis AWS Skill Builder (RAG, Bedrock, Cloud Security).</li>
-              <li><strong>Approved Mercor Expert:</strong> Indonesian Linguistic Specialist untuk riset model frontier lab dunia.</li>
-            </ul>
-          `,
-          en: `
-            <h3 class="text-lg font-bold text-white mb-2">AI Credentials &amp; Model Benchmarking</h3>
-            <ul class="list-disc pl-5 space-y-2">
-              <li><strong>Mercor Certified — Introduction to Agents:</strong> Verified credential (<a href="https://work.mercor.com/learn/verify/MRC-2026-5XW2RQSG" target="_blank" class="text-purple-300 underline font-mono">MRC-2026-5XW2RQSG</a>) in evaluating autonomous AI agent trajectories and tool-use fidelity.</li>
-              <li><strong>Google &amp; Gemini Certified Educator:</strong> Accredible-verified in Gemini AI pedagogy, Google Educator Level 1 &amp; Level 2.</li>
-              <li><strong>AWS Technical Curriculum Evaluator:</strong> Benchmarking AI avatar narration and Indonesian localization accuracy for RAG, Amazon Bedrock, and Cloud Security.</li>
-              <li><strong>Mercor Approved Linguistic Expert:</strong> Evaluating frontier language model alignment and reasoning.</li>
-            </ul>
-          `
-        }
-      },
-      {
-        id: "cv",
-        category: "credentials",
-        title: "Curriculum Vitae",
-        tag: "Official Resume & Credentials",
-        edition: "ATS & Executive Ready",
-        meta: "Updated October 2026",
-        icon: "file-text",
-        thumb: "./assets/cv-preview.png",
-        color: "cyan",
-        backdropClass: "backdrop-cv",
-        liveUrl: "./CV_Jaya_Hartono_Pinuyut.pdf",
-        githubUrl: "https://www.linkedin.com/in/jaya-hartono-pinuyut-1827b6410",
-        tech: ["PDF Vector", "Word DOCX", "Accredible Links", "Mercor Verification"],
-        desc: {
-          id: "Dokumen CV resmi Jaya Hartono Pinuyut, S.T. memuat 14+ tahun rekam jejak rekayasa sistem, status Pendidik PNS (Penata Muda Tk. I / III/b), sertifikasi Google & Mercor, serta portofolio proyek produksi.",
-          en: "Official Curriculum Vitae of Jaya Hartono Pinuyut, S.T. detailing 14+ years in software engineering, civil service education (Rank III/b), Google & Mercor certifications, and production software deliveries."
-        },
-        deepDive: {
-          id: `
-            <h3 class="text-lg font-bold text-white mb-2">Unduh Berkas CV Resmi</h3>
-            <p class="mb-4">Tersedia dalam dua format siap unduh yang telah disinkronkan dengan seluruh proyek dan kredensial:</p>
-            <div class="flex flex-wrap gap-3">
-              <a href="./CV_Jaya_Hartono_Pinuyut.pdf" target="_blank" class="px-4 py-2 rounded-xl bg-cyan-500 text-white font-bold text-xs flex items-center gap-2">
-                <i data-lucide="download" class="w-4 h-4"></i> Unduh PDF (Cetak / ATS)
-              </a>
-              <a href="./CV_Jaya_Hartono_Pinuyut_Updated.docx" download class="px-4 py-2 rounded-xl glass border border-white/20 text-slate-200 font-bold text-xs flex items-center gap-2">
-                <i data-lucide="file-text" class="w-4 h-4"></i> Unduh Word (.docx)
-              </a>
-            </div>
-          `,
-          en: `
-            <h3 class="text-lg font-bold text-white mb-2">Download Official CV Files</h3>
-            <p class="mb-4">Available in two high-fidelity formats aligned with all live systems and verified credentials:</p>
-            <div class="flex flex-wrap gap-3">
-              <a href="./CV_Jaya_Hartono_Pinuyut.pdf" target="_blank" class="px-4 py-2 rounded-xl bg-cyan-500 text-white font-bold text-xs flex items-center gap-2">
-                <i data-lucide="download" class="w-4 h-4"></i> Download PDF (ATS Ready)
-              </a>
-              <a href="./CV_Jaya_Hartono_Pinuyut_Updated.docx" download class="px-4 py-2 rounded-xl glass border border-white/20 text-slate-200 font-bold text-xs flex items-center gap-2">
-                <i data-lucide="file-text" class="w-4 h-4"></i> Download Word (.docx)
-              </a>
-            </div>
-          `
-        }
-      }
-    ];
+    lucide.createIcons();
 
-    let currentCategory = 'all';
-    let activeIndex = 0;
+    const i18n = {
+      id: {
+        navProjects: "Proyek",
+        navAi: "EdTech & AI",
+        navStack: "Teknologi",
+        navCreds: "Kredensial",
+        navContact: "Kontak",
+        heroBadge: "Tersedia untuk Kontrak Full-Stack & Evaluasi AI",
+        heroDesc: "Full-Stack Software Engineer & Pendidik berbasis di Kotamobagu, Indonesia. Berpengalaman membangun platform produksi multi-peran, sistem presensi biometrik GPS, cloud POS, serta evaluasi & kalibrasi model frontier AI.",
+        btnViewWork: "Lihat Karya Produksi",
+        btnCv: "Curriculum Vitae (PDF)",
+        statUsers: "Pengguna Harian",
+        statPlatforms: "Platform Aktif",
+        projectsHeading: "Sistem Nyata yang Beroperasi",
+        p1Desc: "Sistem presensi terintegrasi untuk SMKN 3 Kotamobagu (Kepsek, Guru, TU, Siswa, Ortu). Dilengkapi verifikasi wajah di browser (face-api.js), validasi radius GPS Haversine, approval izin, dan notifikasi otomatis WhatsApp.",
+        p2Desc: "Platform AI analisis peluang pasar global untuk produk digital mandiri. Mengolah estimasi demand, pricing tier, analisis kompetisi, dan langkah eksekusi roadmap dalam 50+ bahasa dengan webhook pembayaran Ko-fi.",
+        p3Desc: "Sistem kasir & operasional resto terintegrasi. Manajemen shift kasir, Kitchen Display System (KDS), pesanan meja via QR, delivery dispatch, dan pemotongan stok otomatis berbasis resep.",
+        p4Desc: "Portal berita dan publikasi akademik resmi SMK Negeri 3 Kotamobagu. Mengelola pengumuman, prestasi, agenda kegiatan, portal alumni, serta integrasi e-learning dengan pengawasan audit log aktivitas admin.",
+        edtechHeading: "Spesialis Pendidik Teknologi (EdTech) & Evaluator AI",
+        edtechDesc: "Spesialisasi ganda sebagai Pendidik Teknologi Komputer bersertifikasi (14+ tahun masa pengabdian) serta Evaluator AI Terverifikasi Mercor. Berpengalaman mengaudit alur kerja agen otonom dan kualitas lokalisasi materi teknis AI.",
+        edtechB1: "<strong>Mercor Certified — Introduction to Agents:</strong> Kredensial resmi (MRC-2026-5XW2RQSG) dalam evaluasi agen AI otonom dan validasi tool-calling.",
+        edtechB2: "<strong>Approved Mercor Expert:</strong> Indonesian Linguistic Specialist untuk riset model frontier lab dunia.",
+        edtechB3: "<strong>Evaluator Materi Teknis AWS:</strong> Pengalaman menguji kualitas narasi AI Avatar dan kurasi modul teknis AWS Skill Builder (RAG, Bedrock, Cloud Security).",
+        stackHeading: "Teknologi & Arsitektur Sistem",
+        visitorTitle: "Telemetri Pengunjung Global",
+        visitorVisits: "Kunjungan",
+        visitorUnique: "Negara",
+        contactHeading: "Mari Berkolaborasi",
+        contactSub: "Tersedia untuk proyek pengembangan aplikasi, sistem instansi/bisnis, evaluasi model AI, maupun remote engineering."
+      },
+      en: {
+        navProjects: "Projects",
+        navAi: "EdTech & AI",
+        navStack: "Stack",
+        navCreds: "Credentials",
+        navContact: "Contact",
+        heroBadge: "Available for Full-Stack, AI Evaluation & Contract Roles",
+        heroDesc: "Full-Stack Software Engineer & Educator based in Kotamobagu, Indonesia. Experienced in building multi-role production platforms, client-side biometrics, cloud POS, and conducting rigorous AI evaluation & localization for frontier research labs.",
+        btnViewWork: "Explore Production Work",
+        btnCv: "Curriculum Vitae (PDF)",
+        statUsers: "Daily Active Users",
+        statPlatforms: "Active Platforms",
+        projectsHeading: "Featured Systems in Operation",
+        p1Desc: "Multi-role digital attendance ecosystem for SMKN 3 Kotamobagu (Principal, Admin, Teachers, Staff, Students, Parents). Features in-browser biometric face verification (face-api.js), GPS Haversine geofencing, and automated WhatsApp alert gateways.",
+        p2Desc: "AI-driven global market prospect analyzer for independent digital creators. Estimates international demand, competitor pricing tiers, and generates step-by-step roadmaps across 50+ languages with Ko-fi monetization webhooks.",
+        p3Desc: "Integrated cloud restaurant suite featuring cashier shift reconciliation, Kitchen Display System (KDS), table QR ordering, driver dispatch, and automated raw material stock deduction based on recipe definitions.",
+        p4Desc: "Official institutional news and academic publishing portal for SMK Negeri 3 Kotamobagu. Manages announcements, achievements, event calendars, alumni network, and e-learning access with strict administrative audit logging.",
+        edtechHeading: "Educational Technology (EdTech) & AI Evaluation Specialist",
+        edtechDesc: "Dual expertise as a Certified Computer Science Educator (14+ years in secondary/vocational education) and Verified AI Agent Evaluator. Skilled in benchmarking autonomous LLM agent trajectories, precision RLHF annotation, and cultural nuance alignment in Indonesian.",
+        edtechB1: "<strong>Mercor Certified — Introduction to Agents:</strong> Officially verified credential (MRC-2026-5XW2RQSG) in evaluating autonomous agent trajectories and tool-use fidelity.",
+        edtechB2: "<strong>Approved Mercor Expert:</strong> Indonesian Linguistic Specialist for frontier AI lab research projects.",
+        edtechB3: "<strong>Technical Course Localization:</strong> Evaluated AI avatar narration and Indonesian localization accuracy for AWS Skill Builder modules (RAG, Bedrock, Cloud Security).",
+        stackHeading: "Technical Stack & Engineering Skills",
+        visitorTitle: "Global Telemetry by Country",
+        visitorVisits: "Visits",
+        visitorUnique: "Countries",
+        contactHeading: "Let's Connect & Collaborate",
+        contactSub: "Available for software engineering contracts, AI evaluation, and full-time remote roles."
+      }
+    };
+
     let currentLang = localStorage.getItem('portfolio_lang') || 'id';
 
-    // Filter items based on active hub category
-    function getFilteredItems() {
-      if (currentCategory === 'all') return portfolioData;
-      return portfolioData.filter(item => item.category === currentCategory);
-    }
-
-    // Render ribbon tiles
-    function renderRibbon() {
-      const track = document.getElementById('tiles-track');
-      const items = getFilteredItems();
-      track.innerHTML = '';
-
-      items.forEach((item, idx) => {
-        const tile = document.createElement('div');
-        tile.className = `ps5-tile ${idx === activeIndex ? 'active' : ''}`;
-        tile.setAttribute('role', 'option');
-        tile.setAttribute('aria-selected', idx === activeIndex);
-        tile.setAttribute('data-id', item.id);
-        tile.onclick = () => selectItem(idx);
-
-        const iconBg = item.color === 'purple' ? 'bg-purple-900/60 text-purple-300' :
-                       item.color === 'emerald' ? 'bg-emerald-900/60 text-emerald-300' :
-                       item.color === 'amber' ? 'bg-amber-900/60 text-amber-300' :
-                       item.color === 'blue' ? 'bg-blue-900/60 text-blue-300' :
-                       'bg-cyan-900/60 text-cyan-300';
-
-        tile.style.backgroundImage = `linear-gradient(180deg, rgba(15, 23, 42, 0.45) 0%, rgba(3, 7, 18, 0.88) 100%), url('${item.thumb}')`;
-        tile.style.backgroundSize = 'cover';
-        tile.style.backgroundPosition = 'center';
-        tile.innerHTML = `
-          <div class="ps5-tile-icon ${iconBg} shadow-md backdrop-blur-sm border border-white/10">
-            <i data-lucide="${item.icon}" class="w-4 h-4"></i>
-          </div>
-          <span class="ps5-tile-label drop-shadow-sm">${item.title}</span>
-        `;
-        track.appendChild(tile);
-      });
-
-      lucide.createIcons();
-      updateDetails();
-      scrollToActiveTile();
-    }
-
-    function scrollToActiveTile() {
-      const track = document.getElementById('tiles-track');
-      const activeTile = track.children[activeIndex];
-      if (activeTile) {
-        activeTile.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
-      }
-    }
-
-    // Select an item by index in current filtered list
-    function selectItem(idx) {
-      const items = getFilteredItems();
-      if (idx < 0) idx = 0;
-      if (idx >= items.length) idx = items.length - 1;
-      activeIndex = idx;
-
-      // Update active tile DOM
-      const track = document.getElementById('tiles-track');
-      Array.from(track.children).forEach((el, i) => {
-        el.classList.toggle('active', i === activeIndex);
-        el.setAttribute('aria-selected', i === activeIndex);
-      });
-
-      updateDetails();
-      scrollToActiveTile();
-    }
-
-    function navigateItem(dir) {
-      const items = getFilteredItems();
-      let next = activeIndex + dir;
-      if (next < 0) next = items.length - 1;
-      if (next >= items.length) next = 0;
-      selectItem(next);
-    }
-
-    // Update details section with current item
-    function updateDetails() {
-      const items = getFilteredItems();
-      const item = items[activeIndex];
-      if (!item) return;
-
-      const tagEl = document.getElementById('item-tag');
-      const editionEl = document.getElementById('item-edition');
-      const metaEl = document.getElementById('item-meta');
-      const titleEl = document.getElementById('item-title');
-      const descEl = document.getElementById('item-desc');
-
-      // Kinetic Text Reveal
-      [tagEl, editionEl, metaEl, titleEl, descEl].forEach(el => {
-        if (el) {
-          el.classList.remove('ps5-reveal');
-          void el.offsetWidth; // trigger reflow
-          el.classList.add('ps5-reveal');
-        }
-      });
-
-      tagEl.innerText = item.tag;
-      editionEl.innerText = item.edition;
-      metaEl.innerText = item.meta;
-      titleEl.innerText = item.title;
-      descEl.innerText = item.desc[currentLang] || item.desc['id'];
-
-      // Update Left Hero Thumbnail Card
-      const heroThumbImg = document.getElementById('hero-thumb-img');
-      const heroThumbCard = document.getElementById('hero-thumb-card');
-      const heroThumbMeta = document.getElementById('hero-thumb-meta');
-      if (heroThumbImg) {
-        heroThumbImg.src = item.thumb;
-      }
-      if (heroThumbMeta) {
-        heroThumbMeta.innerText = item.meta;
-      }
-      if (heroThumbCard) {
-        const glowColor = item.color === 'purple' ? 'rgba(168, 85, 247, 0.42)' :
-                          item.color === 'emerald' ? 'rgba(16, 185, 129, 0.42)' :
-                          item.color === 'amber' ? 'rgba(245, 158, 11, 0.42)' :
-                          item.color === 'blue' ? 'rgba(59, 130, 246, 0.42)' :
-                          'rgba(56, 189, 248, 0.42)';
-        heroThumbCard.style.boxShadow = `0 20px 50px -10px rgba(0, 0, 0, 0.8), 0 0 40px -5px ${glowColor}`;
-        
-        // Trigger specular light sheen glide
-        heroThumbCard.classList.remove('trigger-sheen');
-        void heroThumbCard.offsetWidth;
-        heroThumbCard.classList.add('trigger-sheen');
-      }
-
-      // Tech Stack
-      const techBox = document.getElementById('item-tech-stack');
-      techBox.innerHTML = item.tech.map(t => `<span class="ps5-tech-pill">${t}</span>`).join('');
-
-      // Buttons
-      const launchBtn = document.getElementById('btn-live-launch');
-      const launchText = document.getElementById('btn-live-text');
-      launchBtn.href = item.liveUrl;
-      launchText.innerText = currentLang === 'en' ? 'Launch Live' : 'Buka Aplikasi';
-
-      const ghBtn = document.getElementById('btn-github-link');
-      ghBtn.href = item.githubUrl;
-
-      // Update 3D Neural AI Background Color
-      const neuralHex = item.color === 'purple' ? 0xa855f7 :
-                        item.color === 'emerald' ? 0x10b981 :
-                        item.color === 'amber' ? 0xf59e0b :
-                        item.color === 'blue' ? 0x3b82f6 :
-                        0x38bdf8;
-      if (typeof setNeuralThemeColor === 'function') {
-        setNeuralThemeColor(neuralHex);
-      }
-
-      // Backdrop Transition
-      const layer = document.getElementById('backdrop-layer');
-      layer.className = `ps5-backdrop-layer active ${item.backdropClass}`;
-    }
-
-    // Filter Categories
-    function filterCategory(cat) {
-      currentCategory = cat;
-      activeIndex = 0;
-
-      // Update tabs style
-      ['all', 'production', 'ai', 'credentials'].forEach(c => {
-        const btn = document.getElementById(`tab-${c}`);
-        if (btn) btn.classList.toggle('active', c === cat);
-      });
-
-      renderRibbon();
-    }
-
-    function cycleHubTab() {
-      const cats = ['all', 'production', 'ai', 'credentials'];
-      const curIdx = cats.indexOf(currentCategory);
-      const nextCat = cats[(curIdx + 1) % cats.length];
-      filterCategory(nextCat);
-    }
-
-    function launchActiveItem() {
-      const items = getFilteredItems();
-      const item = items[activeIndex];
-      if (item && item.liveUrl) {
-        window.open(item.liveUrl, '_blank', 'noopener');
-      }
-    }
-
-    // Language Toggle
     function switchLang(lang) {
       currentLang = lang;
       localStorage.setItem('portfolio_lang', lang);
 
-      document.getElementById('btnLangId').classList.toggle('active', lang === 'id');
-      document.getElementById('btnLangEn').classList.toggle('active', lang === 'en');
-
-      // Update static texts
-      document.querySelector('[data-i18n="legendNavigate"]').innerText = lang === 'en' ? 'Navigate' : 'Geser';
-      document.querySelector('[data-i18n="legendLaunch"]').innerText = lang === 'en' ? 'Launch' : 'Buka';
-      document.querySelector('[data-i18n="legendDetails"]').innerText = lang === 'en' ? 'Details' : 'Detail';
-      document.querySelector('[data-i18n="legendCategory"]').innerText = lang === 'en' ? 'Category' : 'Kategori';
-      document.querySelector('[data-i18n="btnBack"]').innerText = lang === 'en' ? 'Back' : 'Kembali';
-
-      updateDetails();
-      if (document.getElementById('details-modal').classList.contains('is-open')) {
-        populateModal();
-      }
-    }
-
-    // Details Modal
-    function openDetailsModal() {
-      populateModal();
-      document.getElementById('details-modal').classList.add('is-open');
-    }
-
-    function closeDetailsModal() {
-      document.getElementById('details-modal').classList.remove('is-open');
-    }
-
-    function populateModal() {
-      const items = getFilteredItems();
-      const item = items[activeIndex];
-      if (!item) return;
-
-      document.getElementById('modal-crumb-cat').innerText = item.edition;
-      document.getElementById('modal-crumb-title').innerText = item.title;
-      document.getElementById('modal-meta-top').innerText = item.tag;
-      document.getElementById('modal-title').innerText = item.title;
-      document.getElementById('modal-summary').innerText = item.desc[currentLang] || item.desc['id'];
-
-      const iconBox = document.getElementById('modal-icon-box');
-      iconBox.innerHTML = `<i data-lucide="${item.icon}" class="w-8 h-8 text-cyan-400"></i>`;
-
-      const body = document.getElementById('modal-body-content');
-      body.innerHTML = item.deepDive[currentLang] || item.deepDive['id'];
-
-      const footer = document.getElementById('modal-actions-footer');
-      footer.innerHTML = `
-        <a href="${item.liveUrl}" target="_blank" rel="noopener" class="px-5 py-2.5 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-white font-bold text-xs flex items-center gap-2">
-          <i data-lucide="external-link" class="w-4 h-4"></i> ${currentLang === 'en' ? 'Open Live Deployment' : 'Buka Layanan Live'}
-        </a>
-        <a href="${item.githubUrl}" target="_blank" rel="noopener" class="px-4 py-2.5 rounded-xl glass border border-white/20 text-slate-300 hover:text-white font-semibold text-xs flex items-center gap-2">
-          <i data-lucide="github" class="w-4 h-4"></i> ${currentLang === 'en' ? 'GitHub Showcase' : 'Showcase Repository'}
-        </a>
-      `;
-
-      lucide.createIcons();
-    }
-
-    // Keyboard Shortcuts (PS5 Controller Style)
-    window.addEventListener('keydown', (e) => {
-      // If modal open, allow Esc to close
-      if (document.getElementById('details-modal').classList.contains('is-open')) {
-        if (e.key === 'Escape') closeDetailsModal();
-        return;
+      const btnId = document.getElementById('btnLangId');
+      const btnEn = document.getElementById('btnLangEn');
+      if (btnId && btnEn) {
+        if (lang === 'id') {
+          btnId.className = "px-2 py-0.5 rounded text-[11px] font-semibold text-white bg-white/[0.1] transition-all";
+          btnEn.className = "px-2 py-0.5 rounded text-[11px] font-semibold text-linear-textMuted hover:text-white transition-all";
+        } else {
+          btnEn.className = "px-2 py-0.5 rounded text-[11px] font-semibold text-white bg-white/[0.1] transition-all";
+          btnId.className = "px-2 py-0.5 rounded text-[11px] font-semibold text-linear-textMuted hover:text-white transition-all";
+        }
       }
 
-      if (e.key === 'ArrowLeft') {
-        navigateItem(-1);
-      } else if (e.key === 'ArrowRight') {
-        navigateItem(1);
-      } else if (e.key === 'Enter') {
-        launchActiveItem();
-      } else if (e.key === 'd' || e.key === 'D') {
-        openDetailsModal();
-      } else if (e.key === 'm' || e.key === 'M') {
-        cycleHubTab();
-      } else if (e.key === 'l' || e.key === 'L') {
-        switchLang(currentLang === 'id' ? 'en' : 'id');
-      }
-    });
-
-    // Clock
-    function updateClock() {
-      const now = new Date();
-      let hours = now.getHours();
-      let minutes = now.getMinutes();
-      const ampm = hours >= 12 ? 'PM' : 'AM';
-      hours = hours % 12;
-      hours = hours ? hours : 12;
-      minutes = minutes < 10 ? '0' + minutes : minutes;
-      const str = hours + ':' + minutes + ' ' + ampm;
-      const el = document.getElementById('live-clock');
-      if (el) el.innerText = str;
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (i18n[lang] && i18n[lang][key] !== undefined) {
+          el.innerHTML = i18n[lang][key];
+        }
+      });
+      document.documentElement.lang = lang;
     }
-    setInterval(updateClock, 1000);
-    updateClock();
 
-    // Visitor sync
+    // Live Visitor Telemetry Sync
     async function syncVisitors() {
       try {
         const res = await fetch('https://marry.myap.web.id/api/visitors');
         if (!res.ok) return;
         const data = await res.json();
         if (data.total) {
-          const el = document.getElementById('top-visitor-stat');
-          if (el) el.innerText = `${data.total}+ Visits`;
+          const totalEl = document.getElementById('visitorTotal');
+          if (totalEl) totalEl.innerText = data.total + '+';
+        }
+        if (data.uniqueCountries) {
+          const countriesEl = document.getElementById('visitorCountries');
+          if (countriesEl) countriesEl.innerText = data.uniqueCountries;
+        }
+        if (data.topCountries && data.topCountries.length > 0) {
+          const container = document.getElementById('visitorCountriesContainer');
+          if (container) {
+            container.innerHTML = data.topCountries.map((c, i) => `
+              <div class="shrink-0 px-2.5 py-1 rounded-md linear-card flex items-center gap-2 text-xs font-mono text-slate-200">
+                <span>${c.flag || '🌐'}</span>
+                <span>${c.name}</span>
+                <span class="text-[10px] ${i === 0 ? 'text-linear-violet font-semibold' : 'text-linear-textMuted'}">${c.count}</span>
+              </div>
+            `).join('');
+          }
         }
       } catch (err) {}
     }
-    syncVisitors();
 
-    // Ribbon Drag-to-Scroll & Touch Gestures (antislop-layoutmobile)
-    function setupRibbonDrag() {
-      const wrapper = document.getElementById('ribbon-wrapper');
-      if (!wrapper) return;
-      let isDown = false;
-      let startX = 0;
-      let scrollLeft = 0;
-
-      wrapper.addEventListener('mousedown', (e) => {
-        isDown = true;
-        startX = e.pageX - wrapper.offsetLeft;
-        scrollLeft = wrapper.scrollLeft;
-      });
-      wrapper.addEventListener('mouseleave', () => isDown = false);
-      wrapper.addEventListener('mouseup', () => isDown = false);
-      wrapper.addEventListener('mousemove', (e) => {
-        if (!isDown) return;
-        e.preventDefault();
-        const x = e.pageX - wrapper.offsetLeft;
-        const walk = (x - startX) * 1.6;
-        wrapper.scrollLeft = scrollLeft - walk;
-      });
-    }
-
-    // Init
     window.addEventListener('DOMContentLoaded', () => {
       switchLang(currentLang);
-      renderRibbon();
-      setupRibbonDrag();
+      syncVisitors();
     });
   </script>
-<script>
-    // ==========================================
-    // 3D NEURAL AI BACKGROUND ENGINE (Three.js)
-    // ==========================================
-    const neuralCanvas = document.getElementById('neural-canvas');
-    const nScene = new THREE.Scene();
-    nScene.fog = new THREE.FogExp2(0x030712, 0.0018);
-
-    const nCamera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
-    nCamera.position.z = 45;
-
-    const nRenderer = new THREE.WebGLRenderer({ canvas: neuralCanvas, alpha: true, antialias: true });
-    nRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-    nRenderer.setSize(window.innerWidth, window.innerHeight);
-
-    // Neural Network Nodes & Synapses
-    const nodeCount = 85;
-    const nodeGroup = new THREE.Group();
-    nScene.add(nodeGroup);
-
-    const nodesData = [];
-    const nodeGeo = new THREE.SphereGeometry(0.38, 16, 16);
-    let currentThemeColor = new THREE.Color(0x38bdf8);
-
-    const nodeMat = new THREE.MeshBasicMaterial({
-      color: currentThemeColor,
-      transparent: true,
-      opacity: 0.85
-    });
-
-    for (let i = 0; i < nodeCount; i++) {
-      const mesh = new THREE.Mesh(nodeGeo, nodeMat.clone());
-      const pos = new THREE.Vector3(
-        (Math.random() - 0.5) * 85,
-        (Math.random() - 0.5) * 60,
-        (Math.random() - 0.5) * 50
-      );
-      mesh.position.copy(pos);
-      nodeGroup.add(mesh);
-
-      nodesData.push({
-        mesh: mesh,
-        velocity: new THREE.Vector3(
-          (Math.random() - 0.5) * 0.04,
-          (Math.random() - 0.5) * 0.04,
-          (Math.random() - 0.5) * 0.03
-        ),
-        originalPos: pos.clone()
-      });
-    }
-
-    const maxDistance = 16;
-    const maxConnections = 140;
-    const linePositions = new Float32Array(maxConnections * 2 * 3);
-    const lineColors = new Float32Array(maxConnections * 2 * 3);
-
-    const lineGeo = new THREE.BufferGeometry();
-    lineGeo.setAttribute('position', new THREE.BufferAttribute(linePositions, 3));
-    lineGeo.setAttribute('color', new THREE.BufferAttribute(lineColors, 3));
-
-    const lineMat = new THREE.LineBasicMaterial({
-      vertexColors: true,
-      transparent: true,
-      opacity: 0.45,
-      blending: THREE.AdditiveBlending
-    });
-
-    const synapseLines = new THREE.LineSegments(lineGeo, lineMat);
-    nodeGroup.add(synapseLines);
-
-    // Central Core Neural Cluster Wireframe
-    const clusterGeo = new THREE.IcosahedronGeometry(14, 2);
-    const clusterMat = new THREE.MeshBasicMaterial({
-      color: currentThemeColor,
-      wireframe: true,
-      transparent: true,
-      opacity: 0.12
-    });
-    const neuralCluster = new THREE.Mesh(clusterGeo, clusterMat);
-    nodeGroup.add(neuralCluster);
-
-    // Mouse Parallax
-    let mouseX = 0, mouseY = 0;
-    let targetX = 0, targetY = 0;
-    window.addEventListener('mousemove', (e) => {
-      mouseX = (e.clientX - window.innerWidth / 2) * 0.0008;
-      mouseY = (e.clientY - window.innerHeight / 2) * 0.0008;
-    });
-
-    window.addEventListener('resize', () => {
-      nCamera.aspect = window.innerWidth / window.innerHeight;
-      nCamera.updateProjectionMatrix();
-      nRenderer.setSize(window.innerWidth, window.innerHeight);
-    });
-
-    function setNeuralThemeColor(hex) {
-      const targetColor = new THREE.Color(hex);
-      currentThemeColor.lerp(targetColor, 0.5);
-      clusterMat.color.copy(currentThemeColor);
-      nodesData.forEach(n => {
-        n.mesh.material.color.copy(currentThemeColor);
-        // Excitation pulse burst on project switch
-        n.velocity.multiplyScalar(1.25);
-        setTimeout(() => n.velocity.multiplyScalar(0.8), 450);
-      });
-    }
-
-    const nClock = new THREE.Clock();
-    function animateNeural() {
-      requestAnimationFrame(animateNeural);
-      const delta = nClock.getDelta();
-      const elapsed = nClock.getElapsedTime();
-
-      targetX += (mouseX - targetX) * 0.05;
-      targetY += (mouseY - targetY) * 0.05;
-
-      nodeGroup.rotation.y = elapsed * 0.04 + targetX * 8;
-      nodeGroup.rotation.x = Math.sin(elapsed * 0.03) * 0.1 + targetY * 8;
-
-      neuralCluster.rotation.y = -elapsed * 0.06;
-      neuralCluster.rotation.z = elapsed * 0.03;
-
-      for (let i = 0; i < nodesData.length; i++) {
-        const nd = nodesData[i];
-        nd.mesh.position.add(nd.velocity);
-        if (Math.abs(nd.mesh.position.x) > 45) nd.velocity.x *= -1;
-        if (Math.abs(nd.mesh.position.y) > 32) nd.velocity.y *= -1;
-        if (Math.abs(nd.mesh.position.z) > 28) nd.velocity.z *= -1;
-      }
-
-      let lineIdx = 0;
-      let colorIdx = 0;
-      const positions = synapseLines.geometry.attributes.position.array;
-      const colors = synapseLines.geometry.attributes.color.array;
-
-      for (let i = 0; i < nodesData.length && lineIdx < maxConnections * 6; i++) {
-        for (let j = i + 1; j < nodesData.length && lineIdx < maxConnections * 6; j++) {
-          const dist = nodesData[i].mesh.position.distanceTo(nodesData[j].mesh.position);
-          if (dist < maxDistance) {
-            const p1 = nodesData[i].mesh.position;
-            const p2 = nodesData[j].mesh.position;
-
-            positions[lineIdx++] = p1.x;
-            positions[lineIdx++] = p1.y;
-            positions[lineIdx++] = p1.z;
-            positions[lineIdx++] = p2.x;
-            positions[lineIdx++] = p2.y;
-            positions[lineIdx++] = p2.z;
-
-            const alpha = 1.0 - (dist / maxDistance);
-            colors[colorIdx++] = currentThemeColor.r * alpha;
-            colors[colorIdx++] = currentThemeColor.g * alpha;
-            colors[colorIdx++] = currentThemeColor.b * alpha;
-            colors[colorIdx++] = currentThemeColor.r * alpha;
-            colors[colorIdx++] = currentThemeColor.g * alpha;
-            colors[colorIdx++] = currentThemeColor.b * alpha;
-          }
-        }
-      }
-
-      lineGeo.setDrawRange(0, lineIdx / 3);
-      lineGeo.attributes.position.needsUpdate = true;
-      lineGeo.attributes.color.needsUpdate = true;
-
-      nRenderer.render(nScene, nCamera);
-    }
-    animateNeural();
-</script>
 </body>
 </html>
