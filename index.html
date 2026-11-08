@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Jaya Hartono Pinuyut — Full-Stack Software Engineer & AI Specialist</title>
+  <title>Jaya Hartono Pinuyut : Full-Stack Software Engineer & AI Specialist</title>
   
-  <meta name="description" content="Portfolio of Jaya Hartono Pinuyut (jayyuzz) — Full-Stack Software Engineer, EdTech & AI Evaluation Specialist. Built with Linear.app precision design system.">
-  <meta property="og:title" content="Jaya Hartono Pinuyut — Full-Stack & AI Portfolio">
+  <meta name="description" content="Portfolio of Jaya Hartono Pinuyut (jayyuzz) : Full-Stack Software Engineer, EdTech & AI Evaluation Specialist. Built with Linear.app precision design system.">
+  <meta property="og:title" content="Jaya Hartono Pinuyut : Full-Stack & AI Portfolio">
   <meta property="og:description" content="Architecting Real Systems, Evaluating Frontier AI. Next.js 16, Supabase, Laravel, Mercor & Google Certified.">
   <meta property="og:url" content="https://jayyuzz.github.io/">
 
@@ -43,7 +43,7 @@
               textPrimary: '#f7f8f8',
               textSecondary: '#d0d6e0',
               textMuted: '#8a8f98',
-              textSubtle: '#62666d',
+              textSubtle: '#7d828c',
             }
           }
         }
@@ -186,9 +186,48 @@
     ::-webkit-scrollbar-thumb:hover {
       background: #5e6ad2;
     }
+
+    /* Accessibility Focus Styles (antislop-human / WCAG 2.1 AA) */
+    :focus-visible {
+      outline: 2px solid #7170ff !important;
+      outline-offset: 3px !important;
+    }
+    a:focus-visible, button:focus-visible {
+      outline: 2px solid #7170ff !important;
+      outline-offset: 2px !important;
+    }
+
+    /* Prefers-reduced-motion support */
+    @media (prefers-reduced-motion: reduce) {
+      *, ::before, ::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+      #starlight-canvas {
+        display: none !important;
+      }
+    }
+
+    /* Minimum tap target sizing for mobile touch */
+    @media (max-width: 768px) {
+      .touch-target {
+        min-height: 44px;
+        min-width: 44px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+      }
+    }
   </style>
 </head>
 <body class="selection:bg-linear-indigo/30 selection:text-white relative">
+  <!-- Accessibility Skip Link (WCAG AA) -->
+  <a href="#hero" class="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-50 focus:px-4 focus:py-2 focus:bg-[#5e6ad2] focus:text-white focus:rounded-md focus:shadow-xl focus:outline-none focus:ring-2 focus:ring-white text-xs font-semibold">
+    Lewati ke konten utama / Skip to main content
+  </a>
+
 
   <!-- Starlight & Ambient Beams (Option 1) -->
   <canvas id="starlight-canvas"></canvas>
@@ -233,10 +272,30 @@
         <a href="https://www.linkedin.com/in/jaya-hartono-pinuyut-1827b6410" target="_blank" rel="noopener" class="p-1.5 text-linear-textMuted hover:text-white transition-colors" title="LinkedIn">
           <i data-lucide="linkedin" class="w-4 h-4"></i>
         </a>
-        <a href="mailto:jaya.pinuyut@gmail.com" class="hidden sm:inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-medium bg-white/[0.05] hover:bg-white/[0.09] text-white border border-white/[0.08] transition-all">
+        <a href="mailto:jaya.pinuyut@gmail.com" class="hidden sm:inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-medium bg-white/[0.05] hover:bg-white/[0.09] text-white border border-white/[0.08] transition-all" aria-label="Kirim email ke jaya.pinuyut@gmail.com">
           <i data-lucide="mail" class="w-3.5 h-3.5 text-linear-violet"></i>
           <span>Email</span>
         </a>
+
+        <!-- Mobile Menu Toggle (antislop-layoutmobile / R-03) -->
+        <button id="mobileMenuBtn" onclick="toggleMobileMenu()" aria-label="Buka menu navigasi" aria-expanded="false" class="md:hidden flex items-center justify-center w-8 h-8 rounded-md bg-white/[0.05] hover:bg-white/[0.1] border border-white/[0.08] text-linear-textMuted hover:text-white transition-all">
+          <i id="mobileMenuIcon" data-lucide="menu" class="w-4 h-4"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Navigation Drawer (antislop-layoutmobile / R-03) -->
+    <div id="mobileMenu" class="hidden md:hidden border-t border-white/[0.06] bg-[#08090a]/95 backdrop-blur-xl px-4 py-4 space-y-2">
+      <nav class="flex flex-col space-y-1 text-sm font-medium">
+        <a href="#projects" onclick="closeMobileMenu()" class="px-3 py-2.5 rounded-lg hover:bg-white/[0.06] text-linear-textSecondary hover:text-white transition-colors" data-i18n="navProjects">Projects</a>
+        <a href="#edtech-ai" onclick="closeMobileMenu()" class="px-3 py-2.5 rounded-lg hover:bg-white/[0.06] text-linear-textSecondary hover:text-white transition-colors" data-i18n="navAi">EdTech &amp; AI</a>
+        <a href="#stack" onclick="closeMobileMenu()" class="px-3 py-2.5 rounded-lg hover:bg-white/[0.06] text-linear-textSecondary hover:text-white transition-colors" data-i18n="navStack">Stack</a>
+        <a href="#credentials" onclick="closeMobileMenu()" class="px-3 py-2.5 rounded-lg hover:bg-white/[0.06] text-linear-textSecondary hover:text-white transition-colors" data-i18n="navCreds">Credentials</a>
+        <a href="#contact" onclick="closeMobileMenu()" class="px-3 py-2.5 rounded-lg hover:bg-white/[0.06] text-linear-textSecondary hover:text-white transition-colors" data-i18n="navContact">Contact</a>
+      </nav>
+      <div class="pt-3 border-t border-white/[0.06] flex items-center justify-between text-xs text-linear-textMuted">
+        <span>jaya.pinuyut@gmail.com</span>
+        <a href="mailto:jaya.pinuyut@gmail.com" class="text-linear-violet hover:text-white font-medium">Kirim Pesan</a>
       </div>
     </div>
   </header>
@@ -328,9 +387,12 @@
             </div>
 
             <div>
-              <div class="flex items-center justify-between">
-                <h3 class="text-lg font-semibold text-white group-hover:text-linear-violet transition-colors">SMK3 Absensi Digital</h3>
-                <span class="text-xs font-mono text-emerald-400 bg-emerald-950/60 border border-emerald-800/60 px-2 py-0.5 rounded">1,500+ Users</span>
+              <div class="flex items-center justify-between gap-2">
+                <div class="flex items-center gap-2">
+                  <h3 class="text-lg font-semibold text-white group-hover:text-linear-violet transition-colors">SMK3 Absensi Digital</h3>
+                  <span class="text-[10px] font-mono font-semibold uppercase tracking-wider text-emerald-400 bg-emerald-950/70 border border-emerald-700/60 px-2 py-0.5 rounded">Flagship</span>
+                </div>
+                <span class="text-xs font-mono text-emerald-400 bg-emerald-950/60 border border-emerald-800/60 px-2 py-0.5 rounded whitespace-nowrap">1,500+ Users</span>
               </div>
               <p class="text-xs text-linear-textSecondary mt-2 leading-relaxed" data-i18n="p1Desc">
                 Multi-role digital attendance ecosystem for SMKN 3 Kotamobagu (Principal, Admin, Teachers, Staff, Students, Parents). Features in-browser biometric face verification (face-api.js), GPS Haversine geofencing, and automated WhatsApp alert gateways.
@@ -369,7 +431,7 @@
 
             <div>
               <div class="flex items-center justify-between">
-                <h3 class="text-lg font-semibold text-white group-hover:text-linear-violet transition-colors">marry 💍</h3>
+                <h3 class="text-lg font-semibold text-white group-hover:text-linear-violet transition-colors">marry</h3>
                 <span class="text-xs font-mono text-purple-400 bg-purple-950/60 border border-purple-800/60 px-2 py-0.5 rounded">50+ Languages</span>
               </div>
               <p class="text-xs text-linear-textSecondary mt-2 leading-relaxed" data-i18n="p2Desc">
@@ -495,7 +557,7 @@
           <div class="space-y-2.5 pt-2 text-xs text-linear-textSecondary">
             <div class="flex items-start gap-2.5">
               <i data-lucide="check" class="w-4 h-4 text-emerald-400 shrink-0 mt-0.5"></i>
-              <span data-i18n="edtechB1"><strong>Mercor Certified — Introduction to Agents:</strong> Officially verified credential (MRC-2026-5XW2RQSG) in evaluating autonomous agent trajectories and tool-use fidelity.</span>
+              <span data-i18n="edtechB1"><strong>Mercor Certified : Introduction to Agents:</strong> Officially verified credential (MRC-2026-5XW2RQSG) in evaluating autonomous agent trajectories and tool-use fidelity.</span>
             </div>
             <div class="flex items-start gap-2.5">
               <i data-lucide="check" class="w-4 h-4 text-emerald-400 shrink-0 mt-0.5"></i>
@@ -508,8 +570,8 @@
           </div>
         </div>
 
-        <!-- Verified Credential Badges List -->
-        <div class="space-y-3">
+        <!-- Verified Credential Badges List (Target for #credentials link) -->
+        <div id="credentials" class="space-y-3 scroll-mt-20">
           <a href="https://work.mercor.com/learn/verify/MRC-2026-5XW2RQSG" target="_blank" rel="noopener" class="block p-3.5 rounded-xl linear-card hover:border-linear-violet/40 group">
             <div class="flex items-center justify-between text-xs font-semibold text-white">
               <span>Mercor Certified: Agents</span>
@@ -623,8 +685,9 @@
             <i data-lucide="mail" class="w-3.5 h-3.5"></i>
             <span>jaya.pinuyut@gmail.com</span>
           </a>
-          <button onclick="navigator.clipboard.writeText('jaya.pinuyut@gmail.com'); alert('Email copied!');" class="btn-linear-ghost px-2.5 py-2 rounded-lg text-xs font-mono" title="Copy email">
-            <i data-lucide="copy" class="w-3.5 h-3.5"></i>
+          <button id="copyEmailBtn" onclick="copyEmailToClipboard()" class="btn-linear-ghost px-2.5 py-2 rounded-lg text-xs font-mono flex items-center gap-1" title="Salin email" aria-label="Salin alamat email ke clipboard">
+            <i id="copyEmailIcon" data-lucide="copy" class="w-3.5 h-3.5"></i>
+            <span class="sr-only">Salin email</span>
           </button>
         </div>
       </div>
@@ -680,7 +743,7 @@
         p4Desc: "Portal berita dan publikasi akademik resmi SMK Negeri 3 Kotamobagu. Mengelola pengumuman, prestasi, agenda kegiatan, portal alumni, serta integrasi e-learning dengan pengawasan audit log aktivitas admin.",
         edtechHeading: "Spesialis Pendidik Teknologi (EdTech) & Evaluator AI",
         edtechDesc: "Spesialisasi ganda sebagai Pendidik Teknologi Komputer bersertifikasi (14+ tahun masa pengabdian) serta Evaluator AI Terverifikasi Mercor. Berpengalaman mengaudit alur kerja agen otonom dan kualitas lokalisasi materi teknis AI.",
-        edtechB1: "<strong>Mercor Certified — Introduction to Agents:</strong> Kredensial resmi (MRC-2026-5XW2RQSG) dalam evaluasi agen AI otonom dan validasi tool-calling.",
+        edtechB1: "<strong>Mercor Certified : Introduction to Agents:</strong> Kredensial resmi (MRC-2026-5XW2RQSG) dalam evaluasi agen AI otonom dan validasi tool-calling.",
         edtechB2: "<strong>Approved Mercor Expert:</strong> Indonesian Linguistic Specialist untuk riset model frontier lab dunia.",
         edtechB3: "<strong>Evaluator Materi Teknis AWS:</strong> Pengalaman menguji kualitas narasi AI Avatar dan kurasi modul teknis AWS Skill Builder (RAG, Bedrock, Cloud Security).",
         stackHeading: "Teknologi & Arsitektur Sistem",
@@ -709,7 +772,7 @@
         p4Desc: "Official institutional news and academic publishing portal for SMK Negeri 3 Kotamobagu. Manages announcements, achievements, event calendars, alumni network, and e-learning access with strict administrative audit logging.",
         edtechHeading: "Educational Technology (EdTech) & AI Evaluation Specialist",
         edtechDesc: "Dual expertise as a Certified Computer Science Educator (14+ years in secondary/vocational education) and Verified AI Agent Evaluator. Skilled in benchmarking autonomous LLM agent trajectories, precision RLHF annotation, and cultural nuance alignment in Indonesian.",
-        edtechB1: "<strong>Mercor Certified — Introduction to Agents:</strong> Officially verified credential (MRC-2026-5XW2RQSG) in evaluating autonomous agent trajectories and tool-use fidelity.",
+        edtechB1: "<strong>Mercor Certified : Introduction to Agents:</strong> Officially verified credential (MRC-2026-5XW2RQSG) in evaluating autonomous agent trajectories and tool-use fidelity.",
         edtechB2: "<strong>Approved Mercor Expert:</strong> Indonesian Linguistic Specialist for frontier AI lab research projects.",
         edtechB3: "<strong>Technical Course Localization:</strong> Evaluated AI avatar narration and Indonesian localization accuracy for AWS Skill Builder modules (RAG, Bedrock, Cloud Security).",
         stackHeading: "Technical Stack & Engineering Skills",
@@ -775,6 +838,73 @@
           }
         }
       } catch (err) {}
+    }
+
+    // Mobile Navigation Toggle (antislop-layoutmobile)
+    function toggleMobileMenu() {
+      const menu = document.getElementById('mobileMenu');
+      const btn = document.getElementById('mobileMenuBtn');
+      const icon = document.getElementById('mobileMenuIcon');
+      if (!menu) return;
+      const isOpen = !menu.classList.contains('hidden');
+      if (isOpen) {
+        closeMobileMenu();
+      } else {
+        menu.classList.remove('hidden');
+        if (btn) btn.setAttribute('aria-expanded', 'true');
+        if (icon) icon.setAttribute('data-lucide', 'x');
+        lucide.createIcons();
+      }
+    }
+
+    function closeMobileMenu() {
+      const menu = document.getElementById('mobileMenu');
+      const btn = document.getElementById('mobileMenuBtn');
+      const icon = document.getElementById('mobileMenuIcon');
+      if (menu && !menu.classList.contains('hidden')) {
+        menu.classList.add('hidden');
+        if (btn) btn.setAttribute('aria-expanded', 'false');
+        if (icon) icon.setAttribute('data-lucide', 'menu');
+        lucide.createIcons();
+      }
+    }
+
+    // Keyboard listener for Escape key to close mobile menu (R-32)
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        closeMobileMenu();
+      }
+    });
+
+    // Tactile Clipboard Copy Function (R-26 / antislop-human)
+    function copyEmailToClipboard() {
+      const email = 'jaya.pinuyut@gmail.com';
+      navigator.clipboard.writeText(email).then(() => {
+        const toast = document.getElementById('copyToast');
+        const icon = document.getElementById('copyEmailIcon');
+        if (icon) icon.setAttribute('data-lucide', 'check');
+        lucide.createIcons();
+        if (toast) {
+          toast.classList.remove('translate-y-12', 'opacity-0', 'pointer-events-none');
+          toast.classList.add('translate-y-0', 'opacity-100');
+          setTimeout(() => {
+            toast.classList.remove('translate-y-0', 'opacity-100');
+            toast.classList.add('translate-y-12', 'opacity-0', 'pointer-events-none');
+            if (icon) icon.setAttribute('data-lucide', 'copy');
+            lucide.createIcons();
+          }, 2400);
+        }
+      }).catch(() => {
+        const toast = document.getElementById('copyToast');
+        if (toast) {
+          toast.classList.remove('translate-y-12', 'opacity-0', 'pointer-events-none');
+          toast.classList.add('translate-y-0', 'opacity-100');
+          setTimeout(() => {
+            toast.classList.remove('translate-y-0', 'opacity-100');
+            toast.classList.add('translate-y-12', 'opacity-0', 'pointer-events-none');
+          }, 3000);
+        }
+      });
     }
 
     window.addEventListener('DOMContentLoaded', () => {
@@ -871,5 +1001,10 @@
     })();
   </script>
 
+  <!-- Micro-interaction Toast Feedback (antislop-human / R-26) -->
+  <div id="copyToast" role="status" aria-live="polite" class="fixed bottom-6 right-6 z-50 transform translate-y-12 opacity-0 pointer-events-none transition-all duration-300 flex items-center gap-2.5 px-4 py-2.5 rounded-lg bg-[#141517] border border-white/[0.12] shadow-2xl text-xs text-white">
+    <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-400"></i>
+    <span id="toastMessage">Email jaya.pinuyut@gmail.com berhasil disalin!</span>
+  </div>
 </body>
 </html>
